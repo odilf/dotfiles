@@ -3,7 +3,7 @@ return {
 		"folke/which-key.nvim",
 		config = function()
 			vim.o.timeout = true
-			vim.o.timeoutlen = 300
+			vim.o.timeoutlen = 500
 			local wk = require("which-key")
 
 			wk.setup({})
@@ -34,21 +34,25 @@ return {
 					v = { "<cmd>ToggleTerm direction=vertical size=80<enter>", "Vertical terminal" },
 					t = { "<cmd>ToggleTerm direction=tab size=80<enter>", "Tab terminal" },
 					[","] = { "<cmd>ToggleTerm<enter>", "Toggle terminal" },
+					-- TODO: Currently broken if the terminal is already open
+					r = { "<cmd>ToggleTerm<enter>i<up><enter>", "Repeat last terminal command" }
 				},
 
 				-- LSP
 				l = {
 					name = "lsp",
-					a = { vim.lsp.buf.code_action, "Code Action" },
+					a = { vim.lsp.buf.code_action, "Code action" },
 					d = { vim.lsp.buf.definition, "Definition" },
 					f = { function() vim.lsp.buf.format { async = true } end, "Format" },
-					g = { vim.diagnostic.open_float, "Show Diagnostics" },
-					j = { vim.diagnostic.goto_next, "Next Diagnostic" },
-					k = { vim.diagnostic.goto_prev, "Previous Diagnostic" },
-					l = { vim.lsp.diagnostic.set_loclist, "Set Location List" },
+					g = { vim.diagnostic.open_float, "Show diagnostics"},
+					G = { "<cmd>Telescope diagnostics<enter>", "Show diagnostics" },
+					j = { vim.diagnostic.goto_next, "Next diagnostic" },
+					k = { vim.diagnostic.goto_prev, "Previous diagnostic" },
+					l = { vim.lsp.diagnostic.setloclist, "Set location list" },
 					r = { vim.lsp.buf.rename, "Rename" },
-					t = { vim.lsp.buf.type_definition, "Type Definition" },
-					w = { vim.lsp.buf.workspace_symbol, "Workspace Symbol" },
+					t = { vim.lsp.buf.type_definition, "Type definition" },
+					w = { "<cmd>Telescope lsp_dynamic_workspace_symbols<enter>", "Workspace symbol"
+					},
 				},
 
 				-- Search
@@ -60,7 +64,18 @@ return {
 					m = { "<cmd>Telescope marks<enter>", "Search Marks" },
 					r = { function() require("spectre").open() end, "Replace in files (Spectre)" },
 				},
+
+				-- Debug
+				d = {
+					name = "debug",
+					b = { require('dap').toggle_breakpoint, "Toggle breakpoint" },
+					
+				}
 			}, { prefix = "<leader>" })
+
+			wk.register({
+				["<lt>"] = { "<nop>" },
+			}, { mode = "n" })
 
 			-- Creating and closing tabs
 			wk.register({
@@ -71,19 +86,28 @@ return {
 
 			-- Tab navigation with <D-1> through <D-9>
 			for i = 1, 9 do
-			 wk.register({
-				 ["<D-" .. i .. ">"] = { i .. "gt", "Go to tab " .. i },
-			 })
+				wk.register({
+					["<D-" .. i .. ">"] = { i .. "gt", "Go to tab " .. i },
+				})
 			end
 
 			-- Toggle terminal
 			wk.register({
+				-- TODO: This is kinda ugly, I can't press escape in terminal mode
 				["<esc>"] = { [[<C-\><C-n>]], "Exit terminal mode" },
 			}, { mode = "t" })
-
+			
+			-- Hover
 			wk.register({
 				K = { vim.lsp.buf.hover, "Hover" }
 			})
+
+			-- Copy paste from clipboard
+			-- TODO: Figure out interaction with tmux 🙄
+			-- wk.register({
+			-- 	["<C-c>"] = { "\"*y", "Copy to clipboard" },
+			-- 	["<C-v>"] = { "\"*p", "Paste from clipboard" },
+			-- })
 		end,
 
 		lazy = false

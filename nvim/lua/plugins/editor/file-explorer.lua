@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-    dependencies = {
+		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-frecency.nvim",
 			"kkharji/sqlite.lua",
@@ -14,9 +14,6 @@ return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		cmd = "Neotree",
-		init = function()
-      vim.g.neo_tree_remove_legacy_commands = 1
-    end,
 		opts = {
 			filesystem = {
 				follow_current_file = true,

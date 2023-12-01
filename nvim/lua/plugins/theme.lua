@@ -13,6 +13,19 @@ return {
 
   { "folke/zen-mode.nvim" },
 
-  { "stevearc/dressing.nvim", event = "VeryLazy" }, -- Neovim plugin to improve the default vim.ui interfaces 
+  -- Neovim plugin to improve the default vim.ui interfaces
+  {
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+    opts = {
+      input = {
+        insert_only = false,
+        start_in_insert = true,
+      },
+      select = {
+        backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+      }
+    }
+  },
   { "nvim-tree/nvim-web-devicons", lazy = false },
 }

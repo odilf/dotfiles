@@ -36,10 +36,6 @@ return {
 
 	-- Search and replace in multiple files
 	{
-    "windwp/nvim-spectre",
-    -- keys = {
-    --   { "<leader>sr", , desc = "Replace in files (Spectre)" },
-    -- },
-  },
+		"windwp/nvim-spectre",
+	},
 }
-

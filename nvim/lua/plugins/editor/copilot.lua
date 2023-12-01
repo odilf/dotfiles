@@ -8,7 +8,7 @@ return {
 				auto_trigger = true,
 				debounce = 75,
 				keymap = {
-					accept = "<S-CR>",
+					accept = "<TAB>",
 					accept_word = false,
 					accept_line = false,
 					next = "<M-]>",

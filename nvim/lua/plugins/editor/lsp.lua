@@ -23,6 +23,7 @@ return {
 				'rust_analyzer',
 				'tsserver',
 				'emmet_ls',
+				'lua_ls'
 			}
 
 			for _, lsp in ipairs(servers) do

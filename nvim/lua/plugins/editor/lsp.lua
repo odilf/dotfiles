@@ -3,9 +3,9 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufRead", "BufNewFile" },
 		dependencies = {
-			"nvim-lua/lsp-status.nvim", -- status bar
-			"kosayoda/nvim-lightbulb", -- VSCode like lightbulb
-			{ "onsails/lspkind.nvim", name ="lspkind" }, -- VSCode like lightbulb
+			"nvim-lua/lsp-status.nvim",          -- status bar
+			"kosayoda/nvim-lightbulb",           -- VSCode like lightbulb
+			{ "onsails/lspkind.nvim", name = "lspkind" }, -- idk
 
 			"hrsh7th/nvim-cmp",
 			"hrsh7th/cmp-nvim-lsp",
@@ -74,15 +74,15 @@ return {
 
 	-- top status bar
 	{
-    "glepnir/lspsaga.nvim",
-    event = "LspAttach",
-    config = function()
-        require("lspsaga").setup({})
-    end,
-    dependencies = {
-      {"nvim-tree/nvim-web-devicons"},
-      --Please make sure you install markdown and markdown_inline parser
-      {"nvim-treesitter/nvim-treesitter"}
-    }
+		"glepnir/lspsaga.nvim",
+		event = "LspAttach",
+		config = function()
+			require("lspsaga").setup({})
+		end,
+		dependencies = {
+			{ "nvim-tree/nvim-web-devicons" },
+			--Please make sure you install markdown and markdown_inline parser
+			{ "nvim-treesitter/nvim-treesitter" }
+		}
 	}
 }

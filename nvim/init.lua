@@ -10,23 +10,21 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 
-
 vim.opt.rtp:prepend(lazypath)
+-- Lazy package manager (above)
+
+-- Set the current working directory to passed path if it's valid
+if vim.fn.isdirectory(vim.v.argv[3]) == 1 then
+  vim.api.nvim_set_current_dir(vim.v.argv[3])
+end
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 
--- Neovide settings
-if vim.g.neovide then
-  vim.g.neovide_input_macos_alt_is_meta = true
-  vim.o.guifont = "Fira Code"
-  vim.g.neovide_remember_window_size = true
-  vim.g.neovide_cursor_animate_command_line = false
-  vim.g.neovide_cursor_animate_in_insert_mode = false
-  vim.g.neovide_scale_factor = 0.95
-end
+require("neovide")
 
+-- Leader key
 vim.keymap.set("n", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 
@@ -35,7 +33,7 @@ vim.opt.relativenumber = true
 vim.opt.showmode = false
 vim.opt.signcolumn = 'yes'
 
-
+-- Lazy package manager
 require("lazy").setup({
   { import = "plugins" },
   { import = "plugins.editor" },
@@ -48,4 +46,6 @@ require("lazy").setup({
 # TODOS:
 
 - [ ] Look into Wilder.nvim (for cmd line autocomplete)
+- [ ] Look into a grammar/spell checker
+- [ ] Look into https://github.com/smoka7/multicursors.nvim
 ]]--

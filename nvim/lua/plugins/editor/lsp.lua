@@ -4,8 +4,6 @@ return {
 		event = { "BufRead", "BufNewFile" },
 		dependencies = {
 			"nvim-lua/lsp-status.nvim",          -- status bar
-			"kosayoda/nvim-lightbulb",           -- VSCode like lightbulb
-			{ "onsails/lspkind.nvim", name = "lspkind" }, -- idk
 
 			"hrsh7th/nvim-cmp",
 			"hrsh7th/cmp-nvim-lsp",

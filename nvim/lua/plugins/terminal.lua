@@ -1,7 +1,7 @@
 return {
 	{
 		'akinsho/toggleterm.nvim',
-		lazy = false,
+		event = "VimEnter",
 		config = function()
 			require("toggleterm").setup({
 				size = 20,

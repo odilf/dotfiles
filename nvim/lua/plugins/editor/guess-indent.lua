@@ -1,7 +1,7 @@
 return {
 	{
 		'nmac427/guess-indent.nvim',
-		lazy = false,
+		event = "BufRead",
 		opts = {},
 	},
 }

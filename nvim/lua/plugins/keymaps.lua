@@ -110,6 +110,6 @@ return {
 			-- })
 		end,
 
-		lazy = false
+		event = "VimEnter",
 	},
 }

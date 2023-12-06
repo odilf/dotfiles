@@ -27,5 +27,5 @@ return {
       }
     }
   },
-  { "nvim-tree/nvim-web-devicons", lazy = false },
+  { "nvim-tree/nvim-web-devicons", event = "VimEnter" },
 }

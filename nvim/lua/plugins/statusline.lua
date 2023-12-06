@@ -1,7 +1,11 @@
 return {
 	{
 		"nvim-lualine/lualine.nvim",
-		lazy = false,
+		dependencies = {
+			"arkav/lualine-lsp-progress", -- look at the name
+		},
+
+		event = "VimEnter",
 
 		opts = {
 			options = {
@@ -15,7 +19,9 @@ return {
 						sources = { 'nvim_lsp' },
 					},
 				},
-				lualine_c = {},
+				lualine_c = {
+					'lsp_progress'
+				},
 
 				lualine_x = { 'fileformat', 'encoding' },
 				lualine_y = { 'branch', 'diff' },

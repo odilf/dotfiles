@@ -12,7 +12,7 @@ return {
 				-- Files and telescope
 				f = {
 					name = "file", -- optional group name
-					f = { "<cmd>Telescope find_files<enter>", "Find File" },
+					f = { "<cmd>Telescope frecency workspace=CWD<enter>", "Find File" },
 					g = { "<cmd>Telescope live_grep<enter>", "Find in file (grep)" },
 					r = { "<cmd>Telescope oldfiles<enter>", "Open recent file" },
 					e = { "<cmd>Neotree toggle<enter>", "Toggle file explorer" },

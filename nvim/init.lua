@@ -32,6 +32,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.showmode = false
 vim.opt.signcolumn = 'yes'
+vim.opt.linebreak = true
 
 -- Lazy package manager
 require("lazy").setup({

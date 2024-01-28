@@ -1,0 +1,37 @@
+import = ["/Users/odilf/.config/alacritty/kanagawa_dragon.toml"]
+
+[cursor]
+vi_mode_style = "Block"
+
+[cursor.style]
+shape = "Beam"
+
+[font]
+size = 15.0
+
+[font.normal]
+family = "GeistMono Nerd Font Mono"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+action = "None"
+key = "W"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "ToggleSimpleFullscreen"
+key = "F"
+mods = "Command|Control"
+
+[window]
+decorations = "none"
+dynamic_title = true
+opacity = 0.9
+option_as_alt = "Both"
+
+[window.padding]
+x = 0
+y = 0

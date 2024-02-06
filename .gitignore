@@ -4,5 +4,9 @@
 # Except
 !.gitignore
 !*/
+
 !nvim/**
 !alacritty/**
+
+!rocketfetch/**
+!fish/**

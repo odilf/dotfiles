@@ -1,5 +1,7 @@
 import = ["/Users/odilf/.config/alacritty/kanagawa_dragon.toml"]
 
+shell = "/opt/homebrew/bin/fish"
+
 [cursor]
 vi_mode_style = "Block"
 
@@ -32,6 +34,7 @@ dynamic_title = true
 opacity = 0.7
 option_as_alt = "Both"
 blur = true
+startup_mode = "Maximized"
 
 [window.padding]
 x = 0

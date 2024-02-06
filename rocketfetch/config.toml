@@ -1,0 +1,37 @@
+module-order = "user delimiter os host kernel uptime packages shell resolution desktop-environment window-manager terminal cpu"
+
+[format]
+padding-top = 4
+
+[os]
+output-style = "#000000"
+
+[host]
+output-style = "#000000"
+
+[kernel]
+output-style = "#000000"
+
+[uptime]
+output-style = "#000000"
+
+[packages]
+output-style = "#000000"
+
+[shell]
+output-style = "#000000"
+
+[resolution]
+output-style = "#000000"
+
+[desktop-environment]
+output-style = "#000000"
+
+[window-manager]
+output-style = "#000000"
+
+[terminal]
+output-style = "#000000"
+
+[cpu]
+output-style = "#000000"

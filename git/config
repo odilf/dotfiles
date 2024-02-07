@@ -1,0 +1,14 @@
+[user]
+	name = Odilf
+	email = odysseas.maheras@gmail.com
+[credential]
+	helper = store
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+[core]
+	editor = nvim
+
+[includeIf "gitdir:~/Documents/Uni/**"]
+    path = ~/Documents/Uni/.gitconfig

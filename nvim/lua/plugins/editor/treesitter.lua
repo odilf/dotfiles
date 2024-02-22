@@ -1,22 +1,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     dependencies = {
-      {
-        'nvim-treesitter/nvim-treesitter-context',
-        opts = {
-          enable = true,
-        }
-      },
-      {
-        'windwp/nvim-ts-autotag',
-        opts = {
-          enable = true,
-        }
-      },
+      'nvim-treesitter/nvim-treesitter-context',
+      'windwp/nvim-ts-autotag',
     },
 
     opts = {
@@ -43,6 +32,7 @@ return {
         "tsx",
         "typescript",
         "vim",
+        "wgsl",
         "yaml",
       },
       incremental_selection = {
@@ -57,9 +47,17 @@ return {
       autotag = {
         enable = true,
       },
+      rainbow = {
+        enable = true,
+      }
     },
 
     config = function(_, opts)
+      -- folds
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+      vim.opt.foldlevel = 99 -- start always unfolded
+
       require("nvim-treesitter.configs").setup(opts)
     end,
   },

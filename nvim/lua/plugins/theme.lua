@@ -1,16 +1,19 @@
 return {
   "NLKNguyen/papercolor-theme",
-  "savq/melange-nvim",
-
   {
-    "rebelot/kanagawa.nvim",
-    name = "kanagawa",
+    "savq/melange-nvim",
     lazy = false,
     config = function()
-      vim.cmd.colorscheme("kanagawa-dragon")
+      vim.opt.termguicolors = true
+      vim.cmd.colorscheme("kanagawa")
     end,
   },
 
+  {
+    "rebelot/kanagawa.nvim",
+  },
+
+  -- VSCode-like zen mode
   { "folke/zen-mode.nvim" },
 
   -- Neovim plugin to improve the default vim.ui interfaces

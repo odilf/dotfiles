@@ -1,13 +1,18 @@
 return {
+	-- TODO: Use [proximity-sort](https://github.com/jonhoo/proximity-sort)
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-frecency.nvim",
-			"kkharji/sqlite.lua",
+			{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 		},
 		config = function()
-			require("telescope").load_extension("frecency")
+			local telescope = require("telescope")
+
+			telescope.setup({})
+			telescope.load_extension("frecency")
+			telescope.load_extension("fzf")
 		end,
 	},
 
@@ -16,14 +21,16 @@ return {
 		cmd = "Neotree",
 		opts = {
 			filesystem = {
-				follow_current_file = true,
+				follow_current_file = {
+					enabled = true,
+				},
 			},
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
 			"MunifTanjim/nui.nvim",
-		}
+		},
 	},
 
 	{

@@ -1,16 +1,14 @@
 return {
   "NLKNguyen/papercolor-theme",
+  "savq/melange-nvim",
+
   {
-    "savq/melange-nvim",
+    "rebelot/kanagawa.nvim",
     lazy = false,
     config = function()
       vim.opt.termguicolors = true
       vim.cmd.colorscheme("kanagawa")
     end,
-  },
-
-  {
-    "rebelot/kanagawa.nvim",
   },
 
   -- VSCode-like zen mode

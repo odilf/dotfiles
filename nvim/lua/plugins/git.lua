@@ -12,5 +12,15 @@ return {
 				diffview = true,
 			}
 		}
+	},
+
+	{
+		'lewis6991/gitsigns.nvim',
+
+		requires = {
+			'nvim-lua/plenary.nvim',
+		},
+		-- event = 'BufRead',
+		cmd = "Gitsigns"
 	}
 }

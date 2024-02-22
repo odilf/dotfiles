@@ -13,40 +13,20 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- Lazy package manager (above)
 
--- Set the current working directory to passed path if it's valid
-if vim.fn.isdirectory(vim.v.argv[3]) == 1 then
-  vim.api.nvim_set_current_dir(vim.v.argv[3])
-end
-
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-
+require("general")
 require("neovide")
-
--- Leader key
-vim.keymap.set("n", "<Space>", "<Nop>")
-vim.g.mapleader = " "
-
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.showmode = false
-vim.opt.signcolumn = 'yes'
-vim.opt.linebreak = true
 
 -- Lazy package manager
 require("lazy").setup({
-  { import = "plugins" },
-  { import = "plugins.editor" },
-  { import = "plugins.languages" },
-})
-
+    { import = "plugins" },
+    { import = "plugins.editor" },
+    { import = "plugins.languages" },
+  },
+  { change_detection = { notify = false } }
+)
 
 
 --[[
 # TODOS:
-
-- [ ] Look into Wilder.nvim (for cmd line autocomplete)
-- [ ] Look into a grammar/spell checker
 - [ ] Look into https://github.com/smoka7/multicursors.nvim
-]]--
+]]

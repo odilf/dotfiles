@@ -1,13 +1,14 @@
 return {
   "NLKNguyen/papercolor-theme",
   "savq/melange-nvim",
+  "rebelot/kanagawa.nvim",
 
   {
-    "rebelot/kanagawa.nvim",
+    "marko-cerovac/material.nvim",
     lazy = false,
     config = function()
       vim.opt.termguicolors = true
-      vim.cmd.colorscheme("kanagawa")
+      vim.cmd.colorscheme("material-darker")
     end,
   },
 

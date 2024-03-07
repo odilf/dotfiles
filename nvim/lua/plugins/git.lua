@@ -16,11 +16,18 @@ return {
 
 	{
 		'lewis6991/gitsigns.nvim',
-
 		requires = {
 			'nvim-lua/plenary.nvim',
 		},
-		-- event = 'BufRead',
-		cmd = "Gitsigns"
+
+		event = 'BufRead',
+		cmd = "Gitsigns",
+		opts = {}
+	},
+
+	{
+		'tpope/vim-fugitive',
+		event = 'BufWrite',
+		cmd = 'Git'
 	}
 }

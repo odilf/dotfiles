@@ -1,0 +1,30 @@
+{
+	"title": "Caps lock -> Escape or ctrl",
+	"rules": [
+		{
+			"description": "Caps lock to escape if alone or ctrl if held",
+			"manipulators": [
+				{
+					"type": "basic",
+					"from": {
+						"key_code": "caps_lock",
+						"modifiers": {
+							"optional": ["any"]
+						}
+					},
+					"to": [
+						{
+							"key_code": "left_control",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "escape"
+						}
+					]
+				}			
+			]
+		}
+	]
+}

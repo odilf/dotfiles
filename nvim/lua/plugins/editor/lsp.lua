@@ -1,5 +1,11 @@
 return {
     {
+        -- Highlight all instances of the word under the cursor
+        'RRethy/vim-illuminate',
+        event = { 'BufRead' }
+    },
+
+    {
         'neovim/nvim-lspconfig',
         event = { 'BufRead', 'BufNewFile' },
         dependencies = {

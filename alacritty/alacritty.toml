@@ -1,4 +1,4 @@
-import = ["/Users/odilf/.config/alacritty/kanagawa_dragon.toml"]
+import = ["./alacritty-theme/themes/material_theme_mod.toml"]
 
 shell = "/opt/homebrew/bin/fish"
 
@@ -17,11 +17,6 @@ family = "GeistMono Nerd Font Mono"
 [font.offset]
 x = 0
 y = 0
-
-[[keyboard.bindings]]
-action = "None"
-key = "W"
-mods = "Command"
 
 [[keyboard.bindings]]
 action = "ToggleSimpleFullscreen"

@@ -19,12 +19,14 @@ return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		cmd = "Neotree",
+		event = "VimEnter",
 		opts = {
 			filesystem = {
 				follow_current_file = {
 					enabled = true,
 				},
 			},
+			auto_clean_after_session_restore = true, -- For auto-sessions
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",

@@ -7,6 +7,8 @@ switch (uname)
 		source ~/.config/fish/macos/subconfig.fish
 end
 
+set SHELL "fish"
+
 if status is-interactive
 	zoxide init fish | source
 	starship init fish | source

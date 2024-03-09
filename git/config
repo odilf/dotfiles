@@ -5,10 +5,16 @@
 	helper = store
 [pull]
 	rebase = true
+
+# Reuse Recorded Resulution (don't solve same conflict multiple times)
+[rerere]
+	enabled = true
 [fetch]
 	prune = true
 [core]
 	editor = nvim
+
+
 
 [includeIf "gitdir:~/Documents/Uni/**"]
     path = ~/Documents/Uni/.gitconfig

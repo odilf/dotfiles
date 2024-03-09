@@ -1,15 +1,11 @@
-set PATH $PATH /opt/homebrew/bin
-set PATH $PATH ~/.cargo/bin
+source ~/.config/fish/aliases.fish
 
-abbr --add ls lsd
-abbr --add vim nvim
-abbr --add grep rg
-abbr --add cat bat
-
-abbr --add c cargo
-abbr --add g git
-abbr --add e nvim
-
+switch (uname)
+    case Linux
+		source ~/.config/fish/linux/subconfig.fish
+    case Darwin
+		source ~/.config/fish/macos/subconfig.fish
+end
 
 if status is-interactive
 	zoxide init fish | source

@@ -2,12 +2,13 @@ source ~/.config/fish/aliases.fish
 
 switch (uname)
     case Linux
-		source ~/.config/fish/linux/subconfig.fish
+		source ~/.config/fish/paths/linux.fish
     case Darwin
-		source ~/.config/fish/macos/subconfig.fish
+		source ~/.config/fish/paths/macos.fish
 end
 
-set SHELL "fish"
+set -x LANG en_US.UTF-8
+set -x SHELL "fish"
 
 if status is-interactive
 	zoxide init fish | source

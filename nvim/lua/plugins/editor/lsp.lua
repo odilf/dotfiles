@@ -38,7 +38,7 @@ return {
                 'vale_ls',
                 'typos_lsp',
 
-                -- standalones 
+                -- standalones
                 'rust_analyzer',
                 'lua_ls',
                 'pyright',

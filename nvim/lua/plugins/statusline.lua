@@ -2,14 +2,15 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
+			"nvim-tree/nvim-web-devicons",
 			"arkav/lualine-lsp-progress", -- look at the name
 		},
 
 		event = "VimEnter",
 
 		opts = {
-			options = {
-				ignore_focus = { "neo-tree", "neo-tree-popup", "notify" },
+			extensions = {
+				"nvim-tree",
 			},
 			sections = {
 				lualine_a = { 'mode' },
@@ -23,9 +24,9 @@ return {
 					'lsp_progress'
 				},
 
-				lualine_x = { 'fileformat', 'encoding' },
-				lualine_y = { 'branch', 'diff' },
-				lualine_z = { 'location', 'filename' },
+				lualine_x = { 'branch', 'diff' },
+				lualine_y = { 'location' },
+				lualine_z = { 'filename' },
 			}
 		}
 	}

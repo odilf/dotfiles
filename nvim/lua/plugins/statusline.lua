@@ -12,6 +12,9 @@ return {
 			extensions = {
 				"nvim-tree",
 			},
+			options = {
+				section_separators = { left = '', right = '' },
+			},
 			sections = {
 				lualine_a = { 'mode' },
 				lualine_b = {

@@ -10,7 +10,13 @@ return {
 		config = function()
 			local telescope = require("telescope")
 
-			telescope.setup({})
+			telescope.setup({
+				extensions = {
+					frecency = {
+						db_safe_mode = false,
+					}
+				}
+			})
 			telescope.load_extension("frecency")
 			telescope.load_extension("fzf")
 		end,

@@ -1,3 +1,4 @@
+--
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -17,20 +18,22 @@ return {
 			},
 			sections = {
 				lualine_a = { 'mode' },
-				lualine_b = {
-					{
-						'diagnostics',
-						sources = { 'nvim_lsp' },
-					},
-				},
-				lualine_c = {
-					'lsp_progress'
-				},
+				lualine_b = { { 'diagnostics', sources = { 'nvim_lsp' } } },
+				lualine_c = { 'lsp_progress' },
 
 				lualine_x = { 'branch', 'diff' },
 				lualine_y = { 'location' },
 				lualine_z = { 'filename' },
-			}
+			},
+			inactive_sections = {
+				lualine_a = {},
+				lualine_b = { { 'diagnostics', sources = { 'nvim_lsp' } } },
+				lualine_c = { 'lsp_progress' },
+
+				lualine_x = { 'branch' },
+				lualine_y = {},
+				lualine_z = { 'filename' },
+			},
 		}
 	}
 }

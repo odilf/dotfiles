@@ -23,21 +23,25 @@ return {
 	},
 
 	{
-		"nvim-neo-tree/neo-tree.nvim",
-		cmd = "Neotree",
-		event = "VimEnter",
-		opts = {
-			filesystem = {
-				follow_current_file = {
-					enabled = true,
-				},
-			},
-			auto_clean_after_session_restore = true, -- For auto-sessions
-		},
+		"nvim-tree/nvim-tree.lua",
+		lazy = false, -- Bad to lazy load according to [docs](https://github.com/nvim-tree/nvim-tree.lua/wiki/Installation#lazy-loading)
 		dependencies = {
-			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
+		},
+		opts = {
+			reload_on_bufenter = true,
+			actions = {
+				use_system_clipboard = true,
+			},
+			tab = {
+				sync = {
+					open = true,
+					close = true,
+				}
+			},
+			update_focused_file = {
+				enable = true,
+			},
 		},
 	},
 

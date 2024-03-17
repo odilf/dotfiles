@@ -16,9 +16,9 @@ return {
 						name = "file", -- optional group name
 						f = { "<cmd>Telescope find_files<enter>", "Find File" },
 						g = { "<cmd>Telescope live_grep<enter>", "Find in file (grep)" },
-						-- r = { "<cmd>Telescope oldfiles<enter>", "Open recent file" },
-						r = { "<cmd>Telescope frecency workspace=CWD<enter>", "Open recent file" },
-						e = { "<cmd>Neotree toggle<enter>", "Toggle file explorer" },
+						r = { "<cmd>Telescope oldfiles<enter>", "Open recent file" },
+						c = { "<cmd>Telescope frecency workspace=CWD<enter>", "Open frecency" },
+						e = { "<cmd>NvimTreeToggle<enter>", "Toggle file explorer" },
 						[","] = { "<cmd>Telescope buffers<enter>", "Search buffers" },
 					},
 
@@ -109,4 +109,3 @@ return {
 		event = "VimEnter",
 	},
 }
-

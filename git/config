@@ -6,7 +6,7 @@
 [pull]
 	rebase = true
 
-# Reuse Recorded Resulution (don't solve same conflict multiple times)
+# Reuse Recorded Resolution (don't solve same conflict multiple times)
 [rerere]
 	enabled = true
 [fetch]

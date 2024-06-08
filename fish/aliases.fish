@@ -14,5 +14,6 @@ abbr --add gc git commit
 abbr --add gp git push 
 abbr --add gP git pull 
 abbr --add gd git diff
+abbr --add gs git status
 
 abbr resource source ~/.config/fish/config.fish

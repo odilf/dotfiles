@@ -14,7 +14,9 @@ return {
 				telescope = true,
 				diffview = true,
 			}
-		}
+		},
+
+		cmd = "Neogit",
 	},
 
 	{

@@ -2,7 +2,7 @@
 	name = Odilf
 	email = odysseas.maheras@gmail.com
 [credential]
-	helper = store
+	helper = cache
 [pull]
 	rebase = true
 
@@ -18,3 +18,5 @@
 
 [includeIf "gitdir:~/Documents/Uni/**"]
     path = ~/Documents/Uni/.gitconfig
+[push]
+	autoSetupRemote = true

@@ -1,6 +1,7 @@
 return {
 	{
 		"folke/which-key.nvim",
+		event = "VimEnter",
 		config = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 500
@@ -13,7 +14,7 @@ return {
 
 					-- Files and telescope
 					f = {
-						name = "file", -- optional group name
+						name = "file",
 						f = { "<cmd>Telescope find_files<enter>", "Find File" },
 						g = { "<cmd>Telescope live_grep<enter>", "Find in file (grep)" },
 						r = { "<cmd>Telescope oldfiles<enter>", "Open recent file" },
@@ -30,8 +31,11 @@ return {
 						d = { "<cmd>DiffviewOpen<enter>", "Open diff" },
 
 						h = { "<cmd>Gitsigns stage_hunk<enter>", "Stage hunk" },
+						f = { "<cmd>Gitsigns stage_buffer<enter>", "Stage file" },
 						j = { "<cmd>Gitsigns next_hunk<enter>", "Next hunk" },
 						k = { "<cmd>Gitsigns prev_hunk<enter>", "Previous hunk" },
+
+						c = { "<cmd>Git commit<enter>", "Commit" },
 					},
 
 					-- Terminal
@@ -58,7 +62,7 @@ return {
 						r = { vim.lsp.buf.rename, "Rename" },
 						t = { vim.lsp.buf.type_definition, "Type definition" },
 						w = { "<cmd>Telescope lsp_dynamic_workspace_symbols<enter>", "Workspace symbol" },
-						h = { function(buf) vim.lsp.inlay_hint.enable(buf, not vim.lsp.inlay_hint.is_enabled()) end, "Inlay hints" }
+						h = { function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) end, "Inlay hints" }
 					},
 
 					-- Search
@@ -96,7 +100,7 @@ return {
 			-- Non-leader mappings
 			wk.register({
 				-- Copilot
-				{ "<M-l>", "<cmd>Copilot accept<cr>",  desc = "Accept copilot suggestion" },
+				{ "<C-l>", "<cmd>Copilot accept<cr>",  desc = "Accept copilot suggestion" },
 				{ "<M-]>", "<cmd>Copilot next<cr>",    desc = "Next copilot suggestion" },
 				{ "<M-[>", "<cmd>Copilot prev<cr>",    desc = "Previous copilot suggestion" },
 				{ "<C-]>", "<cmd>Copilot dismiss<cr>", desc = "Dismiss copilot suggestion" },
@@ -105,7 +109,5 @@ return {
 				K = { vim.lsp.buf.hover, "Hover" },
 			})
 		end,
-
-		event = "VimEnter",
 	},
 }

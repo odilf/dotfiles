@@ -9,5 +9,9 @@ abbr --add g git
 abbr --add e nvim
 
 abbr --add mygit https://github.com/Odilf
+abbr --add gl git log --graph 
+abbr --add gc git commit
+abbr --add gp git push 
+abbr --add gP git pull 
 
 abbr resource source ~/.config/fish/config.fish

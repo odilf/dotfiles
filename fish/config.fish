@@ -15,8 +15,9 @@ if status is-interactive
 
 	zoxide init fish | source
 	starship init fish | source
+	enable_transience
 	
-	set fish_greeting
+	set fish_greeting 
 	pfetch
 end
 

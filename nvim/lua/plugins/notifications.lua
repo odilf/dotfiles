@@ -2,6 +2,13 @@ return {
 	'rcarriga/nvim-notify',
 	lazy = false,
 	config = function()
-		vim.notify = require('notify')
+		---@diagnostic disable-next-line: duplicate-set-field
+		vim.notify = function(msg, level, opts)
+			if msg == 'No information available' then
+				return
+			end
+
+			return require('notify').notify(msg, level, opts)
+		end
 	end
 }

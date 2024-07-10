@@ -1,10 +1,8 @@
---
 return {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
-			"arkav/lualine-lsp-progress", -- look at the name
 		},
 
 		event = "VimEnter",
@@ -19,7 +17,7 @@ return {
 			sections = {
 				lualine_a = { 'mode' },
 				lualine_b = { { 'diagnostics', sources = { 'nvim_lsp' } } },
-				lualine_c = { 'lsp_progress' },
+				lualine_c = {},
 
 				lualine_x = { 'branch', 'diff' },
 				lualine_y = { 'location' },
@@ -28,7 +26,7 @@ return {
 			inactive_sections = {
 				lualine_a = {},
 				lualine_b = { { 'diagnostics', sources = { 'nvim_lsp' } } },
-				lualine_c = { 'lsp_progress' },
+				lualine_c = {},
 
 				lualine_x = { 'branch' },
 				lualine_y = {},

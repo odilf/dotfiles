@@ -1,3 +1,8 @@
+-- folds
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 99    -- start always unfolded
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -53,23 +58,7 @@ return {
 		},
 
 		config = function(_, opts)
-			-- folds
-			vim.opt.foldmethod = "expr"
-			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-			vim.opt.foldlevel = 99 -- start always unfolded
-
 			require("nvim-treesitter.configs").setup(opts)
 		end,
 	},
-
-	{
-		event = { 'BufRead', 'BufNewFile' },
-		'RRethy/vim-illuminate',
-		opts = {
-			under_cursor = false,
-		},
-		config = function(_, opts)
-			require('illuminate').configure(opts)
-		end
-	}
 }

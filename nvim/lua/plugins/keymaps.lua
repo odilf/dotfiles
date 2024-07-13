@@ -1,112 +1,89 @@
+local toggle_inlay_hints = function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end
+
 return {
 	{
 		"folke/which-key.nvim",
-		event = "VimEnter",
-		config = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 500
-
+		event = "VeryLazy",
+		opts = {
+			preset = "modern",
+		},
+		dependencies = {
+			"echasnovski/mini.icons",
+		},
+		config = function(opts)
 			local wk = require("which-key")
 
-			wk.register({
-				["<leader>"] = {
-					name = "leader mappings",
+			wk.setup(opts)
 
-					-- Files and telescope
-					f = {
-						name = "file",
-						f = { "<cmd>Telescope find_files<enter>", "Find File" },
-						g = { "<cmd>Telescope live_grep<enter>", "Find in file (grep)" },
-						r = { "<cmd>Telescope oldfiles<enter>", "Open recent file" },
-						c = { "<cmd>Telescope frecency workspace=CWD<enter>", "Open frecency" },
-						e = { "<cmd>NvimTreeToggle<enter>", "Toggle file explorer" },
-						[","] = { "<cmd>Telescope buffers<enter>", "Search buffers" },
-					},
+			wk.add({
+				{ "<leader>",   group = "leader mappings" },
 
-					-- Git
-					g = {
-						name = "git",
-						g = { "<cmd>Neogit<enter>", "Open neogit" },
-						b = { "<cmd>Gitsigns blame_line<enter>", "Blame line" },
-						d = { "<cmd>DiffviewOpen<enter>", "Open diff" },
+				{ "<leader>c",  group = "completion" },
+				{ "<leader>cc", require('cmp').mapping.complete,                              desc = "Complete" },
+				{ "<leader>cs", "<cmd>CmpStatus<enter>",                                      desc = "Cmp Status" },
 
-						h = { "<cmd>Gitsigns stage_hunk<enter>", "Stage hunk" },
-						f = { "<cmd>Gitsigns stage_buffer<enter>", "Stage file" },
-						j = { "<cmd>Gitsigns next_hunk<enter>", "Next hunk" },
-						k = { "<cmd>Gitsigns prev_hunk<enter>", "Previous hunk" },
+				{ "<leader>f",  group = "file" },
+				{ "<leader>f,", "<cmd>Telescope buffers<enter>",                              desc = "Search buffers" },
+				{ "<leader>fc", "<cmd>Telescope frecency workspace=CWD<enter>",               desc = "Open frecency" },
+				{ "<leader>fe", "<cmd>NvimTreeToggle<enter>",                                 desc = "Toggle file explorer" },
+				{ "<leader>ff", "<cmd>Telescope find_files<enter>",                           desc = "Find File" },
+				{ "<leader>fg", "<cmd>Telescope live_grep<enter>",                            desc = "Find in file (grep)" },
+				{ "<leader>fr", "<cmd>Telescope oldfiles<enter>",                             desc = "Open recent file" },
+				{ "<leader>fs", function() require("persistence").load() end,                 desc = "Load session" },
 
-						c = { "<cmd>Git commit<enter>", "Commit" },
-					},
+				{ "<leader>g",  group = "git" },
+				{ "<leader>gb", "<cmd>Gitsigns blame_line<enter>",                            desc = "Blame line" },
+				{ "<leader>gc", "<cmd>Git commit<enter>",                                     desc = "Commit" },
+				{ "<leader>gd", "<cmd>DiffviewOpen<enter>",                                   desc = "Open diff" },
+				{ "<leader>gf", "<cmd>Gitsigns stage_buffer<enter>",                          desc = "Stage file" },
+				{ "<leader>gg", "<cmd>Neogit<enter>",                                         desc = "Open neogit" },
+				{ "<leader>gh", "<cmd>Gitsigns stage_hunk<enter>",                            desc = "Stage hunk" },
+				{ "<leader>gj", "<cmd>Gitsigns next_hunk<enter>",                             desc = "Next hunk" },
+				{ "<leader>gk", "<cmd>Gitsigns prev_hunk<enter>",                             desc = "Previous hunk" },
 
-					-- Terminal
-					t = {
-						name = "terminal",
-						h = { "<cmd>ToggleTerm direction=horizontal<enter>", "Horizontal terminal" },
-						f = { "<cmd>ToggleTerm direction=float<enter>", "Floating terminal" },
-						v = { "<cmd>ToggleTerm direction=vertical size=80<enter>", "Vertical terminal" },
-						t = { "<cmd>ToggleTerm direction=tab size=80<enter>", "Tab terminal" },
-						[","] = { "<cmd>ToggleTerm<enter>", "Toggle terminal" },
-					},
+				{ "<leader>l",  group = "lsp" },
+				{ "<leader>lG", "<cmd>Telescope diagnostics<enter>",                          desc = "Show diagnostics" },
+				{ "<leader>la", vim.lsp.buf.code_action,                                      desc = "Code action" },
+				{ "<leader>ld", vim.lsp.buf.definition,                                       desc = "Definition" },
+				{ "<leader>lf", function() vim.lsp.buf.format { async = true } end,           desc = "Format" },
+				{ "<leader>lg", vim.diagnostic.open_float,                                    desc = "Show diagnostics" },
+				{ "<leader>lh", toggle_inlay_hints,                                           desc = "Inlay hints" },
+				{ "<leader>lj", vim.diagnostic.goto_next,                                     desc = "Next diagnostic" },
+				{ "<leader>lk", vim.diagnostic.goto_prev,                                     desc = "Previous diagnostic" },
+				{ "<leader>lr", vim.lsp.buf.rename,                                           desc = "Rename" },
+				{ "<leader>lt", vim.lsp.buf.type_definition,                                  desc = "Type definition" },
+				{ "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<enter>",        desc = "Workspace symbol" },
 
-					-- LSP
-					l = {
-						name = "lsp",
-						a = { vim.lsp.buf.code_action, "Code action" },
-						d = { vim.lsp.buf.definition, "Definition" },
-						f = { function() vim.lsp.buf.format { async = true } end, "Format" },
-						g = { vim.diagnostic.open_float, "Show diagnostics" },
-						G = { "<cmd>Telescope diagnostics<enter>", "Show diagnostics" },
-						j = { vim.diagnostic.goto_next, "Next diagnostic" },
-						k = { vim.diagnostic.goto_prev, "Previous diagnostic" },
-						l = { vim.lsp.diagnostic.setloclist, "Set location list" },
-						r = { vim.lsp.buf.rename, "Rename" },
-						t = { vim.lsp.buf.type_definition, "Type definition" },
-						w = { "<cmd>Telescope lsp_dynamic_workspace_symbols<enter>", "Workspace symbol" },
-						h = { function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) end, "Inlay hints" }
-					},
+				{ "<leader>n",  group = "notifications" },
+				-- { "<leader>nd", , desc = "Dismiss" },
 
-					-- Search
-					s = {
-						name = "search",
-						s = { "<cmd>Telescope live_grep<enter>", "Search in files (grep)" },
-						b = { "<cmd>Telescope buffers<enter>", "Search Buffers" },
-						h = { "<cmd>Telescope help_tags<enter>", "Search Help" },
-						m = { "<cmd>Telescope marks<enter>", "Search Marks" },
-						r = { function() require("spectre").open() end, "Replace in files (Spectre)" },
-					},
+				{ "<leader>s",  group = "search" },
+				{ "<leader>sb", "<cmd>Telescope buffers<enter>",                              desc = "Search Buffers" },
+				{ "<leader>sh", "<cmd>Telescope help_tags<enter>",                            desc = "Search Help" },
+				{ "<leader>sm", "<cmd>Telescope marks<enter>",                                desc = "Search Marks" },
+				{ "<leader>sr", require("spectre").open,                                      desc = "Replace in files (Spectre)" },
+				{ "<leader>ss", "<cmd>Telescope live_grep<enter>",                            desc = "Search in files (grep)" },
 
-					-- Completion
-					-- Some completion mappings are in `lsp.lua`
-					c = {
-						name = "completion",
-						s = { "<cmd>CmpStatus<enter>", "Cmp Status" },
-						c = { function() require('cmp').mapping.complete() end, "Complete" }
-					}
+				{ "<leader>t",  group = "terminal" },
+				{ "<leader>t,", "<cmd>ToggleTerm<enter>",                                     desc = "Toggle terminal" },
+				{ "<leader>tf", "<cmd>ToggleTerm direction=float<enter>",                     desc = "Floating terminal" },
+				{ "<leader>th", "<cmd>ToggleTerm direction=horizontal<enter>",                desc = "Horizontal terminal" },
+				{ "<leader>tt", "<cmd>ToggleTerm direction=tab size=80<enter>",               desc = "Tab terminal" },
+				{ "<leader>tv", "<cmd>ToggleTerm direction=vertical size=80<enter>",          desc = "Vertical terminal" },
 
-					-- -- Debug
-					-- d = {
-					-- 	name = "debug",
-					-- 	-- b = { require('dap').toggle_breakpoint, "Toggle breakpoint" },
-					-- }
-				}
-			})
+				-- Other
+				{ "<leader>?",  function() require("which-key").show({ global = false }) end, desc = "Buffer Local Keymaps (which-key)" },
 
-			-- Toggle terminal
-			wk.register({
 				-- TODO: This is kinda ugly, I can't press escape in terminal mode
-				["<esc>"] = { [[<C-\><C-n>]], "Exit terminal mode" },
-			}, { mode = "t" })
+				{ "<esc>",      "<C-\\><C-n>",                                                desc = "Exit terminal mode",              mode = "t" },
 
-			-- Non-leader mappings
-			wk.register({
-				-- Copilot
-				{ "<C-l>", "<cmd>Copilot accept<cr>",  desc = "Accept copilot suggestion" },
-				{ "<M-]>", "<cmd>Copilot next<cr>",    desc = "Next copilot suggestion" },
-				{ "<M-[>", "<cmd>Copilot prev<cr>",    desc = "Previous copilot suggestion" },
-				{ "<C-]>", "<cmd>Copilot dismiss<cr>", desc = "Dismiss copilot suggestion" },
-
-				-- Hover
-				K = { vim.lsp.buf.hover, "Hover" },
+				{ "<C-l>",      "<cmd>Copilot accept<cr>",                                    desc = "Accept copilot suggestion" },
+				{ "<M-]>",      "<cmd>Copilot next<cr>",                                      desc = "Next copilot suggestion" },
+				{ "<M-[>",      "<cmd>Copilot prev<cr>",                                      desc = "Previous copilot suggestion" },
+				{ "<C-]>",      "<cmd>Copilot dismiss<cr>",                                   desc = "Dismiss copilot suggestion" },
+				{ "K",          vim.lsp.buf.hover,                                            desc = "Hover" },
 			})
 		end,
 	},

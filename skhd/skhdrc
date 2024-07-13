@@ -1,5 +1,4 @@
-# opens iTerm2
-# alt - return : /Applications/Alacritty.app
+# opens terminal
 alt - return : alacritty
 
 # Show system statistics

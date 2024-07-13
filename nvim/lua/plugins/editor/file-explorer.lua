@@ -30,18 +30,12 @@ return {
 		},
 		opts = {
 			reload_on_bufenter = true,
-			actions = {
-				use_system_clipboard = true,
-			},
-			tab = {
-				sync = {
-					open = true,
-					close = true,
-				}
-			},
 			update_focused_file = {
 				enable = true,
 			},
+			view = {
+				centralize_selection = true,
+			}
 		},
 	},
 
@@ -49,7 +43,7 @@ return {
 		event = "BufRead",
 		"Pocco81/auto-save.nvim",
 		opts = {
-			trigger_events = { "InsertLeave" },
+			trigger_events = { "InsertLeave", "FocusLost", "TabLeave" },
 		}
 	},
 

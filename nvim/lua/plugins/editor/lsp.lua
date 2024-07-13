@@ -1,10 +1,24 @@
 return {
+    -- Lazydev config from `https://github.com/folke/lazydev.nvim`
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "luvit-meta/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+
+
     {
         'neovim/nvim-lspconfig',
         event = { 'BufRead', 'BufNewFile' },
         dependencies = {
             'nvim-lua/lsp-status.nvim', -- status bar
-            'folke/neodev.nvim',        -- easier editing of neovim files
 
             -- Language Server installation
             'williamboman/mason-lspconfig.nvim',
@@ -13,11 +27,9 @@ return {
         cmd = { 'Mason' },
 
         config = function()
-            -- Neodev needs to be loaded before lspconfig
-            require('neodev').setup()
-
             -- Each entry can be name for defaults or an { name, opts } table
             local servers = {
+
                 -- web dev
                 'tsserver',
                 'svelte',
@@ -33,15 +45,16 @@ return {
                 'typos_lsp',
 
                 -- standalones
-                'rust_analyzer',
+                'rust_analyzer', -- Apparently has problems in beta?
+                'typst_lsp',
                 'lua_ls',
                 'pyright',
                 'wgsl_analyzer',
                 'clangd',
                 'taplo',
-                'typst_lsp',
                 'wgsl_analyzer',
                 'yamlls',
+                'zk',
             }
 
             local server_names = {}
@@ -92,11 +105,15 @@ return {
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'hrsh7th/cmp-calc',
+
+            'zbirenbaum/copilot-cmp',
+            'zbirenbaum/copilot.lua',
         },
         config = function()
             local lspkind = require('lspkind')
             local luasnip = require('luasnip')
             local cmp = require('cmp')
+            require("copilot_cmp").setup()
 
             cmp.setup({
                 snippet = {
@@ -110,22 +127,28 @@ return {
                     ['<C-d>'] = cmp.mapping.scroll_docs(4),  -- Down
 
                     ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<CR>'] = cmp.mapping.confirm {
+                    ['<C-K>'] = cmp.mapping.confirm {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     },
                 }),
 
                 sources = {
+                    { name = 'copilot' },
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
                     { name = 'path' },
                     { name = 'nvim_lsp_signature_help' },
                     { name = 'calc' },
+                    { name = 'lazydev',                group_index = 0 },
                 },
 
-                view = {
-                    entries = "custom",
+                -- view = {
+                --     entries = "custom",
+                -- },
+
+                experimental = {
+                    ghost_text = true,
                 },
 
                 -- honestly, 🤷
@@ -166,4 +189,15 @@ return {
             { 'nvim-treesitter/nvim-treesitter' }
         }
     },
+
+    -- inline diagnostics
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy",
+        config = function()
+            vim.opt.updatetime = 100
+            vim.diagnostic.config({ virtual_text = false })
+            require('tiny-inline-diagnostic').setup()
+        end
+    }
 }

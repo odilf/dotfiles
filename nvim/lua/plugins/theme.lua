@@ -32,6 +32,7 @@ return {
 
   -- Auto switch light/dark theme
   {
+    event = "VeryLazy",
     "f-person/auto-dark-mode.nvim",
     opts = {
       update_interval = 1000,

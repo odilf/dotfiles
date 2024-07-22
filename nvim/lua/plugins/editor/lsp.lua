@@ -52,6 +52,7 @@ return {
                 'wgsl_analyzer',
                 'clangd',
                 'taplo',
+                'nil_ls',
                 'wgsl_analyzer',
                 'yamlls',
                 'zk',

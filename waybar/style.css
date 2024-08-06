@@ -1,0 +1,147 @@
+@import "macchiato.css";
+
+/* General */
+
+* {
+	font-family: GeistMono Nerd Font;
+	/* font-size: 12px; */
+	font-weight: 600;
+}
+
+#waybar {
+	background: transparent;
+	color: @text;
+	margin: 5px 5px;
+}
+
+/* Left */
+
+#workspaces {
+	border-radius: 1rem;
+	margin: 5px;
+	margin-left: 1rem;
+}
+
+#workspaces button {
+	color: @lavender;
+	padding: 0.2rem;
+}
+
+#workspaces button.active {
+	color: @sky;
+}
+
+#workspaces button:hover {
+	color: @sapphire;
+}
+
+/* Middle */
+
+#window {
+	/* Doesn't work */
+	font-weight: 800;
+}
+
+/* Right */
+
+#pulseaudio,
+#memory,
+#battery,
+#network,
+#temperature,
+#backlight,
+#cpu,
+#clock,
+#custom-quit,
+#custom-lock,
+#custom-reboot,
+#custom-power
+{
+	border: 0px solid red;
+	margin-right: 5px;
+}
+
+#pulseaudio {
+	color: @flamingo;
+	padding-right: 0.8rem;
+}
+
+#memory {
+	color: @pink;
+	padding-right: 0.4rem;
+}
+
+#network {
+	color: @mauve;
+	padding-right: 0.7rem;
+}
+
+#temperature {
+	color: @red;
+	padding-right: 0.1rem;
+}
+
+#backlight {
+	color: @maroon;
+	padding-right: 0.2rem;
+}
+
+#cpu {
+	color: @peach;
+	padding-right: 0.6rem;
+}
+
+@keyframes blink {
+	to {
+		background-color: @peach;
+	}
+}
+
+#battery {
+	color: @yellow;
+	padding-right: 0.7rem;
+}
+
+#battery.charging {
+	color: @green;
+}
+
+
+#battery.warning:not(.charging) {
+	color: @red;
+}
+
+#battery.critical:not(.charging) {
+	background-color: @red;
+	color: @base;
+	animation-name: blink;
+	animation-duration: 0.5s;
+	animation-timing-function: cubic-bezier(0.87, 0, 0.13, 1);
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+
+#clock {
+	color: @green;
+	padding-right: 0.1rem;
+}
+
+#custom-quit {
+	padding-right: 0.2rem;
+	margin: 0rem 0.3rem;
+}
+
+#custom-lock {
+	padding-right: 0.2rem;
+	margin: 0rem 0.3rem;
+}
+
+#custom-reboot {
+	padding-right: 0.2rem;
+	margin: 0rem 0.3rem;
+}
+
+#custom-power {
+	padding-right: 0.4rem;
+	margin: 0rem 0.3rem;
+}

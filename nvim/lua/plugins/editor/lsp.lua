@@ -11,173 +11,47 @@ return {
             },
         },
     },
-    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 
-
+    -- TODO: Revise how this works
     {
-        'neovim/nvim-lspconfig',
-        event = { 'BufRead', 'BufNewFile' },
+        "dundalek/lazy-lsp.nvim",
         dependencies = {
-            'nvim-lua/lsp-status.nvim', -- status bar
-
-            -- Language Server installation
-            'williamboman/mason-lspconfig.nvim',
-            'williamboman/mason.nvim',
+            "neovim/nvim-lspconfig",
+            { "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/nvim-cmp",
         },
-        cmd = { 'Mason' },
-
-        config = function()
-            -- Each entry can be name for defaults or an { name, opts } table
-            local servers = {
-
-                -- web dev
-                'tsserver',
-                'svelte',
-                'tailwindcss',
-                'unocss',
-                'biome',
-                'cssls',
-                'html',
-
-                -- markdown
-                'marksman',
-                'vale_ls',
-                'typos_lsp',
-
-                -- standalones
-                'rust_analyzer', -- Apparently has problems in beta?
-                'typst_lsp',
-                'lua_ls',
-                'pyright',
-                'wgsl_analyzer',
-                'clangd',
-                'taplo',
-                'nil_ls',
-                'wgsl_analyzer',
-                'yamlls',
-                'zk',
-            }
-
-            local server_names = {}
-            for key, value in pairs(servers) do
-                if type(value) == 'table' then
-                    server_names[key] = value[1]
-                else
-                    server_names[key] = value
-                end
-            end
-
-            require('mason').setup()
-            require('mason-lspconfig').setup({
-                ensure_installed = server_names
-            })
-
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            local lspconfig = require('lspconfig')
-
-            for _, lsp in ipairs(servers) do
-                if type(lsp) == 'string' then
-                    -- Default config
-                    lspconfig[lsp].setup({
-                        capabilities = capabilities,
-                        diagnostics = { enable = true }
-                    })
-                else
-                    -- Override config
-                    lspconfig[lsp[1]].setup(lsp[2])
-                end
-            end
-        end,
-
-    },
-
-    {
-        'hrsh7th/nvim-cmp',
-        event = { 'BufRead', 'BufNewFile' },
-        dependencies = {
-            'saadparwaiz1/cmp_luasnip',
-            'L3MON4D3/LuaSnip',
-            'onsails/lspkind.nvim', -- lsp symbols
-
-            -- Sources
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp-signature-help',
-            'hrsh7th/cmp-calc',
-
-            'zbirenbaum/copilot-cmp',
-            'zbirenbaum/copilot.lua',
+        opts = {
+            excluded_servers = {
+                "ccls",                            -- prefer clangd
+                -- "denols",                          -- prefer eslint and tsserver
+                -- "docker_compose_language_service", -- yamlls should be enough?
+                "flow",                            -- prefer eslint and tsserver
+                "ltex",                            -- grammar tool using too much CPU
+                -- "quick_lint_js",                   -- prefer eslint and tsserver
+                "rnix",                            -- archived on Jan 25, 2024
+                "scry",                            -- archived on Jun 1, 2023
+                -- "tailwindcss",                     -- associates with too many filetypes
+            },
+            preferred_servers = {
+                markdown = {},
+                python = { "pyright", "ruff_lsp" },
+                javascript = { "eslint", "tsserver "},
+                typescript = { "eslint", "tsserver "},
+            },
         },
-        config = function()
-            local lspkind = require('lspkind')
-            local luasnip = require('luasnip')
-            local cmp = require('cmp')
-            require("copilot_cmp").setup()
+        config = function(_, opts)
+            local lsp_zero = require("lsp-zero")
 
-            cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end,
-                },
-
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-                    ['<C-d>'] = cmp.mapping.scroll_docs(4),  -- Down
-
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-K>'] = cmp.mapping.confirm {
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = true,
-                    },
-                }),
-
-                sources = {
-                    { name = 'copilot' },
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'path' },
-                    { name = 'nvim_lsp_signature_help' },
-                    { name = 'calc' },
-                    { name = 'lazydev',                group_index = 0 },
-                },
-
-                -- view = {
-                --     entries = "custom",
-                -- },
-
-                experimental = {
-                    ghost_text = true,
-                },
-
-                -- honestly, 🤷
-                ---@diagnostic disable-next-line: missing-fields
-                formatting = {
-                    format = lspkind.cmp_format({
-                        mode = 'symbol', -- show only symbol annotations
-                    })
-                }
-            })
-
-            -- Completions for search
-            cmp.setup.cmdline({ '/', '?' }, {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = 'buffer' }
-                }
-            })
-
-            -- Completions for command line
-            cmp.setup.cmdline(':', {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    { name = 'path' }
-                }, {
-                    { name = 'cmdline' }
+            lsp_zero.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings to learn the available actions
+                lsp_zero.default_keymaps({
+                    buffer = bufnr,
+                    preserve_mappings = false
                 })
-            })
+            end)
+
+            require("lazy-lsp").setup(opts)
         end,
     },
 

@@ -5,7 +5,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-frecency.nvim",
-			{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+			-- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -18,7 +18,8 @@ return {
 				}
 			})
 			telescope.load_extension("frecency")
-			telescope.load_extension("fzf")
+			-- TODO: Re-enable fzf in nixos
+			-- telescope.load_extension("fzf")
 		end,
 	},
 

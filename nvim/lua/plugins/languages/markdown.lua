@@ -1,14 +1,14 @@
 return {
-	{
-
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = "cd app && pnpm install",
-		ft = { "markdown" },
-		init = function()
-			vim.g.mkdp_filetypes = { "markdown" }
-		end,
-	},
+	-- {
+	--
+	-- 	"iamcco/markdown-preview.nvim",
+	-- 	cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+	-- 	build = "cd app && pnpm install",
+	-- 	ft = { "markdown" },
+	-- 	init = function()
+	-- 		vim.g.mkdp_filetypes = { "markdown" }
+	-- 	end,
+	-- },
 
 	{
 		"tadmccorkle/markdown.nvim",

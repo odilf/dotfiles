@@ -31,6 +31,7 @@ return {
                 -- "quick_lint_js",                   -- prefer eslint and tsserver
                 "rnix",                            -- archived on Jan 25, 2024
                 "scry",                            -- archived on Jun 1, 2023
+                "als",                             -- deprecated, it seems
                 -- "tailwindcss",                     -- associates with too many filetypes
             },
             preferred_servers = {

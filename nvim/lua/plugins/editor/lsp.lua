@@ -17,40 +17,38 @@ return {
         "dundalek/lazy-lsp.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
-            { "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+            { "VonHeikemen/lsp-zero.nvim", branch = "v4.x" },
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/nvim-cmp",
         },
         opts = {
             excluded_servers = {
-                "ccls",                            -- prefer clangd
+                "ccls",          -- prefer clangd
+                "flow",          -- prefer eslint and tsserver
+                "ltex",          -- grammar tool using too much CPU
+                "quick_lint_js", -- prefer eslint and tsserver
+                "rnix",          -- archived on Jan 25, 2024
+                "scry",          -- archived on Jun 1, 2023
+                "als",           -- deprecated, it seems
                 -- "denols",                          -- prefer eslint and tsserver
                 -- "docker_compose_language_service", -- yamlls should be enough?
-                "flow",                            -- prefer eslint and tsserver
-                "ltex",                            -- grammar tool using too much CPU
-                -- "quick_lint_js",                   -- prefer eslint and tsserver
-                "rnix",                            -- archived on Jan 25, 2024
-                "scry",                            -- archived on Jun 1, 2023
-                "als",                             -- deprecated, it seems
                 -- "tailwindcss",                     -- associates with too many filetypes
             },
             preferred_servers = {
                 markdown = {},
                 python = { "pyright", "ruff_lsp" },
-                javascript = { "eslint", "tsserver "},
-                typescript = { "eslint", "tsserver "},
+                javascript = { "eslint", "tsserver " },
+                typescript = { "eslint", "tsserver " },
             },
         },
         config = function(_, opts)
             local lsp_zero = require("lsp-zero")
 
-            lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings to learn the available actions
-                lsp_zero.default_keymaps({
-                    buffer = bufnr,
-                    preserve_mappings = false
-                })
-            end)
+            lsp_zero.extend_lspconfig({
+                capabilities = require('cmp_nvim_lsp').default_capabilities(),
+                float_border = 'rounded',
+                sign_text = true,
+            })
 
             require("lazy-lsp").setup(opts)
         end,
@@ -66,7 +64,7 @@ return {
         }
     },
 
-    -- inline diagnostics
+    -- inline fancy diagnostics
     {
         "rachartier/tiny-inline-diagnostic.nvim",
         event = "VeryLazy",

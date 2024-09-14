@@ -52,4 +52,11 @@ return {
 	{
 		"windwp/nvim-spectre",
 	},
+
+	{
+		"stevearc/oil.nvim",
+		cmd = "Oil",
+		event = "BufRead",
+		opts = { default_file_explorer = false },
+	}
 }

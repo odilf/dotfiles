@@ -15,6 +15,12 @@ alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
 
+# Navigate between monitors
+shift + lctrl - h : yabai -m display --focus west
+shift + lctrl - j : yabai -m display --focus south
+shift + lctrl - k : yabai -m display --focus north
+shift + lctrl - l : yabai -m display --focus east
+
 # Moving windows
 shift + alt - h : yabai -m window --warp west
 shift + alt - j : yabai -m window --warp south

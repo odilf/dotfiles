@@ -22,3 +22,5 @@
 !hypr/**
 !tofi/**
 !waybar/**
+
+!nix-darwin/**

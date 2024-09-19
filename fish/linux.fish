@@ -1,4 +1,4 @@
-source ~/.config/fish/paths/universal.fish
+abbr rebuild nixos-rebuild switch --use-remote-sudo
 
 # brew
 set PATH $PATH ~/.linuxbrew/bin

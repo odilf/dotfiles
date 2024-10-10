@@ -22,6 +22,3 @@ if status is-interactive
 	pfetch
 end
 
-
-# Created by `pipx` on 2024-03-13 10:57:59
-set PATH $PATH /Users/odilf/.local/bin

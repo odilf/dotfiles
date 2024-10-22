@@ -17,3 +17,5 @@ abbr --add gd git diff
 abbr --add gs git status
 
 abbr resource source ~/.config/fish/config.fish
+
+abbr nshell nix-shell --run fish -p 

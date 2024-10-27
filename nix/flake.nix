@@ -5,21 +5,30 @@
     # TODO: Change this to nixpkgs-unstable and put in the other one in the server thing
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nix-darwin, ... }: {
+  outputs = { nixpkgs, nix-darwin, ... }@inputs: {
 
-    nixosConfigurations."uoh" = nixpkgs.lib.nixosSystem {
+    nixosConfigurations."uoh-server" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
       modules = [
-        ./configurations/uoh/configuration.nix
+        ./hosts/uoh-server/configuration.nix
+        ./nixos-modules
       ];
     };
 
-    darwinConfigurations."Odysseass-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      modules = [ ./darwin-configuration.nix ];
+    darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        ./hosts/macbook.nix 
+        ./nixos-modules
+      ];
     };
   };
 }

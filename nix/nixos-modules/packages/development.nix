@@ -52,9 +52,11 @@ in
             dua
             eza
             fd
+            pfetch-rs
             starship
             ripgrep
             rsync
+            thefuck
             tokei
             vim
             neovim

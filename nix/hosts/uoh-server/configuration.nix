@@ -49,20 +49,9 @@
     shell = pkgs.fish;
   };
 
-  environment = {
-    # variables = {
-    #   EDITOR = "nvim";
-    #   SHELL = "fish";
-    # };
-  };
-
-  programs = {
-    # fish.enable = true;
-
-    mosh = {
-      enable = true;
-      openFirewall = true;
-    };
+  programs.mosh = {
+    enable = true;
+    openFirewall = true;
   };
 
   # Enable the OpenSSH daemon.
@@ -137,13 +126,7 @@
       configFile = /etc/inadyn.conf;
     };
 
-    jellyfin = {
-      enable = true;
-      # logDir = /home/uoh/.config/jellyfin/data;
-      # cacheDir = /home/uoh/.config/jellyfin/cache;
-      # dataDir = /home/uoh/.config/jellyfin/data;
-      # configDir = /home/uoh/.config/jellyfin;
-    };
+    jellyfin.enable = true;
 
     # immich = {
     #   enable = true;

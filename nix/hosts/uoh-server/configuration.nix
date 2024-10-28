@@ -58,13 +58,11 @@
   services = {
     openssh = {
       enable = true;
-      ports = [ 22 ];
       openFirewall = true;
       settings = {
         PasswordAuthentication = true;
         AllowUsers = [ "uoh" ];
         UseDns = true;
-        X11Forwarding = lib.mkDefault false;
         PermitRootLogin = "prohibit-password";
       };
     };

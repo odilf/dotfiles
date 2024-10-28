@@ -197,17 +197,6 @@
     };
   };
 
-  # system = {
-  #   autoUpgrade.enable = true;
-  #   autoUpgrade.allowReboot = false;
-  #   autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
-  #
-  #   # Copy the NixOS configuration file and link it from the resulting system
-  #   # (/run/current-system/configuration.nix). This is useful in case you
-  #   # accidentally delete configuration.nix.
-  #   copySystemConfiguration = true;
-  # };
-
   specialisation = {
     desktop.configuration = {
       services.xserver = {

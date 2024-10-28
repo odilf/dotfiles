@@ -12,23 +12,26 @@
     };
   };
 
-  outputs = { nixpkgs, nix-darwin, ... }@inputs: {
+  outputs =
+    { nixpkgs, nix-darwin, ... }@inputs:
+    {
+      nixosConfigurations."uoh-server" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = [
+          ./hosts/uoh-server/configuration.nix
+          ./nixos-modules
+        ];
+      };
 
-    nixosConfigurations."uoh-server" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/uoh-server/configuration.nix
-        ./nixos-modules
-      ];
+      darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./hosts/macbook.nix
+          ./nixos-modules
+        ];
+      };
     };
-
-    darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [
-        ./hosts/macbook.nix 
-        ./nixos-modules
-      ];
-    };
-  };
 }

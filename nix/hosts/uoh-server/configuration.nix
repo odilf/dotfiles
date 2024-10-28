@@ -175,6 +175,24 @@
     };
   };
 
+  # Monitoring
+  services = {
+    smartd = {
+      enable = true;
+      devices = [
+        # { device = "/dev/disk/by-uuid/65B5-2A38"; } # UOH-ARCHIVE
+        { device = "/dev/disk/by-uuid/2f764760-62d4-427e-b33d-b08ae3fcc5b7"; } # TOSHIBA
+        { device = "/dev/disk/by-uuid/89bb9652-c89b-40a5-9a76-7e64212b82f0"; } # UOH-MEDIA
+        { device = "/dev/disk/by-uuid/0dfd1ee6-692f-4911-8f84-341a9aa75f4a"; } # INTENSO
+      ];
+    };
+
+    scrutiny = {
+      enable = true;
+      settings.web.listen.port = 8305;
+    };
+  };
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #

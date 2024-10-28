@@ -4,23 +4,29 @@
 
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
-  environment.systemPackages = with pkgs; [ 
-    deno
-    docker-compose
-    entr
-    exiftool
-    fzf
-    gcc
-    imagemagick
-    lima
-    mosh
-    pfetch-rs
-    sketchybar
-    spicetify-cli
-    thefuck
-    typst
-    zk
-  ] ++ import ../packages/dev.nix { inherit pkgs; system = "aarch-darwin";  };
+  environment.systemPackages =
+    with pkgs;
+    [
+      deno
+      docker-compose
+      entr
+      exiftool
+      fzf
+      gcc
+      imagemagick
+      lima
+      mosh
+      pfetch-rs
+      sketchybar
+      spicetify-cli
+      thefuck
+      typst
+      zk
+    ]
+    ++ import ../packages/dev.nix {
+      inherit pkgs;
+      system = "aarch-darwin";
+    };
 
   environment.variables = {
     SHELL = "fish";
@@ -34,7 +40,10 @@
     optimise.automatic = true;
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
   };
 
@@ -42,7 +51,6 @@
   security.pam.enableSudoTouchIdAuth = true;
 
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
-
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
@@ -53,9 +61,9 @@
     onActivation.cleanup = "uninstall";
 
     taps = [
-      "armcord/armcord"     # For armcord
-      "zackelia/formulae"   # For bclm
-      "nikitabobko/tap"     # For aerospace
+      "armcord/armcord" # For armcord
+      "zackelia/formulae" # For bclm
+      "nikitabobko/tap" # For aerospace
       "FelixKratz/formulae" # For JankyBorders
     ];
 

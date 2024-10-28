@@ -129,6 +129,9 @@
     jellyfin.enable = true;
   };
 
+  # For immich
+  virtualisation.docker.enable = true;
+
   # Open ports in the firewall.
   networking = {
     firewall = {

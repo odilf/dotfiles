@@ -38,45 +38,42 @@ in
       systemPackages =
         with pkgs;
         let
+          isDarwin = stdenv.hostPlatform.isDarwin;
+
           default = [
             vim
             git
           ];
-          cli-general = [
-            bat
-            bottom
-            btop
-            curl
-            dua
-            eza
-            fd
-            pfetch-rs
-            starship
-            ripgrep
-            rsync
-            thefuck
-            tokei
-            vim
-            neovim
-            wget
-            yazi
-            zellij
-            zoxide
-          ];
-          cli-darwin = [ darwin.trash ];
 
-          cli = lib.mkMerge [
-            cli-general
-            (lib.mkIf pkgs.stdenv.isDarwin cli-darwin)
-          ];
+          cli =
+            [
+              bat
+              bottom
+              btop
+              curl
+              dua
+              eza
+              fd
+              pfetch-rs
+              starship
+              ripgrep
+              rsync
+              thefuck
+              tokei
+              vim
+              neovim
+              wget
+              yazi
+              zellij
+              zoxide
+            ]
+            ++ lib.optionals isDarwin [
+              darwin.trash
+            ];
 
           rust = [ bacon ];
         in
-        lib.mkMerge [
-          default
-          (lib.mkIf cfg.cli cli)
-          (lib.mkIf cfg.rust rust)
-        ];
+        default ++ lib.optionals cfg.cli cli ++ lib.optionals cfg.rust rust;
     };
   };
 }

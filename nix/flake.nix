@@ -10,6 +10,11 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    churri = {
+      url = "github:odilf/churri";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -23,6 +28,7 @@
         modules = [
           ./hosts/uoh-server/configuration.nix
           ./nixos-modules
+          inputs.churri.nixosModules.default
         ];
       };
 

@@ -1,32 +1,15 @@
-# TODO: Edit
-
 { pkgs, ... }:
 
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
-  environment.systemPackages =
-    with pkgs;
-    [
-      deno
-      docker-compose
-      entr
-      exiftool
-      fzf
-      gcc
-      imagemagick
-      lima
-      mosh
-      pfetch-rs
-      sketchybar
-      spicetify-cli
-      thefuck
-      typst
-      zk
-    ]
-    ++ import ../packages/dev.nix {
-      inherit pkgs;
-      system = "aarch-darwin";
-    };
+  environment.systemPackages = with pkgs; [
+    deno # For peek.nvim
+    exiftool
+    imagemagick
+    lima
+    mosh
+    sketchybar
+  ];
 
   environment.variables = {
     SHELL = "fish";
@@ -82,6 +65,7 @@
       "bitwarden"
       "cool-retro-term"
       "db-browser-for-sqlite"
+      "epic-games"
       "firefox@nightly"
       "font-lora"
       "font-0xproto-nerd-font"
@@ -104,7 +88,7 @@
     ];
   };
 
-  # Install Rosetta 2 for compatibility with x86_64 binaries (namely, `cool-retro-term`).
+  # Install Rosetta 2 for compatibility with x86_64 binaries.
   # system.activationScripts.extraActivation.text = ''
   #   softwareupdate --install-rosetta --agree-to-license
   # '';

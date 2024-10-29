@@ -122,6 +122,12 @@
     };
 
     jellyfin.enable = true;
+
+    churri = {
+      enable = true;
+      host = "0.0.0.0";
+      targetDate = "2024-11-19T15:25:00+01:00";
+    };
   };
 
   # For immich

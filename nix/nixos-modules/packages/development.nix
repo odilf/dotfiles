@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.development-packages;
+  cfg = config.packages.development;
 in
 {
-  options.development-packages = {
+  options.packages.development = {
     enable = lib.mkEnableOption "development-packages";
 
     cli = lib.mkOption {

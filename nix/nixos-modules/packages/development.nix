@@ -5,11 +5,54 @@
   ...
 }:
 let
+  utils = import ./utils.nix;
   cfg = config.packages.development;
+
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+
+  default = [
+    pkgs.vim
+    pkgs.git
+  ];
+
+  cli = lib.optionals cfg.cli (
+    [
+      pkgs.bat
+      pkgs.bottom
+      pkgs.btop
+      pkgs.curl
+      pkgs.dua
+      pkgs.eza
+      pkgs.fd
+      pkgs.pfetch-rs
+      pkgs.starship
+      pkgs.ripgrep
+      pkgs.rsync
+      pkgs.thefuck
+      pkgs.tokei
+      pkgs.vim
+      pkgs.neovim
+      pkgs.wget
+      pkgs.yazi
+      pkgs.zellij
+      pkgs.zoxide
+    ]
+    ++ lib.optionals isDarwin [
+      pkgs.darwin.trash
+    ]
+  );
+
+  rust = lib.optionals cfg.rust [ pkgs.bacon ];
+
+  gui = lib.optionals config.packages.gui [
+    pkgs.vscodium
+    pkgs.cool-retro-term
+    pkgs.alacritty
+  ];
 in
 {
   options.packages.development = {
-    enable = lib.mkEnableOption "development-packages";
+    enable = lib.mkEnableOption "Packages used for developing software";
 
     cli = lib.mkOption {
       type = lib.types.bool;
@@ -34,46 +77,10 @@ in
       fish.enable = lib.mkIf cfg.cli true;
     };
 
-    environment = {
-      systemPackages =
-        with pkgs;
-        let
-          isDarwin = stdenv.hostPlatform.isDarwin;
+    environment.systemPackages = default ++ cli ++ rust ++ utils.mkPkgs gui;
 
-          default = [
-            vim
-            git
-          ];
-
-          cli =
-            [
-              bat
-              bottom
-              btop
-              curl
-              dua
-              eza
-              fd
-              pfetch-rs
-              starship
-              ripgrep
-              rsync
-              thefuck
-              tokei
-              vim
-              neovim
-              wget
-              yazi
-              zellij
-              zoxide
-            ]
-            ++ lib.optionals isDarwin [
-              darwin.trash
-            ];
-
-          rust = [ bacon ];
-        in
-        default ++ lib.optionals cfg.cli cli ++ lib.optionals cfg.rust rust;
+    homebrew = lib.mkIf pkgs.stdenv.isDarwin {
+      casks = utils.mkCasks gui;
     };
   };
 }

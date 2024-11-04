@@ -1,4 +1,4 @@
-abbr rebuild darwin-rebuild switch --flake ~/.config/nix-darwin
+abbr rebuild "darwin-rebuild switch --flake ~/.config/nix#macbook"
 
 # Add Homebrew's fish completions to the path
 if test -d (brew --prefix)"/share/fish/completions"

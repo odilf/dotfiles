@@ -1,13 +1,16 @@
 { pkgs, ... }:
 
 {
+  gui = true;
+  desktop-environment.enable = true;
+
   nixpkgs.hostPlatform = "aarch64-darwin";
   environment.systemPackages = with pkgs; [
     deno # For peek.nvim
     exiftool
     imagemagick
     lima
-    mosh
+    # mosh
     sketchybar
   ];
 
@@ -32,7 +35,6 @@
 
   # TouchID for sudo 
   security.pam.enableSudoTouchIdAuth = true;
-
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
@@ -44,7 +46,6 @@
     onActivation.cleanup = "uninstall";
 
     taps = [
-      "armcord/armcord" # For armcord
       "zackelia/formulae" # For bclm
       "nikitabobko/tap" # For aerospace
       "FelixKratz/formulae" # For JankyBorders
@@ -57,16 +58,13 @@
     ];
 
     casks = [
-      "accord"
-      "aerospace"
-      "alacritty"
       "anki"
-      "armcord"
       "bitwarden"
-      "cool-retro-term"
+      "betterdisplay"
+      # "cool-retro-term"
       "db-browser-for-sqlite"
       "epic-games"
-      "firefox@nightly"
+      # "firefox@nightly"
       "font-lora"
       "font-0xproto-nerd-font"
       "font-comic-shanns-mono-nerd-font"
@@ -75,23 +73,19 @@
       "font-zed-mono-nerd-font"
       "inkscape"
       "krita"
+      "legcord"
       "mechvibes"
       "microsoft-teams" # sigh...
       "minecraft"
       "neovide"
       "steam"
       "surfshark" # Maybe delete
-      "telegram" # Mayeb delete
+      "telegram" # Maybe delete
       "todoist"
-      "vscodium"
+      # "vscodium"
       "wacom-tablet"
     ];
   };
-
-  # Install Rosetta 2 for compatibility with x86_64 binaries.
-  # system.activationScripts.extraActivation.text = ''
-  #   softwareupdate --install-rosetta --agree-to-license
-  # '';
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

@@ -123,7 +123,13 @@
     churri = {
       enable = true;
       host = "0.0.0.0";
-      targetDate = "2024-11-19T15:25:00+01:00";
+      targetDate = "2024-11-16T15:25:00+01:00";
+    };
+
+    sentouki = {
+      enable = true;
+      host = "0.0.0.0";
+      basePath = "/mnt/";
     };
   };
 
@@ -165,11 +171,11 @@
       ];
     };
 
-    "/mnt/UOH-MEDIA" = {
-      device = "/dev/disk/by-uuid/89bb9652-c89b-40a5-9a76-7e64212b82f0";
-      fsType = "btrfs";
-      options = [ "nofail" ];
-    };
+    # "/mnt/UOH-MEDIA" = {
+    #   device = "/dev/disk/by-uuid/89bb9652-c89b-40a5-9a76-7e64212b82f0";
+    #   fsType = "btrfs";
+    #   options = [ "nofail" ];
+    # };
 
     "/mnt/INTENSO" = {
       device = "/dev/disk/by-uuid/0dfd1ee6-692f-4911-8f84-341a9aa75f4a";

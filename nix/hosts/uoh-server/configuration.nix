@@ -3,8 +3,6 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -14,6 +12,8 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+
+  packages.gui = false;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -31,12 +31,9 @@
     "flakes"
   ];
 
-  networking.hostName = "uoh"; # Define your hostname.
+  networking.hostName = "uoh-server"; # Define your hostname.
 
-  # Set your time zone.
   time.timeZone = "Europe/Madrid";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

@@ -1,13 +1,18 @@
-import = ["./alacritty-theme/themes/material_theme_mod.toml"]
+# [general]
+# import = ["~/.config/alacritty/alacritty-theme/themes/material_theme_mod.toml"]
 
-shell = "fish"
+# shell.program = "fish"
+# shell = "/run/current-system/sw/bin/fish"
+# shell.program = "/run/current-system/sw/bin/fish"
 
 [font]
-size = 12.0
+size = 14.0
 
 [font.normal]
-family = "GeistMono Nerd Font"
-style = "semibold"
+family = "ZedMono Nerd Font"
+# family = "GeistMono Nerd Font"
+# style = "SemiBold"
+# family = "Monocraft Nerd Font"
 
 [window]
 decorations = "none"

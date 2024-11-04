@@ -16,6 +16,11 @@
       url = "github:odilf/churri";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sentouki = {
+      url = "github:odilf/sentouki";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -28,13 +33,11 @@
     {
       nixosConfigurations."uoh-server" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-        };
         modules = [
           ./hosts/uoh-server/configuration.nix
           ./nixos-modules
           inputs.churri.nixosModules.default
+          inputs.sentouki.nixosModules.default
         ];
       };
 

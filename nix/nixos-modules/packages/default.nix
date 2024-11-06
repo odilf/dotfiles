@@ -12,6 +12,8 @@ in
     ./games.nix
     ./development.nix
     ./social.nix
+    ./fonts.nix
+    ./creative.nix
   ];
 
   options.packages = {
@@ -27,6 +29,7 @@ in
 
   config = {
     packages.development.enable = lib.mkDefault true;
+    packages.fonts.enable = lib.mkDefault true;
 
     # Always include a text editor, and a browser in GUIs.
     environment.systemPackages =
@@ -39,6 +42,9 @@ in
       ];
 
     homebrew = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      enable = true;
+      onActivation.cleanup = "uninstall";
+
       # TODO: Make it respect config 
       casks = [ "firefox@nightly" ];
     };

@@ -1,7 +1,7 @@
 # TODO
 # - [ ] Emulators
 # - [ ] Steam
-# - [ ] Epic games
+# - [x] Epic games
 # - [ ] Terminal games
 
 {
@@ -12,9 +12,12 @@
 }:
 let
   cfg = config.packages.games;
+
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
 in
 {
-  options.games = {
+  options.packages.games = {
     enable = lib.mkEnableOption "Packages for gaming";
 
     emulators = lib.mkOption {
@@ -25,8 +28,30 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment =
-      {
-      };
+    environment.systemPackages =
+      [
+        pkgs.smassh
+        pkgs.vitetris # Kinda mediocre
+        pkgs.terminal-parrot
+      ]
+      ++ lib.optionals isLinux [
+        pkgs.steam-run
+        pkgs.steam-tui
+      ]
+      ++ lib.optionals config.packages.gui (
+        [
+          pkgs.legendary-gl
+        ]
+        ++ lib.optionals isLinux [
+          pkgs.rare # Epic games GUI (linux)
+          pkgs.minecraft
+        ]
+      );
+
+    homebrew.casks = lib.optionals isDarwin [
+      "epic-games"
+      "minecraft"
+      "steam"
+    ];
   };
 }

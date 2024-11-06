@@ -7,6 +7,7 @@
 let
   cfg = config.desktop-environment;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
 in
 {
   imports = [
@@ -19,8 +20,20 @@ in
   };
 
   config = {
-    environment.systemPackages = [
-      pkgs.qalculate-qt
+    environment.systemPackages =
+      [
+        pkgs.todoist
+        pkgs.qalculate-qt
+      ]
+      ++ lib.optionals isLinux [
+        pkgs.bitwarden-cli
+        pkgs.bitwarden-desktop
+        pkgs.todoist-electron
+      ];
+
+    homebrew.casks = lib.mkIf isDarwin [
+      "bitwarden"
+      "todoist"
     ];
   };
 }

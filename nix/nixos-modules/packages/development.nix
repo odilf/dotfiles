@@ -5,10 +5,10 @@
   ...
 }:
 let
-  utils = import ./utils.nix;
   cfg = config.packages.development;
 
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
 
   default = [
     pkgs.vim
@@ -39,16 +39,24 @@ let
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash
+    ] 
+    ++ lib.optionals isLinux [
+      pkgs.mosh # Broken on darwin
     ]
   );
 
   rust = lib.optionals cfg.rust [ pkgs.bacon ];
 
-  gui = lib.optionals config.packages.gui [
-    pkgs.vscodium
-    pkgs.cool-retro-term
-    pkgs.alacritty
-  ];
+  gui =
+    lib.optionals config.packages.gui [
+      pkgs.alacritty
+      pkgs.cool-retro-term
+      pkgs.neovide
+      pkgs.qbittorrent
+    ]
+    ++ lib.optionals isLinux [
+      pkgs.vscodium
+    ];
 in
 {
   options.packages.development = {
@@ -77,10 +85,10 @@ in
       fish.enable = lib.mkIf cfg.cli true;
     };
 
-    environment.systemPackages = default ++ cli ++ rust ++ utils.mkPkgs gui;
+    environment.systemPackages = default ++ cli ++ rust ++ gui;
 
-    homebrew = lib.mkIf pkgs.stdenv.isDarwin {
-      casks = utils.mkCasks gui;
-    };
+    homebrew.brews = lib.optionals (isDarwin && cfg.cli) [
+      "mosh"
+    ];
   };
 }

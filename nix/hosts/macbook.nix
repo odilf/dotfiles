@@ -2,26 +2,25 @@
 
 {
   gui = true;
+
   desktop-environment.enable = true;
-
-  nixpkgs.hostPlatform = "aarch64-darwin";
-  environment.systemPackages = with pkgs; [
-    deno # For peek.nvim
-    exiftool
-    imagemagick
-    lima
-    # mosh
-    sketchybar
-  ];
-
-  environment.variables = {
-    SHELL = "fish";
+  packages = {
+    social.enable = true;
+    games.enable = true;
+    creative.enable = true;
+    creative.wacom = true;
   };
 
-  # Auto upgrade nix package and the daemon service.
+  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.config.allowUnfree = true; # TODO: Make it whitelist, don't allow all
+
+  environment.systemPackages = with pkgs; [
+    deno # For peek.nvim
+    nodejs_latest # For copilot.nvim
+  ];
+
   services.nix-daemon.enable = true;
   nix = {
-    package = pkgs.nix;
     gc.automatic = true;
     optimise.automatic = true;
     settings = {
@@ -31,60 +30,6 @@
         "flakes"
       ];
     };
-  };
-
-  # TouchID for sudo 
-  security.pam.enableSudoTouchIdAuth = true;
-  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
-
-  # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;
-  programs.fish.enable = true;
-
-  homebrew = {
-    enable = true;
-    onActivation.cleanup = "uninstall";
-
-    taps = [
-      "zackelia/formulae" # For bclm
-      "nikitabobko/tap" # For aerospace
-      "FelixKratz/formulae" # For JankyBorders
-    ];
-
-    brews = [
-      "bclm"
-      "bitwarden-cli"
-      "borders"
-    ];
-
-    casks = [
-      "anki"
-      "bitwarden"
-      "betterdisplay"
-      # "cool-retro-term"
-      "db-browser-for-sqlite"
-      "epic-games"
-      # "firefox@nightly"
-      "font-lora"
-      "font-0xproto-nerd-font"
-      "font-comic-shanns-mono-nerd-font"
-      "font-monocraft-nerd-font"
-      "font-geist-mono-nerd-font"
-      "font-zed-mono-nerd-font"
-      "inkscape"
-      "krita"
-      "legcord"
-      "mechvibes"
-      "microsoft-teams" # sigh...
-      "minecraft"
-      "neovide"
-      "steam"
-      "surfshark" # Maybe delete
-      "telegram" # Maybe delete
-      "todoist"
-      # "vscodium"
-      "wacom-tablet"
-    ];
   };
 
   # Used for backwards compatibility, please read the changelog before changing.

@@ -14,9 +14,12 @@
 }:
 let
   cfg = config.packages.social;
+
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
 in
 {
-  options.social = {
+  options.packages.social = {
     enable = lib.mkEnableOption "Packages used to communicate with fellow humans";
 
     # cli = lib.mkOption {
@@ -30,8 +33,25 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment =
-      {
-      };
+    environment.systemPackages = lib.optionals config.packages.gui (
+      [
+        pkgs.discord
+        # pkgs.telegram-desktop # Fails to download
+        pkgs.nchat
+      ]
+      ++ lib.optionals isLinux [
+        pkgs.whatsapp-for-linux
+        pkgs.teams-for-linux
+      ]
+      ++ lib.optionals isDarwin [
+        # pkgs.whatsapp-for-mac # Fails to download
+      ]
+    );
+
+    homebrew.casks = lib.optionals isDarwin [
+      "whatsapp" # workaround
+      "microsoft-teams" # workaround too I think?
+      "telegram"
+    ];
   };
 }

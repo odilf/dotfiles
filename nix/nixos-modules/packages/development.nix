@@ -39,7 +39,7 @@ let
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash
-    ] 
+    ]
     ++ lib.optionals isLinux [
       pkgs.mosh # Broken on darwin
     ]

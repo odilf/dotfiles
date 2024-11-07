@@ -38,6 +38,7 @@
           ./nixos-modules
           inputs.churri.nixosModules.default
           inputs.sentouki.nixosModules.default
+          ./nixos-modules/polyfill/nix-darwin.nix
         ];
       };
 

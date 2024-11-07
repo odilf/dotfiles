@@ -6,9 +6,10 @@
 }:
 let
   cfg = config.desktop-environment;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
-  config = lib.mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isDarwin) {
+  config = lib.mkIf (cfg.enable && isDarwin)  {
     system.defaults = {
       dock.magnification = true;
       dock.largesize = 68;

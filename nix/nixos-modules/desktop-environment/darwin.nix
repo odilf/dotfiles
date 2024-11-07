@@ -9,7 +9,9 @@ let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
-  config = lib.mkIf (cfg.enable && isDarwin)  {
+  config = lib.mkIf (cfg.enable && isDarwin) {
+    environment.variables.SHELL = "fish";
+
     system.defaults = {
       dock.magnification = true;
       dock.largesize = 68;
@@ -58,6 +60,11 @@ in
               mode.main.binding = tomlCfg.mode.main.binding // {
                 alt-enter = "exec-and-forget SHELL=fish open -n ${pkgs.alacritty}/Applications/Alacritty.app";
               };
+
+              # TODO: Do I need to set them explicitly? Or is it only to override them?
+              start-at-login = false;
+              after-login-command = [ ];
+              after-startup-command = [ ];
             };
           in
           cfg;

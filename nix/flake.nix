@@ -36,9 +36,9 @@
         modules = [
           ./hosts/uoh-server/configuration.nix
           ./nixos-modules
+          ./nixos-modules/polyfill/nix-darwin.nix
           inputs.churri.nixosModules.default
           inputs.sentouki.nixosModules.default
-          ./nixos-modules/polyfill/nix-darwin.nix
         ];
       };
 
@@ -47,6 +47,7 @@
         modules = [
           ./hosts/macbook.nix
           ./nixos-modules
+          ./nixos-modules/polyfill/nixos.nix
         ];
       };
     }

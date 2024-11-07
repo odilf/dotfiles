@@ -7,8 +7,7 @@
 let
   cfg = config.packages.development;
 
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
   default = [
     pkgs.vim
@@ -51,7 +50,7 @@ let
     lib.optionals config.packages.gui [
       pkgs.alacritty
       pkgs.cool-retro-term
-      pkgs.neovide
+      # pkgs.neovide
       pkgs.qbittorrent
     ]
     ++ lib.optionals isLinux [

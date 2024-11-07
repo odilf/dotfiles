@@ -32,22 +32,27 @@ in
       [
         # pkgs.reaper # Some problems
       ]
-      ++ lib.optionals isLinux ([
-        pkgs.blender # broken on darwin
-        pkgs.musescore # broken on darwin :cowboy:
-        pkgs.obs-studio
-      ] ++ lib.optionals cfg.wacom [
-        pkgs.wacomtablet
-      ]);
+      ++ lib.optionals isLinux (
+        [
+          pkgs.blender # broken on darwin
+          pkgs.musescore # broken on darwin :cowboy:
+          pkgs.obs-studio
+        ]
+        ++ lib.optionals cfg.wacom [
+          pkgs.wacomtablet
+        ]
+      );
 
     homebrew = lib.mkIf isDarwin {
-      casks = [
-        "blender"
-        "musescore"
-        "obs"
-      ] ++ lib.optionals cfg.wacom [
-        "wacom-tablet"
-      ];
+      casks =
+        [
+          "blender"
+          "musescore"
+          "obs"
+        ]
+        ++ lib.optionals cfg.wacom [
+          "wacom-tablet"
+        ];
 
       masApps = lib.mkIf isDarwin {
         "Logic Pro" = 634148309;

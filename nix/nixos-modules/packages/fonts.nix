@@ -9,8 +9,7 @@
 let
   cfg = config.packages.fonts;
 
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
 in
 {
   options.packages.fonts = {
@@ -42,12 +41,8 @@ in
           pkgs.libertinus
         ];
 
-      }
-      # Annoying bodgy thing because nix-darwin complains `fontconfig` is not known even if it doesn't use it. 
-      // (
-        if isLinux then
-          {
-            fontconfig = {
+
+            fontconfig = lib.mkIf isLinux {
               defaultFonts = {
                 serif = [
                   "Lora"
@@ -59,9 +54,7 @@ in
                 monospace = [ "" ];
               };
             };
-          }
-        else
-          { }
-      );
+
+      };
   };
 }

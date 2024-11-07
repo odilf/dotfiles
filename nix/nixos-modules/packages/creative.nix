@@ -7,8 +7,7 @@
 let
   cfg = config.packages.creative;
 
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 in
 {
   options.packages.creative = {

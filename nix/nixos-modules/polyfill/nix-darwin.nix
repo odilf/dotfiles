@@ -3,18 +3,19 @@
   ...
 }:
 let
-	inherit (import ./util.nix lib) fill;
-in {
+  inherit (import ./util.nix lib) fill;
+in
+{
   options = {
-	homebrew = fill;
-	security = {
-		pam.enableSudoTouchIdAuth = fill;
-	};
+    homebrew = fill;
+    security = {
+      pam.enableSudoTouchIdAuth = fill;
+    };
 
-	services = {
-			aerospace = fill;
-	};
+    services = {
+      aerospace = fill;
+    };
 
-	system.defaults = fill;
+    system.defaults = fill;
   };
 }

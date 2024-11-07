@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.desktop-environment;
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
 in
 {
   # options.desktop-environment = {

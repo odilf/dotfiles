@@ -1,13 +1,11 @@
 {
   pkgs,
   lib,
-  config,
   ...
 }:
 let
-  cfg = config.desktop-environment;
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  # cfg = config.desktop-environment;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 in
 {
   imports = [

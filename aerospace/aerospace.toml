@@ -22,7 +22,7 @@ exec-on-workspace-change = ['/bin/bash', '-c',
 ]
 
 # Start AeroSpace at login
-start-at-login = true
+start-at-login = false
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -80,7 +80,7 @@ outer.right =      0
 
 # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
 
-alt-enter = "exec-and-forget open -n /nix/store/g6gmpvjmssl6846qnswfd6m49m1yz6p7-alacritty-0.14.0/Applications/Alacritty.app"
+# alt-enter = "exec-and-forget open -n /nix/store/g6gmpvjmssl6846qnswfd6m49m1yz6p7-alacritty-0.14.0/Applications/Alacritty.app"
 alt-shift-enter = "exec-and-forget open -n /Applications/Firefox Nightly.app"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout

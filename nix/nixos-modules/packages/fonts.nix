@@ -14,47 +14,45 @@ in
 {
   options.packages.fonts = {
     enable = lib.mkEnableOption "Packages for gaming";
-    # TODO: 
-    # default =  
   };
 
   config = lib.mkIf cfg.enable {
-    fonts =
-      {
-        packages = [
-          # Mono
-          (pkgs.nerdfonts.override {
-            fonts = [
-              "0xProto"
-              "ComicShannsMono"
-              "GeistMono"
-              "ZedMono"
-            ];
-          })
-          pkgs.monocraft
+    fonts = {
+      packages = [
+        # Mono
+        (pkgs.nerdfonts.override {
+          fonts = [
+            "0xProto"
+            "ComicShannsMono"
+            "GeistMono"
+            "ZedMono"
+          ];
+        })
+        pkgs.monocraft
 
-          # Sans
-          pkgs.poppins
+        # Sans
+        pkgs.atkinson-hyperlegible
+        pkgs.poppins
 
-          # Serif
-          # pkgs.lora
-          pkgs.libertinus
-        ];
+        # Serif
+        # pkgs.lora
+        pkgs.libertinus
+      ];
 
-
-            fontconfig = lib.mkIf isLinux {
-              defaultFonts = {
-                serif = [
-                  "Lora"
-                  "Libertinus"
-                ];
-                sansSerif = [
-                  "Poppins"
-                ];
-                monospace = [ "ZedMono Nerd Font" ];
-              };
-            };
-
+      fontconfig = lib.mkIf isLinux {
+        defaultFonts = {
+          serif = [
+            "Libertinus"
+            "Lora"
+          ];
+          sansSerif = [
+            "Atkinson Hyperlegible"
+            "Poppins"
+          ];
+          monospace = [ "ZedMono Nerd Font" ];
+        };
       };
+
+    };
   };
 }

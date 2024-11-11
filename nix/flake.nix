@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    
+
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     flake-utils.url = "github:numtide/flake-utils";
@@ -45,21 +45,10 @@
           inputs.sentouki.nixosModules.default
         ];
       };
-      
-      nixosConfigurations."nixbook" = let
-        pkgs = import inputs.nixpkgs-stable {
-          inherit system;
-          overlays = [
-          
-            inputs.apple-silicon.overlays.default
-          ];
-        };
-        system = "aarch64-linux";
-      in
-      inputs.nixpkgs-systemd-boot-apple-silicon.lib.nixosSystem {
+
+      nixosConfigurations."nixbook" = inputs.nixpkgs-systemd-boot-apple-silicon.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
-          { hardware.asahi.pkgs = nixpkgs.lib.mkForce pkgs; }
           ./hosts/nixbook/configuration.nix
           ./nixos-modules
           ./nixos-modules/polyfill/nix-darwin.nix

@@ -14,7 +14,6 @@
   };
 
   config = {
-    desktop-environment.enable = lib.mkDefault config.gui;
     packages.gui = lib.mkDefault config.gui;
   };
 }

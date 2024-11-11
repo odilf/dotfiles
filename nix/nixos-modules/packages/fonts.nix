@@ -37,7 +37,7 @@ in
           pkgs.poppins
 
           # Serif
-          pkgs.lora
+          # pkgs.lora
           pkgs.libertinus
         ];
 
@@ -51,7 +51,7 @@ in
                 sansSerif = [
                   "Poppins"
                 ];
-                monospace = [ "" ];
+                monospace = [ "ZedMono Nerd Font" ];
               };
             };
 

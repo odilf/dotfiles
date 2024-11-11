@@ -5,11 +5,10 @@
   ...
 }:
 let
-  cfg = config.desktop-environment;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
-  config = lib.mkIf (cfg.enable && isDarwin) {
+  config = lib.mkIf (config.gui && isDarwin) {
     environment.variables.SHELL = "fish";
 
     system.defaults = {

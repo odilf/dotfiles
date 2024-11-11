@@ -7,6 +7,6 @@ let
 in
 {
   options = {
-	fonts.fontconfig = fill;
+    fonts.fontconfig = fill;
   };
 }

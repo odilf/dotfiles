@@ -84,6 +84,10 @@ in
       fish.enable = lib.mkIf cfg.cli true;
     };
 
+    # Swap escape and caps lock in tty
+    services.xserver.xkb.options = lib.mkIf isLinux "ctrl:swapcaps";
+    console.useXkbConfig = lib.mkIf isLinux true;
+
     environment.systemPackages = default ++ cli ++ rust ++ gui;
 
     homebrew.brews = lib.optionals (isDarwin && cfg.cli) [

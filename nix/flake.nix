@@ -2,8 +2,9 @@
   description = "Odilf's nix configs";
 
   inputs = {
-    # TODO: Change this to nixpkgs-unstable and put in the other one in the server thing
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -21,6 +22,9 @@
       url = "github:odilf/sentouki";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    nixpkgs-systemd-boot-apple-silicon.url = "github:NixOS/nixpkgs?rev=41dea55321e5a999b17033296ac05fe8a8b5a257";
   };
 
   outputs =
@@ -39,6 +43,27 @@
           ./nixos-modules/polyfill/nix-darwin.nix
           inputs.churri.nixosModules.default
           inputs.sentouki.nixosModules.default
+        ];
+      };
+      
+      nixosConfigurations."nixbook" = let
+        pkgs = import inputs.nixpkgs-stable {
+          inherit system;
+          overlays = [
+          
+            inputs.apple-silicon.overlays.default
+          ];
+        };
+        system = "aarch64-linux";
+      in
+      inputs.nixpkgs-systemd-boot-apple-silicon.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          { hardware.asahi.pkgs = nixpkgs.lib.mkForce pkgs; }
+          ./hosts/nixbook/configuration.nix
+          ./nixos-modules
+          ./nixos-modules/polyfill/nix-darwin.nix
+          inputs.apple-silicon.nixosModules.default
         ];
       };
 

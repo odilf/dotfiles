@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }:
 let
@@ -9,24 +10,20 @@ let
 in
 {
   imports = [
-    ./linux.nix
-    ./darwin.nix
+    ./linux
+    ./darwin
   ];
 
-  options.desktop-environment = {
-    enable = lib.mkEnableOption "Desktop environment";
-  };
-
-  config = {
+  config = lib.mkIf config.gui {
     environment.systemPackages =
       [
         pkgs.todoist
         pkgs.qalculate-qt
       ]
       ++ lib.optionals isLinux [
-        pkgs.bitwarden-cli
-        pkgs.bitwarden-desktop
-        pkgs.todoist-electron
+        # pkgs.bitwarden-cli
+        # pkgs.bitwarden-desktop
+        # pkgs.todoist-electron
       ];
 
     homebrew.casks = lib.mkIf isDarwin [

@@ -1,11 +1,11 @@
 lib: {
   fill = lib.mkOption {
     description = ''
-      	This is a polyfill. It is used to not raise 'unknown options' 
-      	when having, for example, a `homebrew` attribute which gets 
-      	disabled for linux.
+      This is a polyfill. It is used to not raise 'unknown options' 
+      when having, for example, a `homebrew` attribute which gets 
+      disabled for linux.
 
-      	Not intender for actual use.
+      Not intender for actual use.
     '';
     readOnly = true;
     apply =

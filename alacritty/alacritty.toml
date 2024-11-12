@@ -6,13 +6,13 @@
 # shell.program = "/run/current-system/sw/bin/fish"
 
 [font]
-size = 14.0
+size = 12.0
 
 [font.normal]
-family = "ZedMono Nerd Font"
-# family = "GeistMono Nerd Font"
-# style = "SemiBold"
+# family = "ZedMono Nerd Font"
 # family = "Monocraft Nerd Font"
+# family = "GeistMono Nerd Font"
+style = "Medium"
 
 [window]
 decorations = "none"

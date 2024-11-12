@@ -7,7 +7,6 @@
   imports = [
     ./packages
     ./desktop-environment
-    ./home-manager
   ];
 
   options = {

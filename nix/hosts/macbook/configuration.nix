@@ -2,7 +2,6 @@
 {
   gui = true;
 
-  desktop-environment.enable = true;
   packages = {
     social.enable = true;
     games.enable = true;

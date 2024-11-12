@@ -13,6 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     churri = {
       url = "github:odilf/churri";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,8 +35,9 @@
   outputs =
     {
       nixpkgs,
-      nix-darwin,
       flake-utils,
+      nix-darwin,
+      home-manager,
       ...
     }@inputs:
     {
@@ -39,8 +45,9 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/uoh-server/configuration.nix
-          ./nixos-modules
-          ./nixos-modules/polyfill/nix-darwin.nix
+          ./modules
+          ./modules/polyfill/nix-darwin.nix
+          home-manager.nixosModules.default
           inputs.churri.nixosModules.default
           inputs.sentouki.nixosModules.default
         ];
@@ -50,8 +57,9 @@
         system = "aarch64-linux";
         modules = [
           ./hosts/nixbook/configuration.nix
-          ./nixos-modules
-          ./nixos-modules/polyfill/nix-darwin.nix
+          ./modules
+          ./modules/polyfill/nix-darwin.nix
+          home-manager.nixosModules.default
           inputs.apple-silicon.nixosModules.default
         ];
       };
@@ -60,8 +68,9 @@
         system = "aarch64-darwin";
         modules = [
           ./hosts/macbook.nix
-          ./nixos-modules
-          ./nixos-modules/polyfill/nixos.nix
+          ./modules
+          ./modules/polyfill/nixos.nix
+          home-manager.nixosModules.default
         ];
       };
     }

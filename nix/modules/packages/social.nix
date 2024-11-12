@@ -1,8 +1,5 @@
 # TODO:
-# - [ ] Whatsapp
-# - [ ] Discord/legcord
 # - [ ] Matrix
-# - [ ] Bluesky
 # - [ ] Mail?
 # - [ ] Terminal clients for all of the above
 
@@ -15,28 +12,23 @@
 let
   cfg = config.packages.social;
 
-  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
 in
 {
   options.packages.social = {
     enable = lib.mkEnableOption "Packages used to communicate with fellow humans";
 
-    # cli = lib.mkOption {
-    #   type = lib.types.bool;
-    #   default = true;
-    #   description = ''
-    #     Add packages for navigating the command line and monitoring the system, 
-    #     such as `eza`, `ripgrep`, `tokei` and `btop`.
-    #   '';
-    # };
+    # TODO: Maybe make options to toggle each service.
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = lib.optionals config.packages.gui (
       [
-        pkgs.discord
-        # pkgs.telegram-desktop # Fails to download
+        pkgs.telegram-desktop # Fails to download
         pkgs.nchat
+      ]
+      ++ lib.optionals isx86 [
+        pkgs.discord # Discord not available on aarch-linux :(
       ]
       ++ lib.optionals isLinux [
         pkgs.whatsapp-for-linux

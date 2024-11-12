@@ -14,6 +14,6 @@ in
   ];
 
   config = {
-    desktop-environment.gnome.enable = lib.mkDefault true;
+    desktop-environment.hyprland.enable = lib.mkDefault true;
   };
 }

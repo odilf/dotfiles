@@ -13,7 +13,7 @@
 let
   cfg = config.packages.games;
 
-  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
 in
 {
   options.packages.games = {
@@ -33,7 +33,7 @@ in
         pkgs.vitetris # Kinda mediocre
         pkgs.terminal-parrot
       ]
-      ++ lib.optionals isLinux [
+      ++ lib.optionals (isLinux && isx86) [
         pkgs.steam-run
         pkgs.steam-tui
       ]
@@ -43,7 +43,7 @@ in
         ]
         ++ lib.optionals isLinux [
           pkgs.rare # Epic games GUI (linux)
-          pkgs.minecraft
+          # pkgs.minecraft
         ]
       );
 

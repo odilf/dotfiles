@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }: let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
   cfg = config.desktop-environment.gnome;
- inherit (pkgs.stdenv.hostPlatform) isLinux;
-in {
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
+{
   options.desktop-environment.gnome = {
     enable = lib.mkEnableOption "gnome";
   };

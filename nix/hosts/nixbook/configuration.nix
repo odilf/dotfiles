@@ -63,6 +63,7 @@
           caps @cap
           lctrl lmet
           lmet lctrl 
+          rmet rctrl 
         )
 
         (defalias

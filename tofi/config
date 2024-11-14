@@ -1,12 +1,11 @@
-width = 50%
-height = 50%
+width = 100%
+height = 100%
 border-width = 0
 outline-width = 0
-padding-left = 20
-padding-top = 20
+padding-left = 43%
+padding-top = 15%
 result-spacing = 25
 num-results = 8
-font = GeistMono Nerd Font
-~
-font-size = 14
+font = monospace
+font-size = 16
 background-color = #000B

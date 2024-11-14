@@ -3,9 +3,7 @@
 /* General */
 
 * {
-	font-family: GeistMono Nerd Font;
-	/* font-size: 12px; */
-	font-weight: 600;
+	font-weight: 500;
 }
 
 #waybar {
@@ -57,6 +55,7 @@
 #custom-reboot,
 #custom-power
 {
+	font-family: "ZedMono Nerd Font";
 	border: 0px solid red;
 	margin-right: 5px;
 }

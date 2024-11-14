@@ -67,7 +67,7 @@
       darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./hosts/macbook.nix
+          ./hosts/macbook/configuration.nix
           ./modules
           ./modules/polyfill/nixos.nix
           home-manager.nixosModules.default

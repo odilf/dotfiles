@@ -18,23 +18,17 @@ in
       default = false;
       description = "Software to make wacom tablets work";
     };
-
-    # emulators = lib.mkOption {
-    #   type = lib.types.bool;
-    #   default = true;
-    #   description = "Emulators for retro consoles.";
-    # };
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages =
       [
-        # pkgs.reaper # Some problems
+        pkgs.reaper
       ]
       ++ lib.optionals isLinux (
         [
-          pkgs.blender # broken on darwin
-          pkgs.musescore # broken on darwin :cowboy:
+          pkgs.blender 
+          pkgs.musescore 
           pkgs.obs-studio
         ]
         ++ lib.optionals cfg.wacom [

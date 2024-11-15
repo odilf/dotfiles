@@ -91,7 +91,8 @@ in
     security.pam.enableSudoTouchIdAuth = true;
 
     environment.systemPackages = [
-      pkgs.iina # Media player (should be in something in packages...)
+      pkgs.iina # Media player (TODO: should be in something in packages...)
+      pkgs.spotify # TODO: Should also be somewhere else
     ];
 
     # TODO: Remove, replace with kanata

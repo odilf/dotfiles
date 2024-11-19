@@ -27,7 +27,7 @@ in
         pkgs.telegram-desktop # Fails to download
         pkgs.nchat
       ]
-      ++ lib.optionals isx86 [
+      ++ lib.optionals (isx86 || isDarwin) [
         pkgs.discord # Discord not available on aarch-linux :(
       ]
       ++ lib.optionals isLinux [

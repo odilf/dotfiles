@@ -13,7 +13,7 @@
     ./hardware-configuration.nix
   ];
 
-  packages.gui = false;
+  gui = false;
 
   # For todoist-electron
   # TODO: Make it whitelist, don't allow all
@@ -122,7 +122,8 @@
       configFile = /etc/inadyn.conf;
     };
 
-    jellyfin.enable = true;
+    # Broken, it seems :(
+    # jellyfin.enable = true;
 
     churri = {
       enable = true;
@@ -130,10 +131,57 @@
       targetDate = "2024-11-16T15:25:00+01:00";
     };
 
-    sentouki = {
+    # `file` is not provided in binary
+    # sentouki = {
+    #   enable = true;
+    #   host = "0.0.0.0";
+    #   basePath = "/mnt/";
+    # };
+
+    # nix-minecraft
+    minecraft-servers = {
       enable = true;
-      host = "0.0.0.0";
-      basePath = "/mnt/";
+      eula = true;
+
+      servers.nina = {
+        enable = true;
+        openFirewall = true;
+        package = pkgs.fabricServers.fabric-1_21_3;
+        serverProperties = {
+          server-ip = "0.0.0.0";
+          server-port = 25565; # To change you need to set up a reverse proxy to forward different `*:25565` requests depending on the host.
+          difficulty = "normal";
+          gamemode = "survival";
+          max-players = 3;
+          motd = "Minecraft server, hosted from UOH";
+          online-mode = false;
+          level-name = "Atlas";
+        };
+
+        jvmOpts = "-Xms4092M -Xmx4092M -XX:+UseG1GC";
+
+        symlinks = {
+
+          # Fetching from the internet
+          "mods" = pkgs.linkFarmFromDrvs "mods" (
+            builtins.attrValues {
+              Lithium = pkgs.fetchurl {
+                url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/QhCwdt4l/lithium-fabric-0.14.2-snapshot%2Bmc1.21.3-build.91.jar";
+                sha256 = "sha256-BJOMjp49XBUJbhhhXcZUhEIVUpaCSTz5UCmLIJWWDFs=";
+              };
+              SkinRestorer = pkgs.fetchurl {
+                url = "https://cdn.modrinth.com/data/ghrZDhGW/versions/GSZWlZM2/skinrestorer-2.1.0%2B1.21-fabric.jar";
+                sha256 = "sha256-pOH3egWhZ6zy+AnfXiULLLSy2Xwb517dQ5fIbqVPRC0=";
+              };
+            }
+          );
+        };
+      };
+    };
+
+    xserver = {
+      enable = true;
+      displayManager.startx.enable = true;
     };
   };
 
@@ -147,6 +195,11 @@
       allowedTCPPorts = [
         80
         443
+
+        # Tests, remove later
+        25565
+        9384
+        1111
       ];
       allowPing = true;
     };

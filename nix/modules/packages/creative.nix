@@ -27,8 +27,8 @@ in
       ]
       ++ lib.optionals isLinux (
         [
-          pkgs.blender 
-          pkgs.musescore 
+          pkgs.blender
+          pkgs.musescore
           pkgs.obs-studio
         ]
         ++ lib.optionals cfg.wacom [

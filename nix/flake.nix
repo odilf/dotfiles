@@ -28,6 +28,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     nixpkgs-systemd-boot-apple-silicon.url = "github:NixOS/nixpkgs?rev=41dea55321e5a999b17033296ac05fe8a8b5a257";
   };
@@ -50,6 +56,10 @@
           home-manager.nixosModules.default
           inputs.churri.nixosModules.default
           inputs.sentouki.nixosModules.default
+          {
+            imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
+            nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+          }
         ];
       };
 

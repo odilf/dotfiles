@@ -13,7 +13,7 @@ in
     enable = lib.mkEnableOption "gnome";
   };
 
-  config = lib.mkIf (cfg.enable && isLinux) {
+  config = lib.mkIf (config.gui && cfg.enable && isLinux) {
     services.xserver = {
       enable = true;
       displayManager.gdm.enable = true;

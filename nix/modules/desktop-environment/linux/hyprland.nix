@@ -13,7 +13,7 @@ in
     enable = lib.mkEnableOption "hyprland";
   };
 
-  config = lib.mkIf (cfg.enable && isLinux) {
+  config = lib.mkIf (config.gui && cfg.enable && isLinux) {
     # nixpkgs.overlays = [
     #   (final: prev:
     #   {

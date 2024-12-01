@@ -61,7 +61,6 @@ in
         wvous-tr-corner = 1;
       };
 
-
       finder = {
         # TODO: Isn't this redundant with the things above?
         AppleShowAllExtensions = true;
@@ -72,7 +71,7 @@ in
 
         QuitMenuItem = true; # Allow quitting Finder
         ShowPathbar = true; # Show path breadcrumbs in finder windows
-        ShowStatusBar = true; # Show status bar at bottom of finder windows with item/disk space stats 
+        ShowStatusBar = true; # Show status bar at bottom of finder windows with item/disk space stats
       };
 
       # Login thing

@@ -86,7 +86,7 @@ in
       # universalaccess.closeViewScrollWheelToggle = true;
     };
 
-    # TouchID for sudo 
+    # TouchID for sudo
     security.pam.enableSudoTouchIdAuth = true;
 
     environment.systemPackages = [

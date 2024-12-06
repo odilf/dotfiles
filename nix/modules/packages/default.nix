@@ -47,7 +47,7 @@ in
         pkgs.vim
       ]
       ++ lib.optionals (cfg.gui && pkgs.stdenv.hostPlatform.isLinux) [
-        # TODO: Make it respect config 
+        # TODO: Make it respect config
         pkgs.firefox-beta
       ];
 
@@ -55,7 +55,7 @@ in
       enable = true;
       onActivation.cleanup = "uninstall";
 
-      # TODO: Make it respect config 
+      # TODO: Make it respect config
       casks = [ "firefox@nightly" ];
     };
   };

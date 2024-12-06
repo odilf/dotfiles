@@ -5,8 +5,6 @@
   ...
 }:
 let
-  # eachHome = (lib.traceVal (import ../../utils.nix { inherit lib pkgs config; }).packages).eachHome;
-  # inherit (lib.traceVal (import ../../utils.nix { inherit lib pkgs config; }).packages) eachHome;
   utils = import ../../utils.nix { inherit lib pkgs config; };
 in
 {

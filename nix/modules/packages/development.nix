@@ -22,20 +22,16 @@ let
       pkgs.btop
       pkgs.curl
       pkgs.dua
-      # pkgs.eza
       pkgs.fd
       pkgs.pfetch-rs
-      # pkgs.starship
       pkgs.ripgrep
       pkgs.rsync
-      # pkgs.thefuck
       pkgs.tokei
       pkgs.vim
       pkgs.neovim
       pkgs.wget
       pkgs.yazi
       pkgs.zellij
-      # pkgs.zoxide
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash
@@ -48,14 +44,14 @@ let
   rust = lib.optionals cfg.rust [ pkgs.bacon ];
 
   gui =
-    lib.optionals config.packages.gui [
+    lib.optionals config.packages.gui ([
       pkgs.cool-retro-term
-      # pkgs.neovide
       pkgs.qbittorrent
     ]
     ++ lib.optionals isLinux [
       pkgs.vscodium
-    ];
+      pkgs.neovide
+    ]);
 in
 {
   options.packages.development = {
@@ -100,8 +96,5 @@ in
 
     // utils.eachHome {
       home.packages = default ++ cli ++ rust ++ gui;
-      # home.file.".config/karabiner".source = ../../../karabiner;
-      # home.file.".config/nvim".source = ../../../nvim;
-      # home.stateVersion = "24.11";
     };
 }

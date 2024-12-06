@@ -16,7 +16,9 @@
 
 
 
-[includeIf "gitdir:~/Documents/Uni/**"]
-    path = ~/Documents/Uni/.gitconfig
+[includeIf "gitdir:Uni/**"]
+    path = /Volumes/sidecar/Uni/.gitconfig
 [push]
 	autoSetupRemote = true
+[init]
+	defaultBranch = main

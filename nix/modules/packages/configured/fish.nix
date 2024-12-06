@@ -44,7 +44,7 @@ in
         grep = "rg";
         cat = "bat";
         vim = "nvim";
-        
+
         # Actual abbreviations of long commands
         e = "nvim";
         g = "git";
@@ -62,7 +62,7 @@ in
 
         ## Nix
         nshell = "nix shell nixpkgs#";
-        # rebuild = let 
+        # rebuild = let
         #   inherit (pkgs.stdenv.hostPlatform) isDarwin;
         #   command = if isDarwin then "darwin-rebuild" else "sudo nixos-rebuild";
         #   host-raw = config.networking.hostName; # TODO: This will not be correct probably

@@ -119,7 +119,7 @@ in
             tomlCfg = builtins.fromTOML (builtins.readFile ../../../../aerospace/aerospace.toml);
             cfg = tomlCfg // {
               mode.main.binding = tomlCfg.mode.main.binding // {
-                alt-enter = "exec-and-forget ${pkgs.alacritty}/bin/alacritty";
+                alt-enter = "exec-and-forget open -n ${pkgs.alacritty}/Applications/Alacritty.app";
               };
 
               # TODO: Do I need to set them explicitly? Or is it only to override them?

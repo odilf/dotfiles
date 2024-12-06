@@ -7,11 +7,12 @@
   imports = [
     ./packages
     ./desktop-environment
+    ./home
     ./peripherals
   ];
 
   options = {
-    gui = lib.mkEnableOption "GUI";
+    gui = lib.mkEnableOption "the graphical user interface";
   };
 
   config = {

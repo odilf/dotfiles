@@ -43,15 +43,16 @@ let
 
   rust = lib.optionals cfg.rust [ pkgs.bacon ];
 
-  gui =
-    lib.optionals config.packages.gui ([
+  gui = lib.optionals config.packages.gui (
+    [
       pkgs.cool-retro-term
       pkgs.qbittorrent
     ]
     ++ lib.optionals isLinux [
       pkgs.vscodium
       pkgs.neovide
-    ]);
+    ]
+  );
 in
 {
   options.packages.development = {

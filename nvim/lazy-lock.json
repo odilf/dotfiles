@@ -24,7 +24,7 @@
   "lazy-lsp.nvim": { "branch": "master", "commit": "8cfb2329a4cdc8e1eefe47dc18fb8e8c6dbdf183" },
   "lazy.nvim": { "branch": "main", "commit": "077102c5bfc578693f12377846d427f49bc50076" },
   "lazydev.nvim": { "branch": "main", "commit": "491452cf1ca6f029e90ad0d0368848fac717c6d2" },
-  "lsp-zero.nvim": { "branch": "v4.x", "commit": "19a8b90340c6c522219c84f7befe784d657ab28e" },
+  "let-it-snow.nvim": { "branch": "main", "commit": "7ff767f7b6e787989ca73ebcdcd0dd5ea483811a" },
   "lspkind.nvim": { "branch": "master", "commit": "a700f1436d4a938b1a1a93c9962dc796afbaef4d" },
   "lspsaga.nvim": { "branch": "main", "commit": "d027f8b9c7c55e26cf4030c8657a2fc8222ed762" },
   "lualine.nvim": { "branch": "master", "commit": "b431d228b7bbcdaea818bdc3e25b8cdbe861f056" },

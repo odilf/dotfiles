@@ -8,6 +8,7 @@ let
   cfg = config.packages.development;
 
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+  utils = import ../utils.nix { inherit lib pkgs config; };
 
   default = [
     pkgs.vim
@@ -21,20 +22,20 @@ let
       pkgs.btop
       pkgs.curl
       pkgs.dua
-      pkgs.eza
+      # pkgs.eza
       pkgs.fd
       pkgs.pfetch-rs
-      pkgs.starship
+      # pkgs.starship
       pkgs.ripgrep
       pkgs.rsync
-      pkgs.thefuck
+      # pkgs.thefuck
       pkgs.tokei
       pkgs.vim
       pkgs.neovim
       pkgs.wget
       pkgs.yazi
       pkgs.zellij
-      pkgs.zoxide
+      # pkgs.zoxide
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash
@@ -48,7 +49,6 @@ let
 
   gui =
     lib.optionals config.packages.gui [
-      pkgs.alacritty
       pkgs.cool-retro-term
       # pkgs.neovide
       pkgs.qbittorrent
@@ -79,19 +79,29 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    programs = {
-      fish.enable = lib.mkIf cfg.cli true;
+  config =
+    lib.mkIf cfg.enable {
+      packages.configured.alacritty.enable = true;
+
+      programs = {
+        fish.enable = lib.mkIf cfg.cli true;
+      };
+
+      environment.systemPackages = default ++ cli ++ rust ++ gui;
+
+      # Swap escape and caps lock in tty
+      services.xserver.xkb.options = lib.mkIf isLinux "ctrl:swapcaps";
+      console.useXkbConfig = lib.mkIf isLinux true;
+
+      homebrew.brews = lib.optionals (isDarwin && cfg.cli) [
+        "mosh"
+      ];
+    }
+
+    // utils.eachHome {
+      home.packages = default ++ cli ++ rust ++ gui;
+      # home.file.".config/karabiner".source = ../../../karabiner;
+      # home.file.".config/nvim".source = ../../../nvim;
+      # home.stateVersion = "24.11";
     };
-
-    # Swap escape and caps lock in tty
-    services.xserver.xkb.options = lib.mkIf isLinux "ctrl:swapcaps";
-    console.useXkbConfig = lib.mkIf isLinux true;
-
-    environment.systemPackages = default ++ cli ++ rust ++ gui;
-
-    homebrew.brews = lib.optionals (isDarwin && cfg.cli) [
-      "mosh"
-    ];
-  };
 }

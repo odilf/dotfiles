@@ -13,7 +13,8 @@
     ./hardware-configuration.nix
   ];
 
-  gui = false;
+  packages.gui = false;
+  packages.users = ["uoh"];
 
   # For todoist-electron
   # TODO: Make it whitelist, don't allow all

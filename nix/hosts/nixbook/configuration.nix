@@ -9,6 +9,7 @@
   gui = true;
 
   packages = {
+    users = [ "odilf" ];
     social.enable = true;
     games.enable = true;
     creative.enable = true;

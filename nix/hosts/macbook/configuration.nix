@@ -3,10 +3,15 @@
   gui = true;
 
   packages = {
+    users = [ "odilf" ];
     social.enable = true;
     games.enable = true;
     creative.enable = true;
     creative.wacom = true;
+  };
+
+  users.users.odilf = {
+    home = "/Users/odilf";
   };
 
   nixpkgs.hostPlatform = "aarch64-darwin";

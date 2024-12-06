@@ -9,6 +9,8 @@ let
 in
 {
   imports = [
+    ./configured
+
     ./games.nix
     ./development.nix
     ./social.nix
@@ -18,7 +20,15 @@ in
 
   options.packages = {
     gui = lib.mkEnableOption "gui";
+
+    users = lib.mkOption {
+      description = "List of users to configure";
+      type = lib.types.nullOr (lib.types.listOf lib.types.str);
+      default = builtins.attrNames config.users.users;
+    };
+
     browser = lib.mkOption {
+      description = "Main browser for the system";
       type = lib.types.enum [
         "firefox"
         "firefox-nightly"

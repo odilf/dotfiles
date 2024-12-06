@@ -1,6 +1,6 @@
 if vim.g.neovide then
   vim.g.neovide_input_macos_option_key_is_meta = "only_left"
-  vim.o.guifont = "GeistMono NF SemiBold:style=Medium:h14"
+  vim.o.guifont = "ZedMono Nerd Font:style=Medium:h12"
 
   vim.g.neovide_cursor_animate_command_line = false
   vim.g.neovide_cursor_animate_in_insert_mode = false

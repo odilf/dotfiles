@@ -80,7 +80,7 @@
           ./hosts/macbook/configuration.nix
           ./modules
           ./modules/polyfill/nixos.nix
-          home-manager.nixosModules.default
+          home-manager.darwinModules.default
         ];
       };
     }

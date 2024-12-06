@@ -39,6 +39,7 @@ in
       ]
       ++ lib.optionals config.packages.gui (
         [
+          pkgs.prismlauncher
           pkgs.legendary-gl
         ]
         ++ lib.optionals isLinux [

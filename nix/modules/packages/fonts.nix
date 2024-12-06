@@ -19,15 +19,10 @@ in
   config = lib.mkIf cfg.enable {
     fonts = {
       packages = [
-        # Mono
-        (pkgs.nerdfonts.override {
-          fonts = [
-            "0xProto"
-            "ComicShannsMono"
-            "GeistMono"
-            "ZedMono"
-          ];
-        })
+        pkgs.nerd-fonts._0xproto
+        pkgs.nerd-fonts.comic-shanns-mono
+        pkgs.nerd-fonts.geist-mono
+        pkgs.nerd-fonts.zed-mono
         pkgs.monocraft
 
         # Sans

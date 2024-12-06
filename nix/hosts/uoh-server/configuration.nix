@@ -14,7 +14,10 @@
   ];
 
   packages.gui = false;
-  packages.users = ["uoh"];
+  packages.users = [
+    "uoh"
+    "odilf"
+  ];
 
   # For todoist-electron
   # TODO: Make it whitelist, don't allow all

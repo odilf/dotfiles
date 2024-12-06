@@ -1,18 +1,12 @@
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let
-  root = path: ../../../. + path;
+  utils = import ../utils.nix { inherit lib pkgs config; };
 in
 {
-  imports =
-    [
-    ];
-
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-
-  home-manager.users.odilf = {
-    # home.file.".config/karabiner".source = ../../../karabiner;
-    # home.file.".config/nvim".source = ../../../nvim;
+  config = {
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+  } // utils.eachHome {
     home.stateVersion = "24.11";
   };
 }

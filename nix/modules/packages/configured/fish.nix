@@ -30,6 +30,7 @@ in
 
       preferAbbrs = true;
       interactiveShellInit = ''
+        set fish_greeting
         enable_transience # (from starship)
 
         ${pkgs.pfetch}/bin/pfetch 

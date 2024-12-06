@@ -1,5 +1,3 @@
-# TODO
-
 {
   pkgs,
   lib,
@@ -30,7 +28,7 @@ in
         pkgs.poppins
 
         # Serif
-        # pkgs.lora
+        pkgs.lora
         pkgs.libertinus
       ];
 

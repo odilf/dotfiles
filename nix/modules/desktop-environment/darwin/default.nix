@@ -41,7 +41,7 @@ in
 
         persistent-apps = [
           "/Applications/Firefox Nightly.app"
-          "/Applications/Nix Apps/Alacritty.app"
+          "${pkgs.alacritty}/Applications/Alacritty.app"
         ];
 
         persistent-others = [

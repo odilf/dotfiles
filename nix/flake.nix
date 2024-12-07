@@ -21,11 +21,19 @@
     churri = {
       url = "github:odilf/churri";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     sentouki = {
       url = "github:odilf/sentouki";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
+    incipit = {
+      url = "github:odilf/incipit";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     nix-minecraft = {
@@ -56,6 +64,7 @@
           home-manager.nixosModules.default
           inputs.churri.nixosModules.default
           inputs.sentouki.nixosModules.default
+          inputs.incipit.nixosModules.default
           {
             imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
             nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];

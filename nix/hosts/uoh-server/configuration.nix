@@ -57,7 +57,6 @@
     openFirewall = true;
   };
 
-  # Enable the OpenSSH daemon.
   services = rec {
     openssh = {
       enable = true;
@@ -76,20 +75,20 @@
       port = 22;
     };
 
-    # incipit = {
-    #   enable = true;
-    #   port = 80;
-    #   host = "0.0.0.0";
-    #   services = {
-    #     "odilf.com".port = 80;
-    #     # "files.odilf.com".port = sentouki.port;
-    #     # "git.odilf.com".port = gitea.port;
-    #     "churri.odilf.com".port = churri.port;
-    #     "photos.odilf.com".port = 2283; # TODO: Change when (or if) immich is properly on nix
-    #     # "media.odilf.com".port = 8096; # Hard coded in jellyfin :(
-    #     "scrutiny.odilf.com".port = scrutiny.settings.web.listen.port;
-    #   };
-    # };
+    incipit = {
+      enable = true;
+      port = 80;
+      addr = "0.0.0.0";
+      incipit-host = "incipit.odilf.com";
+      services = {
+        # "files.odilf.com".port = sentouki.port;
+        # "git.odilf.com".port = gitea.port;
+        "churri.odilf.com".port = churri.port;
+        "photos.odilf.com".port = 2283; # TODO: Change when (or if) immich is properly on nix
+        "media.odilf.com".port = 8096; # Hard coded in jellyfin :(
+        "scrutiny.odilf.com".port = scrutiny.settings.web.listen.port;
+      };
+    };
 
     samba = {
       enable = true;

@@ -148,6 +148,12 @@
     #   basePath = "/mnt/";
     # };
 
+    # gitea = {
+    #   enable = true;
+    #   settings.server.HTTP_PORT = 2780;
+    #   database.type = "postgres";
+    # };
+
     # nix-minecraft
     minecraft-servers = {
       enable = true;

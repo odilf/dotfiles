@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   pkgs,
   ...
@@ -44,8 +40,13 @@
   time.timeZone = "Europe/Madrid";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.uoh = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.fish;
+  };
+
+  users.users.odilf = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
@@ -56,17 +57,22 @@
     openFirewall = true;
   };
 
-  # Enable the OpenSSH daemon.
   services = {
     openssh = {
       enable = true;
       openFirewall = true;
+      ports = [4652];
       settings = {
-        PasswordAuthentication = true;
-        AllowUsers = [ "uoh" ];
+        PasswordAuthentication = false;
+        AllowUsers = [ "uoh" "odilf" ];
         UseDns = true;
         PermitRootLogin = "prohibit-password";
       };
+    };
+
+    endlessh = {
+      enable = true;
+      port = 22;
     };
 
     samba = {
@@ -162,11 +168,9 @@
           level-name = "Atlas";
         };
 
-        jvmOpts = "-Xms4092M -Xmx4092M -XX:+UseG1GC";
+        jvmOpts = "-Xms6G -Xmx6G -XX:+UseG1GC";
 
         symlinks = {
-
-          # Fetching from the internet
           "mods" = pkgs.linkFarmFromDrvs "mods" (
             builtins.attrValues {
               Lithium = pkgs.fetchurl {
@@ -182,11 +186,6 @@
         };
       };
     };
-
-    xserver = {
-      enable = true;
-      displayManager.startx.enable = true;
-    };
   };
 
   # For immich
@@ -199,11 +198,6 @@
       allowedTCPPorts = [
         80
         443
-
-        # Tests, remove later
-        25565
-        9384
-        1111
       ];
       allowPing = true;
     };

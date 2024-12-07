@@ -57,7 +57,8 @@
     openFirewall = true;
   };
 
-  services = {
+  # Enable the OpenSSH daemon.
+  services = rec {
     openssh = {
       enable = true;
       openFirewall = true;
@@ -74,6 +75,21 @@
       enable = true;
       port = 22;
     };
+
+    # incipit = {
+    #   enable = true;
+    #   port = 80;
+    #   host = "0.0.0.0";
+    #   services = {
+    #     "odilf.com".port = 80;
+    #     # "files.odilf.com".port = sentouki.port;
+    #     # "git.odilf.com".port = gitea.port;
+    #     "churri.odilf.com".port = churri.port;
+    #     "photos.odilf.com".port = 2283; # TODO: Change when (or if) immich is properly on nix
+    #     # "media.odilf.com".port = 8096; # Hard coded in jellyfin :(
+    #     "scrutiny.odilf.com".port = scrutiny.settings.web.listen.port;
+    #   };
+    # };
 
     samba = {
       enable = true;
@@ -137,6 +153,7 @@
 
     churri = {
       enable = true;
+      port = 2001;
       host = "0.0.0.0";
       targetDate = "2024-11-16T15:25:00+01:00";
     };
@@ -192,6 +209,22 @@
         };
       };
     };
+
+    # Monitoring
+    smartd = {
+      enable = true;
+      devices = [
+        # { device = "/dev/disk/by-uuid/65B5-2A38"; } # UOH-ARCHIVE
+        { device = "/dev/disk/by-uuid/2f764760-62d4-427e-b33d-b08ae3fcc5b7"; } # TOSHIBA
+        { device = "/dev/disk/by-uuid/89bb9652-c89b-40a5-9a76-7e64212b82f0"; } # UOH-MEDIA
+        { device = "/dev/disk/by-uuid/0dfd1ee6-692f-4911-8f84-341a9aa75f4a"; } # INTENSO
+      ];
+    };
+
+    scrutiny = {
+      enable = true;
+      settings.web.listen.port = 8305;
+    };
   };
 
   # For immich
@@ -242,24 +275,6 @@
       device = "/dev/disk/by-uuid/0dfd1ee6-692f-4911-8f84-341a9aa75f4a";
       fsType = "btrfs";
       options = [ "nofail" ];
-    };
-  };
-
-  # Monitoring
-  services = {
-    smartd = {
-      enable = true;
-      devices = [
-        # { device = "/dev/disk/by-uuid/65B5-2A38"; } # UOH-ARCHIVE
-        { device = "/dev/disk/by-uuid/2f764760-62d4-427e-b33d-b08ae3fcc5b7"; } # TOSHIBA
-        { device = "/dev/disk/by-uuid/89bb9652-c89b-40a5-9a76-7e64212b82f0"; } # UOH-MEDIA
-        { device = "/dev/disk/by-uuid/0dfd1ee6-692f-4911-8f84-341a9aa75f4a"; } # INTENSO
-      ];
-    };
-
-    scrutiny = {
-      enable = true;
-      settings.web.listen.port = 8305;
     };
   };
 

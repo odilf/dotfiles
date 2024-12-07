@@ -82,10 +82,10 @@
       incipit-host = "incipit.odilf.com";
       services = {
         # "files.odilf.com".port = sentouki.port;
-        # "git.odilf.com".port = gitea.port;
         "churri.odilf.com".port = churri.port;
         "photos.odilf.com".port = 2283; # TODO: Change when (or if) immich is properly on nix
         "media.odilf.com".port = 8096; # Hard coded in jellyfin :(
+        "git.odilf.com".port = gitea.settings.server.HTTP_PORT;
         "scrutiny.odilf.com".port = scrutiny.settings.web.listen.port;
       };
     };
@@ -164,11 +164,12 @@
     #   basePath = "/mnt/";
     # };
 
-    # gitea = {
-    #   enable = true;
-    #   settings.server.HTTP_PORT = 2780;
-    #   database.type = "postgres";
-    # };
+    gitea = {
+      enable = true;
+      appName = "Git on UOH.";
+      settings.server.HTTP_PORT = 2780;
+      database.type = "postgres";
+    };
 
     # nix-minecraft
     minecraft-servers = {

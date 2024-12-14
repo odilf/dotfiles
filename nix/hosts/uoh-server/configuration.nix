@@ -191,7 +191,7 @@
           level-name = "Atlas";
         };
 
-        jvmOpts = "-Xms6G -Xmx6G -XX:+UseG1GC";
+        jvmOpts = "-Xms4G -Xmx4G -XX:+UseG1GC";
 
         symlinks = {
           "mods" = pkgs.linkFarmFromDrvs "mods" (

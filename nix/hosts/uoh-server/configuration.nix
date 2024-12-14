@@ -154,7 +154,7 @@
       enable = true;
       port = 2001;
       host = "0.0.0.0";
-      targetDate = "2024-11-16T15:25:00+01:00";
+      targetDate = "2024-12-27T19:00:00+01:00";
     };
 
     # `file` is not provided in binary

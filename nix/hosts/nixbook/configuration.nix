@@ -15,6 +15,8 @@
     creative.enable = true;
   };
 
+  peripherals.sidecar.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;

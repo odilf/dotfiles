@@ -8,6 +8,7 @@
     ./packages
     ./desktop-environment
     ./home
+    ./peripherals
   ];
 
   options = {

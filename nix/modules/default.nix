@@ -7,6 +7,7 @@
   imports = [
     ./packages
     ./desktop-environment
+    ./peripherals
   ];
 
   options = {

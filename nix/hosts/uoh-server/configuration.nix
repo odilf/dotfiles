@@ -61,10 +61,13 @@
     openssh = {
       enable = true;
       openFirewall = true;
-      ports = [4652];
+      ports = [ 4652 ];
       settings = {
         PasswordAuthentication = false;
-        AllowUsers = [ "uoh" "odilf" ];
+        AllowUsers = [
+          "uoh"
+          "odilf"
+        ];
         UseDns = true;
         PermitRootLogin = "prohibit-password";
       };

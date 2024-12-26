@@ -9,6 +9,7 @@
     ./desktop-environment
     ./home
     ./peripherals
+    ./laptop
   ];
 
   options = {

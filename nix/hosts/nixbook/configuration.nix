@@ -2,20 +2,26 @@
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
-  gui = true;
+  # Custom NixOS options
+  # ---
 
+  gui = true;
   packages = {
     users = [ "odilf" ];
     social.enable = true;
     games.enable = true;
     creative.enable = true;
   };
+  desktop-environment.gnome.enable = true;
 
   peripherals.sidecar.enable = true;
+  laptop.enable = true;
+
+  # Regular NixOS options
+  # ---
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -42,9 +48,7 @@
     "flakes"
   ];
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "odilf-nixbook"; 
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.

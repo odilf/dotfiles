@@ -12,7 +12,7 @@ in
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.backupFileExtension = "backup";
+      home-manager.backupFileExtension = "home-manager-backup";
     }
     // utils.eachHome {
       home.stateVersion = "24.11";

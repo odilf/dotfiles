@@ -42,8 +42,10 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
-    nixpkgs-systemd-boot-apple-silicon.url = "github:NixOS/nixpkgs?rev=41dea55321e5a999b17033296ac05fe8a8b5a257";
+    apple-silicon = {
+      url = "github:tpwrules/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -72,7 +74,7 @@
         ];
       };
 
-      nixosConfigurations."nixbook" = inputs.nixpkgs-systemd-boot-apple-silicon.lib.nixosSystem {
+      nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
           ./hosts/nixbook/configuration.nix

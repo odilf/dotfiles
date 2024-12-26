@@ -14,7 +14,8 @@ in
 
   config = utils.eachHome {
     # Maybe necessary for completions? (https://discourse.nixos.org/t/how-to-use-completion-fish-with-home-manager/23356/3)
-    xdg.configFile."fish/completions/nix.fish".source = "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
+    xdg.configFile."fish/completions/nix.fish".source =
+      "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
 
     programs = {
       eza.enable = true;

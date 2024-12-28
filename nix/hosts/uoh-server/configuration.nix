@@ -228,6 +228,11 @@
       enable = true;
       settings.web.listen.port = 8305;
     };
+    
+    cage = {
+      enable = true;
+      program = "${pkgs.firefox}/bin/firefox";
+    };
   };
 
   # For immich

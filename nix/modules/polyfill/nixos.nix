@@ -7,19 +7,15 @@ let
 in
 {
   options = {
-    fonts.fontconfig = fill;
-    console = fill;
-    programs = {
-      hyprland = fill;
-      hyprlock = fill;
-      waybar = fill;
+    homebrew = fill;
+    security = {
+      pam.enableSudoTouchIdAuth = fill;
     };
 
     services = {
-      hypridle = fill;
-      xserver = fill;
+      aerospace = fill;
     };
 
-    systemd = fill;
+    system.defaults = fill;
   };
 }

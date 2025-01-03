@@ -61,15 +61,15 @@
       # Modules
       nixosModules.default = {
         imports = [
-          ./modules
-          ./modules/polyfill/nixos.nix
+          ./nix/modules
+          ./nix/modules/polyfill/nixos.nix
         ];
       };
 
       darwinModules.default = {
         imports = [
-          ./modules
-          ./modules/polyfill/nix-darwin.nix
+          ./nix/modules
+          ./nix/modules/polyfill/nix-darwin.nix
         ];
       };
 
@@ -77,7 +77,7 @@
       nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
-          ./hosts/nixbook/configuration.nix
+          ./nix/hosts/nixbook/configuration.nix
           nixosModules.default
           home-manager.nixosModules.default
           inputs.apple-silicon.nixosModules.default
@@ -87,7 +87,7 @@
       darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./hosts/macbook/configuration.nix
+          ./nix/hosts/macbook/configuration.nix
           darwinModules.default
           home-manager.darwinModules.default
         ];

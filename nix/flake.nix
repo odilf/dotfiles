@@ -56,30 +56,29 @@
       home-manager,
       ...
     }@inputs:
-    {
-      nixosConfigurations."uoh-server" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/uoh-server/configuration.nix
+    rec {
+
+      # Modules
+      nixosModules.default = {
+        imports = [
           ./modules
-          ./modules/polyfill/nix-darwin.nix
-          home-manager.nixosModules.default
-          inputs.churri.nixosModules.default
-          inputs.sentouki.nixosModules.default
-          inputs.incipit.nixosModules.default
-          {
-            imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
-            nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
-          }
+          ./modules/polyfill/nixos.nix
         ];
       };
 
+      darwinModules.default = {
+        imports = [
+          ./modules
+          ./modules/polyfill/nix-darwin.nix
+        ];
+      };
+
+      # Configurations
       nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
           ./hosts/nixbook/configuration.nix
-          ./modules
-          ./modules/polyfill/nix-darwin.nix
+          nixosModules.default
           home-manager.nixosModules.default
           inputs.apple-silicon.nixosModules.default
         ];
@@ -89,8 +88,7 @@
         system = "aarch64-darwin";
         modules = [
           ./hosts/macbook/configuration.nix
-          ./modules
-          ./modules/polyfill/nixos.nix
+          darwinModules.default
           home-manager.darwinModules.default
         ];
       };

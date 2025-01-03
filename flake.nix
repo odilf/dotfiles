@@ -18,34 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    churri = {
-      url = "github:odilf/churri";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
-    sentouki = {
-      url = "github:odilf/sentouki";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
-    incipit = {
-      url = "github:odilf/incipit";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
-    nix-minecraft = {
-      url = "github:Infinidoge/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
-    apple-silicon = {
-      url = "github:tpwrules/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
   };
 
   outputs =
@@ -63,6 +36,7 @@
         imports = [
           ./nix/modules
           ./nix/modules/polyfill/nixos.nix
+          home-manager.nixosModules.default
         ];
       };
 
@@ -70,6 +44,7 @@
         imports = [
           ./nix/modules
           ./nix/modules/polyfill/nix-darwin.nix
+          home-manager.darwinModules.default
         ];
       };
 
@@ -79,7 +54,6 @@
         modules = [
           ./nix/hosts/nixbook/configuration.nix
           nixosModules.default
-          home-manager.nixosModules.default
           inputs.apple-silicon.nixosModules.default
         ];
       };
@@ -89,7 +63,6 @@
         modules = [
           ./nix/hosts/macbook/configuration.nix
           darwinModules.default
-          home-manager.darwinModules.default
         ];
       };
     }

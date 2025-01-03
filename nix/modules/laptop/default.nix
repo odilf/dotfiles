@@ -9,7 +9,7 @@ let
 in
 # inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
 {
-  options.packages.games = {
+  options.laptop = {
     enable = lib.mkEnableOption "Configuration for laptops";
   };
 

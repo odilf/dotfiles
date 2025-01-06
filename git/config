@@ -11,14 +11,3 @@
 	enabled = true
 [fetch]
 	prune = true
-[core]
-	editor = nvim
-
-
-
-[includeIf "gitdir:Uni/**"]
-    path = /Volumes/sidecar/Uni/.gitconfig
-[push]
-	autoSetupRemote = true
-[init]
-	defaultBranch = main

@@ -28,6 +28,7 @@ let
       pkgs.rsync
       pkgs.tokei
       pkgs.vim
+      pkgs.mosh 
       pkgs.neovim
       pkgs.wget
       pkgs.yazi
@@ -35,9 +36,6 @@ let
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash
-    ]
-    ++ lib.optionals isLinux [
-      pkgs.mosh # Broken on darwin
     ]
   );
 
@@ -78,20 +76,15 @@ in
 
   config =
     lib.mkIf cfg.enable {
-      packages.configured.alacritty.enable = true;
-
-      programs = {
-        fish.enable = lib.mkIf cfg.cli true;
+      packages.configured = lib.mkIf cfg.cli {
+        alacritty.enable = true;
+        fish.enable = true;
       };
 
       environment.systemPackages = default ++ cli ++ rust ++ gui;
 
-      # Swap escape and caps lock in tty
-      services.xserver.xkb.options = lib.mkIf isLinux "ctrl:swapcaps";
-      console.useXkbConfig = lib.mkIf isLinux true;
-
-      homebrew.brews = lib.optionals (isDarwin && cfg.cli) [
-        "mosh"
+      homebrew.casks = lib.optionals (isDarwin && config.packages.gui) [
+        "vscodium"
       ];
     }
 

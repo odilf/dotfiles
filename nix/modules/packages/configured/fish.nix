@@ -9,7 +9,7 @@ let
 in
 {
   options.packages.configured.fish = {
-    enabled = lib.mkEnableOption "fish";
+    enable = lib.mkEnableOption "fish";
   };
 
   config = utils.eachHome {
@@ -24,6 +24,9 @@ in
       zoxide.enable = true;
       starship.enable = true;
       thefuck.enable = true;
+
+      direnv.enable = true;
+      direnv.nix-direnv.enable = true;
     };
 
     programs.fish = {
@@ -33,6 +36,8 @@ in
       interactiveShellInit = ''
         set fish_greeting
         enable_transience # (from starship)
+
+        set PATH ~/.nix-profile/bin /run/current-system/sw/bin /nix/var/nix/profiles/default/bin /usr/local/bin /usr/bin /usr/sbin /bin /sbin
 
         ${pkgs.pfetch}/bin/pfetch 
       '';

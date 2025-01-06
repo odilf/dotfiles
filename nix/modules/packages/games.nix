@@ -44,7 +44,7 @@ in
         ]
         ++ lib.optionals isLinux [
           pkgs.rare # Epic games GUI (linux)
-          # pkgs.minecraft
+          pkgs.dolphin-emu
         ]
       );
 
@@ -52,6 +52,7 @@ in
       "epic-games"
       "minecraft"
       "steam"
+      "dolphin"
     ];
   };
 }

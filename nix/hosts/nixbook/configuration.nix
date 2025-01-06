@@ -48,7 +48,7 @@
     "flakes"
   ];
 
-  networking.hostName = "odilf-nixbook"; 
+  networking.hostName = "odilf-nixbook";
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.

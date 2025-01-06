@@ -28,8 +28,7 @@ let
       pkgs.rsync
       pkgs.tokei
       pkgs.vim
-      pkgs.mosh 
-      pkgs.neovim
+      pkgs.mosh
       pkgs.wget
       pkgs.yazi
       pkgs.zellij
@@ -79,6 +78,7 @@ in
       packages.configured = lib.mkIf cfg.cli {
         alacritty.enable = true;
         fish.enable = true;
+        neovim.enable = true;
       };
 
       environment.systemPackages = default ++ cli ++ rust ++ gui;

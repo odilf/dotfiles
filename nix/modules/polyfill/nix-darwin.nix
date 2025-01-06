@@ -18,8 +18,11 @@ in
     services = {
       hypridle = fill;
       xserver = fill;
+      tlp = fill;
     };
 
     systemd = fill;
+
+    fileSystems = fill;
   };
 }

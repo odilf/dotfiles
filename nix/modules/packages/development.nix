@@ -10,11 +10,6 @@ let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
   utils = import ../utils.nix { inherit lib pkgs config; };
 
-  default = [
-    pkgs.vim
-    pkgs.git
-  ];
-
   cli = lib.optionals cfg.cli (
     [
       pkgs.bat
@@ -35,6 +30,8 @@ let
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash
+    ] ++ lib.optionals isLinux [
+      pkgs.trashy
     ]
   );
 
@@ -78,10 +75,11 @@ in
       packages.configured = lib.mkIf cfg.cli {
         alacritty.enable = true;
         fish.enable = true;
+        git.enable = true;
         neovim.enable = true;
       };
 
-      environment.systemPackages = default ++ cli ++ rust ++ gui;
+      environment.systemPackages = cli ++ rust ++ gui;
 
       homebrew.casks = lib.optionals (isDarwin && config.packages.gui) [
         "vscodium"
@@ -89,6 +87,6 @@ in
     }
 
     // utils.eachHome {
-      home.packages = default ++ cli ++ rust ++ gui;
+      home.packages = cli ++ rust ++ gui;
     };
 }

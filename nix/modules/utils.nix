@@ -24,10 +24,12 @@
 
     ```nix
     {
-      users = [ "odilf" ];
-
       config = home-manager.users = {
         odilf = {
+          foo = "bar";
+        };
+
+        gamer = {
           foo = "bar";
         };
       };

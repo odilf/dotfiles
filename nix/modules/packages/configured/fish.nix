@@ -39,7 +39,11 @@ in
           set fish_greeting
           enable_transience # (from starship)
 
-          set PATH ~/.nix-profile/bin /run/current-system/sw/bin /nix/var/nix/profiles/default/bin /usr/local/bin /usr/bin /usr/sbin /bin /sbin
+          # Add all environment variables set in NixOS
+          ${lib.concatMapAttrsStringSep "\n" (name: value: "set -x ${name} ${value}") config.environment.variables}
+          
+          # Append nix path
+          set -x PATH ~/.nix-profile/bin /run/current-system/sw/bin /nix/var/nix/profiles/default/bin $PATH
 
           ${pkgs.pfetch}/bin/pfetch 
         '';
@@ -51,7 +55,6 @@ in
           lt = "eza --tree";
           grep = "rg";
           cat = "bat";
-          vim = "nvim";
 
           # Actual abbreviations of long commands
           e = "nvim";
@@ -78,6 +81,8 @@ in
           # in "${command} switch --flake github:odilf/dotfiles?dir=nix#${host}";
         };
       };
+    } // {
+      environment.variables.SHELL = "fish";
     }
   );
 }

@@ -30,7 +30,8 @@ let
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash
-    ] ++ lib.optionals isLinux [
+    ]
+    ++ lib.optionals isLinux [
       pkgs.trashy
     ]
   );

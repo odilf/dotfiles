@@ -9,8 +9,6 @@ let
 in
 {
   config = lib.mkIf (config.gui && isDarwin) {
-    environment.variables.SHELL = "fish";
-
     system.defaults = {
       ".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
       NSGlobalDomain.AppleKeyboardUIMode = 3;

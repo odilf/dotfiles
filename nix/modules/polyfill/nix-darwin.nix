@@ -13,6 +13,7 @@ in
       hyprland = fill;
       hyprlock = fill;
       waybar = fill;
+      neovim = fill;
     };
 
     services = {

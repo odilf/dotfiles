@@ -8,10 +8,6 @@ let
   utils = import ../utils.nix { inherit lib pkgs config; };
 in
 {
-  imports = [
-    ./syncthing.nix
-  ];
-
   config =
     {
       home-manager.useGlobalPkgs = true;

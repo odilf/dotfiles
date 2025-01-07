@@ -18,7 +18,8 @@ in
     utils.eachHome {
       xdg.configFile.nvim.source = ../../../../nvim;
       programs.neovim.enable = true;
-    } // {
+    }
+    // {
       # Also enable it system-wide
       programs.neovim = lib.mkIf isLinux {
         enable = true;

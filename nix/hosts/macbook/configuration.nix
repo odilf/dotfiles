@@ -17,11 +17,6 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true; # TODO: Make it whitelist, don't allow all
 
-  environment.systemPackages = with pkgs; [
-    deno # For peek.nvim
-    nodejs_latest # For copilot.nvim
-  ];
-
   services.nix-daemon.enable = true;
   nix = {
     gc.automatic = true;

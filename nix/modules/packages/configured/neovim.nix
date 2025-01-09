@@ -17,15 +17,16 @@ in
   config = lib.mkIf cfg.enable (
     utils.eachHome {
       xdg.configFile.nvim.source = ../../../../nvim;
-      programs.neovim.enable = true;
+      programs.neovim = {
+        enable = true;
+        extraPackages = [
+          pkgs.deno # For Peek.nvim
+          pkgs.nodejs_latest # For copilot and perhaps something else
+        ];
+      };
     }
     // {
       # Also enable it system-wide
-      programs.neovim = lib.mkIf isLinux {
-        enable = true;
-        defaultEditor = true;
-      };
-
       environment.variables."EDITOR" = "nvim";
     }
   );

@@ -1,3 +1,7 @@
+-- disable netrw (for nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Leader key
 vim.keymap.set("n", "<Space>", "<Nop>")
 vim.g.mapleader = " "
@@ -11,7 +15,8 @@ vim.opt.signcolumn = 'yes'
 vim.opt.showmode = false
 
 -- Wrap lines
-vim.opt.linebreak = true
+vim.opt.linebreak = false
+vim.opt.wrap = false
 
 -- Tabs
 vim.opt.tabstop = 4 -- Actual tabs

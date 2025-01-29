@@ -44,9 +44,6 @@ return {
         vim.api.nvim_set_option_value("background", "light", {})
         vim.cmd("colorscheme dayfox")
       end,
-
-      -- When [#28](https://github.com/f-person/auto-dark-mode.nvim/pull/28) is merged
-      -- fallback = "dark",
     },
   }
 }

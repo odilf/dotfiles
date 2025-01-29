@@ -28,9 +28,3 @@ require("lazy").setup({
   },
   { change_detection = { notify = false } }
 )
-
-
---[[
-# TODOS:
-- [ ] Look into https://github.com/smoka7/multicursors.nvim
-]]

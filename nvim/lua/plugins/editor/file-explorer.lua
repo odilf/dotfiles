@@ -1,33 +1,18 @@
 return {
-	-- TODO: Use [proximity-sort](https://github.com/jonhoo/proximity-sort)
-	{
-		"nvim-telescope/telescope.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope-frecency.nvim",
-			-- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-		},
-		config = function()
-			local telescope = require("telescope")
-
-			telescope.setup({
-				extensions = {
-					frecency = {
-						db_safe_mode = false,
-					}
-				}
-			})
-			telescope.load_extension("frecency")
-			-- TODO: Re-enable fzf in nixos
-			-- telescope.load_extension("fzf")
-		end,
-	},
-
 	{
 		"nvim-tree/nvim-tree.lua",
 		lazy = false, -- Bad to lazy load according to [docs](https://github.com/nvim-tree/nvim-tree.lua/wiki/Installation#lazy-loading)
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
+			{
+				'b0o/nvim-tree-preview.lua',
+				dependencies = {
+					'nvim-lua/plenary.nvim',
+				},
+			},
+		},
+		keys = {
+			{ "<leader>fe", "<cmd>NvimTreeToggle<enter>", desc = "Open tree file explorer" },
 		},
 		opts = {
 			reload_on_bufenter = true,
@@ -41,8 +26,9 @@ return {
 	},
 
 	{
-		event = "BufRead",
-		"Pocco81/auto-save.nvim",
+		event = { "InsertLeave", "BufRead" },
+		"okuuva/auto-save.nvim",
+		cmd = "ASToggle",
 		opts = {
 			trigger_events = { "InsertLeave", "FocusLost", "TabLeave" },
 		}
@@ -51,6 +37,7 @@ return {
 	-- Search and replace in multiple files
 	{
 		"windwp/nvim-spectre",
+		keys = {}
 	},
 
 	{

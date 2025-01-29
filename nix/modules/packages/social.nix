@@ -33,6 +33,7 @@ in
       ++ lib.optionals isLinux [
         pkgs.whatsapp-for-linux
         pkgs.teams-for-linux
+        pkgs.element-desktop
       ]
       ++ lib.optionals isDarwin [
         # pkgs.whatsapp-for-mac # Fails to download
@@ -43,6 +44,7 @@ in
       "whatsapp" # workaround
       "microsoft-teams" # workaround too I think?
       "telegram"
+      "element"
     ];
   };
 }

@@ -6,6 +6,6 @@
     ./alacritty.nix
     ./fish.nix
     ./git.nix
-    ./neovim.nix
+    ./editor.nix
   ];
 }

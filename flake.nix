@@ -72,7 +72,14 @@
         pkgs = import nixpkgs { inherit system; };
       in
       {
+        devShells.default = pkgs.mkShell {
+          packages = [
+            pkgs.nil
+            pkgs.nixd
+          ];
+        };
         formatter = pkgs.nixfmt-rfc-style;
+
       }
     );
 }

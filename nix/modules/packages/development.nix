@@ -77,7 +77,7 @@ in
         alacritty.enable = true;
         fish.enable = true;
         git.enable = true;
-        neovim.enable = true;
+        editor.enable = true;
       };
 
       environment.systemPackages = cli ++ rust ++ gui;

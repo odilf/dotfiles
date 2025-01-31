@@ -44,7 +44,7 @@ in
     # Always include a text editor, and a browser in GUIs.
     environment.systemPackages =
       [
-        pkgs.vim
+        pkgs.helix
       ]
       ++ lib.optionals (cfg.gui && pkgs.stdenv.hostPlatform.isLinux) [
         # TODO: Make it respect config

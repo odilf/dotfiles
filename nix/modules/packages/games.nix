@@ -45,6 +45,7 @@ in
         ++ lib.optionals isLinux [
           pkgs.rare # Epic games GUI (linux)
           pkgs.dolphin-emu
+          pkgs.clonehero
         ]
       );
 
@@ -53,6 +54,7 @@ in
       "minecraft"
       "steam"
       "dolphin"
+      "clone-hero"
     ];
   };
 }

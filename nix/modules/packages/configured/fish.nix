@@ -59,7 +59,7 @@ in
           cat = "bat";
 
           # Actual abbreviations of long commands
-          e = "nvim";
+          e = "$EDITOR";
           g = "git";
           c = "cargo";
 

@@ -6,7 +6,7 @@
 }:
 {
   /*
-    Expands `set` for each user's home config.
+    Expands `set` for each user's home config (i.e., `config.home-manager.<user>`)
 
     # Example
 
@@ -38,6 +38,16 @@
   */
   eachHome = set: {
     home-manager.users = builtins.listToAttrs (
+      builtins.map (user: {
+        name = user;
+        value = set;
+      }) config.packages.users
+    );
+  };
+
+  # Like `eachHome`, except expands `set` for each user general NixOS config (i.e., `users.users.<user>`)
+  eachUsers = set: {
+    users.users = builtins.listToAttrs (
       builtins.map (user: {
         name = user;
         value = set;

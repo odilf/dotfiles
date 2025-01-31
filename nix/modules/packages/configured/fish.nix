@@ -86,6 +86,10 @@ in
     }
     // {
       environment.variables.SHELL = "fish";
+      programs.fish.enable = true;
+    }
+    // utils.eachUsers {
+      shell = pkgs.fish;
     }
   );
 }

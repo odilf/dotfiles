@@ -74,7 +74,7 @@ in
   config =
     lib.mkIf cfg.enable {
       packages.configured = lib.mkIf cfg.cli {
-        alacritty.enable = true;
+        alacritty.enable = lib.mkIf config.packages.gui true;
         fish.enable = true;
         git.enable = true;
         editor.enable = true;

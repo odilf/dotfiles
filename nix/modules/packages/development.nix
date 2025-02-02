@@ -85,9 +85,18 @@ in
       homebrew.casks = lib.optionals (isDarwin && config.packages.gui) [
         "vscodium"
       ];
+
+      environment.variables.PAGER = lib.mkIf cfg.cli "bat";
     }
 
     // utils.eachHome {
       home.packages = cli ++ rust ++ gui;
+
+      programs = {
+        bat.enable = cfg.cli;
+        bat.config = {
+          theme = "TwoDark";
+        };
+      };
     };
 }

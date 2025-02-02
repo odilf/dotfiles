@@ -27,6 +27,8 @@ in
         starship.enable = true;
         pay-respects.enable = true;
 
+        nix-index.enable = true;
+
         direnv.enable = true;
         direnv.nix-direnv.enable = true;
       };
@@ -44,8 +46,11 @@ in
             name: value: "set -x ${name} ${value}"
           ) config.environment.variables}
 
-          # Append nix path
-          set -x PATH ~/.nix-profile/bin /run/current-system/sw/bin /nix/var/nix/profiles/default/bin $PATH
+          # Append brew path
+          switch (uname)
+            case "Darwin"
+              set -x PATH $PATH /opt/homebrew/bin/
+          end
 
           ${pkgs.pfetch}/bin/pfetch 
         '';

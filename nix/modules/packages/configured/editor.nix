@@ -24,6 +24,7 @@ in
           theme = "starlight";
 
           editor = {
+            # auto-info = false;
             line-number = "relative";
             end-of-line-diagnostics = "hint";
             cursor-shape = {
@@ -37,8 +38,8 @@ in
 
           };
         };
-          languages = {
-            
+        languages = {
+
           language = [
             {
               name = "nix";
@@ -46,7 +47,7 @@ in
               formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
             }
           ];
-          };
+        };
       };
 
       programs.neovim = {

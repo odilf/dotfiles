@@ -9,7 +9,7 @@ in
   options = {
     homebrew = fill;
     security = {
-      pam.enableSudoTouchIdAuth = fill;
+      pam.services.sudo_local.touchIdAuth = fill;
     };
 
     services = {

@@ -9,6 +9,9 @@ let
 in
 {
   config = lib.mkIf (config.gui && isDarwin) {
+    # nix-darwin complains about this
+    ids.gids.nixbld = 350;
+
     system.defaults = {
       ".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
       NSGlobalDomain.AppleKeyboardUIMode = 3;
@@ -85,7 +88,7 @@ in
     };
 
     # TouchID for sudo
-    security.pam.enableSudoTouchIdAuth = true;
+    security.pam.services.sudo_local.touchIdAuth = true;
 
     environment.systemPackages = [
       pkgs.iina # Media player (TODO: should be in something in packages...)

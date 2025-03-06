@@ -33,6 +33,9 @@ in
               select = "underline";
             };
 
+            completion-timeout = 5;
+            completion-trigger-len = 1;
+
             auto-save.focus-lost = true;
             inline-diagnostics.cursor-line = "warning";
 

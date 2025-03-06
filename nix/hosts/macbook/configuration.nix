@@ -17,7 +17,6 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true; # TODO: Make it whitelist, don't allow all
 
-  services.nix-daemon.enable = true;
   nix = {
     gc.automatic = true;
     optimise.automatic = true;

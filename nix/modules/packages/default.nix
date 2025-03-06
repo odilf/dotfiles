@@ -53,7 +53,7 @@ in
 
     homebrew = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       enable = true;
-      onActivation.cleanup = "uninstall";
+      # onActivation.cleanup = "uninstall";
 
       # TODO: Make it respect config
       casks = [ "firefox@nightly" ];

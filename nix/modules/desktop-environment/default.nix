@@ -28,13 +28,26 @@ in
           # pkgs.todoist-electron
         ];
 
-      homebrew.casks = lib.mkIf isDarwin [
-        "bitwarden"
-        "todoist"
-      ];
+      homebrew = lib.mkIf isDarwin {
+        casks = [
+          "bitwarden"
+          "todoist"
+          "syncthing"
+        ];
+
+        brews = [
+          {
+            name = "syncthing";
+            restart_service = "changed";
+          }
+        ];
+      };
 
     }
     // utils.eachHome {
-      services.syncthing.enable = true;
+      services.syncthing = {
+        enable = true;
+        tray.enable = true;
+      };
     };
 }

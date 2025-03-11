@@ -76,6 +76,7 @@
           packages = [
             pkgs.nil
             pkgs.nixd
+            pkgs.jujutsu
           ];
         };
         formatter = pkgs.nixfmt-rfc-style;

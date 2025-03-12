@@ -24,6 +24,7 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = lib.optionals config.packages.gui (
       [
+        pkgs.signal-desktop
         pkgs.telegram-desktop # Fails to download
         pkgs.nchat
       ]

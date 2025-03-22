@@ -15,37 +15,47 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    fonts = {
-      packages = [
-        pkgs.nerd-fonts._0xproto
-        pkgs.nerd-fonts.comic-shanns-mono
-        pkgs.nerd-fonts.geist-mono
-        pkgs.nerd-fonts.zed-mono
-        pkgs.monocraft
+    fonts =
+      let
+        iosevkaOdilf = (
+          pkgs.iosevka.override {
+            set = "Odilf";
+            privateBuildPlan = builtins.readFile ../../../font/iosevka/private-build-plans.toml;
+          }
+        );
+      in
+      {
+        packages = [
+          iosevkaOdilf
+          pkgs.nerd-fonts._0xproto
+          pkgs.nerd-fonts.comic-shanns-mono
+          pkgs.nerd-fonts.geist-mono
+          pkgs.nerd-fonts.zed-mono
+          pkgs.monocraft
 
-        # Sans
-        pkgs.atkinson-hyperlegible
-        pkgs.poppins
+          # Sans
+          pkgs.atkinson-hyperlegible
+          pkgs.poppins
 
-        # Serif
-        pkgs.lora
-        pkgs.libertinus
-      ];
+          # Serif
+          pkgs.lora
+          pkgs.libertinus
+        ];
 
-      fontconfig = lib.mkIf isLinux {
-        defaultFonts = {
-          serif = [
-            "Libertinus"
-            "Lora"
-          ];
-          sansSerif = [
-            "Atkinson Hyperlegible"
-            "Poppins"
-          ];
-          monospace = [ "ZedMono Nerd Font" ];
+        fontconfig = lib.mkIf isLinux {
+          defaultFonts = {
+            serif = [
+              "Libertinus"
+              "Lora"
+            ];
+            sansSerif = [
+              "Atkinson Hyperlegible"
+              "Poppins"
+            ];
+            monospace = [ "ZedMono Nerd Font" ];
+          };
         };
-      };
 
-    };
+      };
   };
 }

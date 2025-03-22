@@ -21,7 +21,10 @@ in
       programs.helix = {
         enable = true;
         settings = {
-          theme = "starlight";
+          # Alternative options for themes:
+          # Non-underline errors: ["ao", "iroaseta", "vim_dark_high_contrast", "yo", "yo_berry", "zenburn"]
+          # Nice looking: ["starlight"]
+          theme = "vim_dark_high_contrast";
 
           editor = {
             # auto-info = false;

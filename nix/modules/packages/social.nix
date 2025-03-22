@@ -35,6 +35,7 @@ in
         pkgs.whatsapp-for-linux
         pkgs.teams-for-linux
         pkgs.element-desktop
+        pkgs.thunderbird
       ]
       ++ lib.optionals isDarwin [
         # pkgs.whatsapp-for-mac # Fails to download
@@ -46,6 +47,7 @@ in
       "microsoft-teams" # workaround too I think?
       "telegram"
       "element"
+      "thunderbird"
     ];
   };
 }

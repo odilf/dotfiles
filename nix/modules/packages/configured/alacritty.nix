@@ -20,9 +20,9 @@ in
         settings = {
           terminal.shell = "${pkgs.fish}/bin/fish";
 
-          font.size = 14.0;
-          font.normal.family = "ZedMono Nerd Font";
-          font.normal.style = "Medium";
+          font.size = 16.0;
+          font.normal.family = "Iosevka Odilf";
+          font.normal.style = "Regular";
 
           # TODO: Review these settings
           window = {

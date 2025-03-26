@@ -18,6 +18,8 @@ in
       default = false;
       description = "Software to make wacom tablets work";
     };
+
+    vst-plugins = lib.mkEnableOption "Add VST plugins for music production and tinkering";
   };
 
   config = lib.mkIf cfg.enable {
@@ -30,10 +32,23 @@ in
           pkgs.blender
           pkgs.musescore
           pkgs.obs-studio
+          pkgs.ardour
+          pkgs.lmms
         ]
         ++ lib.optionals cfg.wacom [
           pkgs.wacomtablet
         ]
+      )
+      ++ lib.optionals cfg.vst-plugins (
+        [
+        ]
+        ++ lib.optionals isLinux [
+          pkgs.lsp-plugins
+          pkgs.zam-plugins
+          pkgs.surge
+          pkgs.oxefmsynth
+        ]
+
       );
 
     homebrew = lib.mkIf isDarwin {
@@ -42,6 +57,9 @@ in
           "blender"
           "musescore"
           "obs"
+          # Ardour is not on brew (nor nixpkgs for darwin)...
+          # "ardour"
+          "lmms"
         ]
         ++ lib.optionals cfg.wacom [
           "wacom-tablet"
@@ -51,7 +69,6 @@ in
         "Logic Pro" = 634148309;
         # - [ ] Facetime
         # - [ ] Safari i guess for testing
-        # - [ ] Photos
       };
     };
   };

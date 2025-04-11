@@ -26,6 +26,7 @@ in
     environment.systemPackages =
       [
         pkgs.reaper
+        pkgs.cmus
       ]
       ++ lib.optionals isLinux (
         [

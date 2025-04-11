@@ -33,7 +33,6 @@ in
       ]
       ++ lib.optionals isLinux [
         pkgs.whatsapp-for-linux
-        pkgs.teams-for-linux
         pkgs.element-desktop
         pkgs.thunderbird
       ]
@@ -44,7 +43,6 @@ in
 
     homebrew.casks = lib.optionals isDarwin [
       "whatsapp" # workaround
-      "microsoft-teams" # workaround too I think?
       "telegram"
       "element"
       "thunderbird"

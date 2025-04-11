@@ -97,6 +97,22 @@ in
         bat.config = {
           theme = "TwoDark";
         };
+
+        jujutsu = {
+          enable = true;
+          settings = {
+            user = {
+              name = "odilf";
+              email = "odysseas.maheras@gmail.com";
+            };
+
+            ui = {
+              pager = "bat";
+              default-command = "${pkgs.bat}/bin/bat";
+              merge-editor = ":builting";
+            };
+          };
+        };
       };
     };
 }

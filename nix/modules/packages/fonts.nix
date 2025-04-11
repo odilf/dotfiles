@@ -16,20 +16,23 @@ in
 
   config = lib.mkIf cfg.enable {
     fonts =
-      let
-        iosevkaOdilf = (
-          pkgs.iosevka.override {
-            set = "Odilf";
-            privateBuildPlan = builtins.readFile ../../../font/iosevka/private-build-plans.toml;
-          }
-        );
-      in
+      # Takes too long to build... and it's kind of ugly.
+      # let
+      #   iosevkaOdilf = (
+      #     pkgs.iosevka.override {
+      #       set = "Odilf";
+      #       privateBuildPlan = builtins.readFile ../../../font/iosevka/private-build-plans.toml;
+      #     }
+      #   );
+      # in
       {
         packages = [
-          iosevkaOdilf
+          # iosevkaOdilf
+          pkgs.nerd-fonts.iosevka-term
+          pkgs.nerd-fonts.iosevka-term-slab
+          pkgs.nerd-fonts.recursive-mono
           pkgs.nerd-fonts._0xproto
           pkgs.nerd-fonts.comic-shanns-mono
-          pkgs.nerd-fonts.geist-mono
           pkgs.nerd-fonts.zed-mono
           pkgs.monocraft
 
@@ -52,7 +55,11 @@ in
               "Atkinson Hyperlegible"
               "Poppins"
             ];
-            monospace = [ "ZedMono Nerd Font" ];
+            monospace = [
+              "IosevkaTerm Nerd Font"
+              "RecMono Nerd Font"
+              "ZedMono Nerd Font"
+            ];
           };
         };
 

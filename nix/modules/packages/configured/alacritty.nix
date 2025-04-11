@@ -21,7 +21,7 @@ in
           terminal.shell = "${pkgs.fish}/bin/fish";
 
           font.size = 16.0;
-          font.normal.family = "Iosevka Odilf";
+          font.normal.family = "IosevkaTerm Nerd Font";
           font.normal.style = "Regular";
 
           # TODO: Review these settings

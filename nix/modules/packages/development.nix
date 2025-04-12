@@ -71,8 +71,8 @@ in
     };
   };
 
-  config =
-    lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable (
+    {
       packages.configured = lib.mkIf cfg.cli {
         alacritty.enable = lib.mkIf config.packages.gui true;
         fish.enable = true;
@@ -99,7 +99,7 @@ in
         };
 
         jujutsu = {
-          enable = true;
+          enable = cfg.cli;
           settings = {
             user = {
               name = "odilf";
@@ -107,12 +107,13 @@ in
             };
 
             ui = {
-              pager = "bat";
-              default-command = "${pkgs.bat}/bin/bat";
+              pager = "${pkgs.bat}/bin/bat";
+              default-command = "log";
               merge-editor = ":builting";
             };
           };
         };
       };
-    };
+    }
+  );
 }

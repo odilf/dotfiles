@@ -8,7 +8,7 @@ let
   utils = import ../utils.nix { inherit lib pkgs config; };
 in
 {
-  config =
+  config = (
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
@@ -16,5 +16,6 @@ in
     }
     // utils.eachHome {
       home.stateVersion = "24.11";
-    };
+    }
+  );
 }

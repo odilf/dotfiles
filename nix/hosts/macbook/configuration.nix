@@ -8,6 +8,7 @@
     games.enable = true;
     creative.enable = true;
     creative.wacom = true;
+    productivity.enable = true;
   };
 
   users.users.odilf = {

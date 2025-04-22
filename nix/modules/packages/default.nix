@@ -16,6 +16,7 @@ in
     ./social.nix
     ./fonts.nix
     ./creative.nix
+    ./productivity.nix
   ];
 
   options.packages = {

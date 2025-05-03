@@ -121,6 +121,10 @@ in
           };
         };
       };
+
+      home.file.".cargo/config.toml" = {
+        text = ''build.target-dir = "~/.cargo/.global-cache"'';
+      };
     }
   );
 }

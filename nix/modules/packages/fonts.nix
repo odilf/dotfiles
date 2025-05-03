@@ -34,6 +34,7 @@ in
           pkgs.nerd-fonts._0xproto
           pkgs.nerd-fonts.comic-shanns-mono
           pkgs.nerd-fonts.zed-mono
+          pkgs.scientifica
           pkgs.monocraft
 
           # Sans
@@ -59,6 +60,7 @@ in
               "IosevkaTerm Nerd Font"
               "RecMono Nerd Font"
               "ZedMono Nerd Font"
+              "Scientifica"
             ];
           };
         };

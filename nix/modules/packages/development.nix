@@ -18,6 +18,7 @@ let
       pkgs.curl
       pkgs.dua
       pkgs.fd
+      pkgs.nh
       pkgs.pfetch-rs
       pkgs.ripgrep
       pkgs.rsync
@@ -27,6 +28,12 @@ let
       pkgs.wget
       pkgs.yazi
       pkgs.zellij
+
+      # Should arguably be in project devShells, but are convinient to always have
+      pkgs.rust-analyzer
+      pkgs.jujutsu
+      pkgs.nil
+      pkgs.nixd
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash

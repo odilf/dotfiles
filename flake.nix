@@ -6,7 +6,7 @@
 
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
@@ -24,63 +24,67 @@
   outputs =
     {
       nixpkgs,
-      flake-utils,
+      flake-parts,
       nix-darwin,
       home-manager,
       ...
     }@inputs:
-    rec {
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
 
-      # Modules
-      nixosModules.default = {
-        imports = [
-          ./nix/modules
-          ./nix/modules/polyfill/nixos.nix
-          home-manager.nixosModules.default
-        ];
-      };
-
-      darwinModules.default = {
-        imports = [
-          ./nix/modules
-          ./nix/modules/polyfill/nix-darwin.nix
-          home-manager.darwinModules.default
-        ];
-      };
-
-      # Configurations
-      nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./nix/hosts/nixbook/configuration.nix
-          nixosModules.default
-          inputs.apple-silicon.nixosModules.default
-        ];
-      };
-
-      darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./nix/hosts/macbook/configuration.nix
-          darwinModules.default
-        ];
-      };
-    }
-    // flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          packages = [
-            pkgs.nil
-            pkgs.nixd
-            pkgs.jujutsu
+      flake = rec {
+        # Modules
+        nixosModules.default = {
+          imports = [
+            ./nix/modules
+            ./nix/modules/polyfill/nixos.nix
+            home-manager.nixosModules.default
           ];
         };
-        formatter = pkgs.nixfmt-rfc-style;
 
-      }
-    );
+        darwinModules.default = {
+          imports = [
+            ./nix/modules
+            ./nix/modules/polyfill/nix-darwin.nix
+            home-manager.darwinModules.default
+          ];
+        };
+
+        # Configurations
+        nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ./nix/hosts/nixbook/configuration.nix
+            nixosModules.default
+            inputs.apple-silicon.nixosModules.default
+          ];
+        };
+
+        darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./nix/hosts/macbook/configuration.nix
+            darwinModules.default
+          ];
+        };
+      };
+
+      perSystem =
+        { pkgs, ... }:
+        {
+          devShells.default = pkgs.mkShell {
+            packages = [
+              pkgs.nil
+              pkgs.nixd
+              pkgs.jujutsu
+            ];
+          };
+          formatter = pkgs.nixfmt-rfc-style;
+        };
+    };
 }

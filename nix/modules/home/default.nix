@@ -8,14 +8,9 @@ let
   utils = import ../utils.nix { inherit lib pkgs config; };
 in
 {
-  config = (
-    {
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.backupFileExtension = "home-manager-backup";
-    }
-    // utils.eachHome {
-      home.stateVersion = "24.11";
-    }
-  );
+  config = lib.recursiveUpdate (utils.eachHome { home.stateVersion = "24.11"; }) {
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.backupFileExtension = "home-manager-backup";
+  };
 }

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.desktop-environment;
+  # cfg = config.desktop-environment;
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
   utils = import ../utils.nix { inherit lib pkgs config; };
 in
@@ -23,9 +23,13 @@ in
           pkgs.qalculate-qt
         ]
         ++ lib.optionals isLinux [
-          # pkgs.bitwarden-cli
-          # pkgs.bitwarden-desktop
-          # pkgs.todoist-electron
+          pkgs.bitwarden
+          pkgs.todoist-electron
+          pkgs.deadbeef
+          pkgs.vlc # TODO: Check if this is good.
+        ]
+        ++ lib.optionals isDarwin [
+          pkgs.iina
         ];
 
       homebrew = lib.mkIf isDarwin {
@@ -33,6 +37,7 @@ in
           "bitwarden"
           "todoist"
           "syncthing"
+          "deadbeef@nightly"
         ];
 
         brews = [

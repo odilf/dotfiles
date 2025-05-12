@@ -67,9 +67,7 @@ in
         ];
 
       masApps = lib.mkIf isDarwin {
-        "Logic Pro" = 634148309;
-        # - [ ] Facetime
-        # - [ ] Safari i guess for testing
+        # "Logic Pro" = 634148309;
       };
     };
   };

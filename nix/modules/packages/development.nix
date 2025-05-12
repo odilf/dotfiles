@@ -31,7 +31,6 @@ let
 
       # Should arguably be in project devShells, but are convinient to always have
       pkgs.rust-analyzer
-      pkgs.jujutsu
       pkgs.nil
       pkgs.nixd
     ]

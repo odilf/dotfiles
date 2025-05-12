@@ -15,6 +15,10 @@
     home = "/Users/odilf";
   };
 
+  users.users.concentration = {
+    home = "/Users/study";
+  };
+
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true; # TODO: Make it whitelist, don't allow all
 

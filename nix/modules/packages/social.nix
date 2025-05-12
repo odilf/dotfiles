@@ -24,14 +24,13 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = lib.optionals config.packages.gui (
       [
-        pkgs.signal-desktop
-        pkgs.telegram-desktop # Fails to download
         pkgs.nchat
       ]
       ++ lib.optionals (isx86 || isDarwin) [
         pkgs.discord # Discord not available on aarch-linux :(
       ]
       ++ lib.optionals isLinux [
+        pkgs.signal-desktop
         pkgs.whatsapp-for-linux
         pkgs.element-desktop
         pkgs.thunderbird
@@ -43,7 +42,6 @@ in
 
     homebrew.casks = lib.optionals isDarwin [
       "whatsapp" # workaround
-      "telegram"
       "element"
       "thunderbird"
     ];

@@ -39,13 +39,6 @@ in
           "syncthing"
           "deadbeef@nightly"
         ];
-
-        brews = [
-          {
-            name = "syncthing";
-            restart_service = "changed";
-          }
-        ];
       };
 
     }

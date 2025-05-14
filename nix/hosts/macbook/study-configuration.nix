@@ -3,17 +3,18 @@
   gui = true;
 
   packages = {
-    users = [ "odilf" ];
+    users = [ "study" ];
     development.enable = true;
-    social.enable = true;
-    games.enable = true;
-    creative.enable = true;
-    creative.wacom = true;
     productivity.enable = true;
+
+    social.enable = false;
+    games.enable = false;
+    creative.enable = false;
+    creative.wacom = false;
   };
 
-  users.users.odilf = {
-    home = "/Users/odilf";
+  users.users.study = {
+    home = "/Users/study";
   };
 
   nixpkgs.hostPlatform = "aarch64-darwin";

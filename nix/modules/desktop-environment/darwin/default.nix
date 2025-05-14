@@ -5,12 +5,12 @@
   ...
 }:
 let
-  utils = import ../../utils.nix;
+  utils = import ../../utils.nix { inherit lib pkgs config; };
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
-  config =
-    lib.mkIf (config.gui && isDarwin) {
+  config = lib.mkIf (config.gui && isDarwin) (
+    {
       # nix-darwin complains about this
       ids.gids.nixbld = 350;
 
@@ -113,12 +113,11 @@ in
         ];
       };
 
-      # services.aerospace = ;
     }
     // utils.eachHome {
-      services.aerospace = {
+      programs.aerospace = {
         enable = true;
-        settings = {
+        userSettings = {
           # If I ever want to use sketchybar again:
           # after-startup-command = [
           # 	'exec-and-forget borders active_color=0xffffff inactive_color=0x000000 width=10.0 style=round',
@@ -191,5 +190,6 @@ in
           };
         };
       };
-    };
+    }
+  );
 }

@@ -72,6 +72,14 @@
             darwinModules.default
           ];
         };
+
+        darwinConfigurations."macbook-study" = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./nix/hosts/macbook/study-configuration.nix
+            darwinModules.default
+          ];
+        };
       };
 
       perSystem =

@@ -1,57 +1,46 @@
 {
+  config,
   lib,
   pkgs,
-  config,
-  ...
 }:
-{
-  /*
-    Expands `set` for each user's home config (i.e., `config.home-manager.<user>`)
+rec {
+  /**
+    List of declared users in the system
+  */
+  users = builtins.attrNames config.custom.bundles;
+
+  /**
+    For each declared user,
 
     # Example
 
     ```nix
-    {
-      packages.users = [ "odilf" "gamer" ];
-
-      config = eachHome {
-        foo = "bar";
-      };
-    }
-    ```
-
-    Expands to:
-
-    ```nix
-    {
-      config = home-manager.users = {
-        odilf = {
-          foo = "bar";
-        };
-
-        gamer = {
-          foo = "bar";
-        };
-      };
-    }
+    mapUsers (username: { programs.fish.enable = true })
+    =>
+    { "odilf".programs.fish.enable = true; "study".programs.fish.enable = true }
     ```
   */
-  eachHome = set: {
-    home-manager.users = builtins.listToAttrs (
-      builtins.map (user: {
-        name = user;
-        value = set;
-      }) config.packages.users
-    );
-  };
+  mapUsers =
+    f: (lib.attrsets.mergeAttrsList (builtins.map (username: { "${username}" = f username; }) users));
 
-  # Like `eachHome`, except expands `set` for each user general NixOS config (i.e., `users.users.<user>`)
-  eachUsers = set: {
-    users.users = builtins.listToAttrs (
-      builtins.map (user: {
-        name = user;
-        value = set;
-      }) config.packages.users
-    );
-  };
+  importModule =
+    path:
+    import path {
+      inherit
+        lib
+        pkgs
+        config
+        ;
+    };
+
+  importModules = modules: lib.foldl lib.recursiveUpdate { } (map importModule modules);
+  checkAttrs =
+    knownAttrs: resolved:
+    lib.attrsets.mapAttrsToList (
+      attr: value:
+      lib.mkIf (!builtins.elem attr knownAttrs)
+        "Uknown attribute: `${attr}` (set to `${lib.generators.toPretty { } value}`)"
+    ) resolved;
+
+  perUserCfg = resolved: attrPath: mapUsers (username: lib.attrByPath attrPath { } resolved);
 }

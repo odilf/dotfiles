@@ -1,22 +1,15 @@
 {
   lib,
-  config,
   ...
 }:
 {
   imports = [
-    ./packages
+    ./package-configurations
+    ./bundles
     ./desktop-environment
-    ./home
-    ./peripherals
-    ./laptop
   ];
 
   options = {
-    gui = lib.mkEnableOption "the graphical user interface";
-  };
-
-  config = {
-    packages.gui = lib.mkDefault config.gui;
+    gui = lib.mkEnableOption "Does the system use a graphical user interface?";
   };
 }

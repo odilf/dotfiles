@@ -5,15 +5,10 @@
   ...
 }:
 let
-  cfg = config.desktop-environment.hyprland;
-  inherit (pkgs.stdenv.hostPlatform) isLinux;
+  enable = config.desktop-environment == "gnome";
 in
 {
-  options.desktop-environment.hyprland = {
-    enable = lib.mkEnableOption "hyprland";
-  };
-
-  config = lib.mkIf (config.gui && cfg.enable && isLinux) {
+  config = lib.mkIf enable {
     programs.hyprland.enable = true;
     programs.waybar.enable = true;
     programs.hyprlock.enable = true;

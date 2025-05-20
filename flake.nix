@@ -6,7 +6,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -37,50 +37,47 @@
         "aarch64-darwin"
       ];
 
-      flake = rec {
-        # Modules
-        nixosModules.default = {
-          imports = [
-            ./nix/modules
-            ./nix/modules/polyfill/nixos.nix
-            home-manager.nixosModules.default
-          ];
-        };
+      flake =
+        let
+          nixosModule = {
+            imports = [
+              ./nix/modules
+              ./nix/modules/polyfill/nixos.nix
+              home-manager.nixosModules.default
+            ];
+          };
 
-        darwinModules.default = {
-          imports = [
-            ./nix/modules
-            ./nix/modules/polyfill/nix-darwin.nix
-            home-manager.darwinModules.default
-          ];
-        };
+          darwinModule = {
+            imports = [
+              ./nix/modules
+              ./nix/modules/polyfill/nix-darwin.nix
+              home-manager.darwinModules.default
+            ];
+          };
+        in
+        {
+          # Modules
+          nixosModules.default = nixosModule;
+          darwinModules.default = darwinModule;
 
-        # Configurations
-        nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = [
-            ./nix/hosts/nixbook/configuration.nix
-            nixosModules.default
-            inputs.apple-silicon.nixosModules.default
-          ];
-        };
+          # Configurations
+          nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = [
+              nixosModule
+              ./nix/hosts/nixbook/configuration.nix
+              inputs.apple-silicon.nixosModules.default
+            ];
+          };
 
-        darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = [
-            ./nix/hosts/macbook/configuration.nix
-            darwinModules.default
-          ];
+          darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            modules = [
+              darwinModule
+              ./nix/hosts/macbook/configuration.nix
+            ];
+          };
         };
-
-        darwinConfigurations."macbook-study" = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = [
-            ./nix/hosts/macbook/study-configuration.nix
-            darwinModules.default
-          ];
-        };
-      };
 
       perSystem =
         { pkgs, ... }:

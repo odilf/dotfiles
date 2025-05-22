@@ -55,22 +55,29 @@ let
     ]
   );
 
+  enable = user: config.custom.bundles."${user}".development.enable;
 in
 {
-  users.users."*" = {
-    packages = cli ++ rust ++ gui;
-  };
+  users.users."*" =
+    user:
+    lib.mkIf (enable user) {
+      packages = cli ++ rust ++ gui;
+    };
 
   programs.fish.enable = true;
 
-  home-manager.users."*".programs = {
-    alacritty.enable = config.gui;
-    fish.enable = true;
-    git.enable = true;
-    helix.enable = true;
-    jujutsu.enable = true;
-    bat.enable = true;
-  };
+  home-manager.users."*" =
+    user:
+    lib.mkIf (enable user) {
+      programs = {
+        alacritty.enable = config.gui;
+        fish.enable = true;
+        git.enable = true;
+        helix.enable = true;
+        jujutsu.enable = true;
+        bat.enable = true;
+      };
+    };
 
   homebrew.casks = lib.optionals (isDarwin && config.gui) [
     "vscodium"

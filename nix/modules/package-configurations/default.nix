@@ -6,12 +6,13 @@
 }:
 let
   utils = import ../utils.nix { inherit config lib pkgs; };
-  modules = [
+  modules = map utils.importModule [
     ./aerospace.nix
     ./alacritty.nix
     ./bat.nix
     ./cargo.nix
     ./fish.nix
+    ./ghostty.nix
     ./git.nix
     ./helix.nix
     ./home-manager.nix
@@ -26,30 +27,28 @@ let
     "system"
   ];
 
-  resolved = utils.importModules modules;
-
-  perUserCfg = utils.perUserCfg resolved;
+  globalCfg = utils.globalCfg modules;
+  globalAndPerUserCfg = utils.globalAndPerUserCfg modules;
 in
 {
   config = {
-    warnings = utils.checkAttrs knownAttrs resolved;
+    warnings = utils.checkAttrs knownAttrs modules;
 
-    home-manager = (resolved.home-manager or { }) // {
-      users = perUserCfg [
-        "home-manager"
-        "users"
-        "*"
-      ];
-    };
-
-    users.users = perUserCfg [
+    users = globalAndPerUserCfg "users" [
       "users"
       "users"
       "*"
     ];
 
-    fonts = resolved.fonts or { };
-    environment = resolved.environment or { };
-    system = resolved.system or { };
+    # home-manager = globalCfg "home-manager";
+    home-manager = globalAndPerUserCfg "home-manager" [
+      "home-manager"
+      "users"
+      "*"
+    ];
+
+    fonts = globalCfg "fonts";
+    environment = globalCfg "environment";
+    system = globalCfg "system";
   };
 }

@@ -9,7 +9,7 @@
       # Alternative options for themes:
       # Non-underline errors: ["ao", "iroaseta", "vim_dark_high_contrast", "yo", "yo_berry", "zenburn"]
       # Nice looking: ["starlight"]
-      theme = "vim_dark_high_contrast";
+      theme = "base16_default";
 
       editor = {
         # auto-info = false;
@@ -26,7 +26,6 @@
 
         auto-save.focus-lost = true;
         inline-diagnostics.cursor-line = "warning";
-
       };
     };
 

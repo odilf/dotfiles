@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   gui = true;
   desktop-environment = "macOS";

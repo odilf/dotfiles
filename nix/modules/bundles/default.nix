@@ -7,7 +7,7 @@
 let
   utils = import ../utils.nix { inherit config lib pkgs; };
 
-  # TODO: Move this to each bundle module
+  # TODO: Move this to each bundle module?
   bundles = {
     development = {
       desc = "Development & cli tools.";
@@ -31,8 +31,6 @@ let
     };
   };
 
-  modules = mapAttrsToList (name: bundle: bundle.path) bundles;
-
   knownAttrs = [
     "users"
     "home-manager"
@@ -40,7 +38,7 @@ let
     "homebrew"
   ];
 
-  resolved = utils.importModules modules;
+  modules = mapAttrsToList (name: bundle: utils.importModule bundle.path) bundles;
 
   inherit (lib.attrsets)
     mapAttrs
@@ -49,7 +47,41 @@ let
     ;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-  perUserCfg = utils.perUserCfg resolved;
+  # perUserCfg =
+  #   modules: attrPath:
+  #   lib.mkMerge (
+  #     map (
+  #       module:
+  #       utils.mapUsers (
+  #         user:
+  #         lib.mkIf config.custom.bundles."${user}".development.enable (lib.attrByPath attrPath { } module)
+  #       )
+  #     ) modules
+  #   );
+
+  # globalCfgExcept =
+  #   modules: attr: exceptAttr:
+  #   lib.mkMerge (
+  #     map (module: builtins.removeAttrs (lib.attrByPath [ attr ] { } module) [ exceptAttr ]) modules
+  #   );
+
+  # globalAndPerUserCfg' =
+  #   modules: globalAttr: userAttrPath:
+  #   let
+  #     perUserCfg' = perUserCfg modules;
+  #     globalCfgExcept' = globalCfgExcept modules;
+
+  #     # The `users` in `home-manager.users.*` or `users.users.*`
+  #     userAttrDistinct = lib.elemAt userAttrPath 1;
+  #   in
+  #   lib.mkMerge [
+  #     (globalCfgExcept' globalAttr userAttrDistinct)
+  #     { users = perUserCfg' userAttrPath; }
+  #   ];
+
+  globalCfg = utils.globalCfg modules;
+  # globalAndPerUserCfg = globalAndPerUserCfg' modules { guard = user: config.custom.bundles."${user}".};
+  globalAndPerUserCfg = utils.globalAndPerUserCfg modules;
 in
 {
   options.custom.bundles = lib.mkOption {
@@ -69,37 +101,33 @@ in
   };
 
   config = {
-    # TODO: This doesn't do anything because the configuration below adds the entries by itself...
-    # I don't know if it's fixable.
     warnings =
       let
-        users = builtins.attrNames config.custom.bundles;
+        users = builtins.attrNames config.users.users;
         inUsers = name: hasAttr name config.users.users;
+        # TODO: This doesn't do anything because the configuration below adds the entries by itself...
+        # I don't know if it's fixable.
         usersWarning = builtins.map (
           name: lib.mkIf (!inUsers name) "${name} is not declared in `users.users`"
         ) users;
-        attrsWarning = utils.checkAttrs knownAttrs resolved;
+        attrsWarning = utils.checkAttrs knownAttrs modules;
       in
       usersWarning ++ attrsWarning;
 
-    users = (resolved.users or { }) // {
-      users = perUserCfg [
-        "users"
-        "users"
-        "*"
-      ];
-    };
+    users = globalAndPerUserCfg "users" [
+      "users"
+      "users"
+      "*"
+    ];
 
-    home-manager = (resolved.home-manager or { }) // {
-      users = perUserCfg [
-        "home-manager"
-        "users"
-        "*"
-      ];
-    };
+    home-manager = globalAndPerUserCfg "home-manager" [
+      "home-manager"
+      "users"
+      "*"
+    ];
 
-    programs = resolved.programs or { };
-    homebrew = lib.mkIf isDarwin (resolved.homebrew or { });
+    programs = globalCfg "programs";
+    homebrew = lib.mkIf isDarwin (globalCfg "homebrew");
   };
 
 }

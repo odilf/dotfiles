@@ -9,7 +9,6 @@ let
 
   cli =
     [
-      pkgs.bat
       pkgs.bottom
       pkgs.btop
       pkgs.curl
@@ -71,11 +70,11 @@ in
     lib.mkIf (enable user) {
       programs = {
         alacritty.enable = config.gui;
+        bat.enable = true;
         fish.enable = true;
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
-        bat.enable = true;
       };
     };
 

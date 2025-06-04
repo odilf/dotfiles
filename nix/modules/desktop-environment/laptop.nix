@@ -3,14 +3,11 @@
   config,
   ...
 }:
-let
-  cfg = config.desktop-environment.laptop;
-in
 {
   options.laptop = {
     enable = lib.mkEnableOption "Configuration for laptops";
   };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.laptop.enable {
     services.tlp = {
       enable = true;
       settings = {

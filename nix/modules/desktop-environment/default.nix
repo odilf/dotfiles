@@ -33,6 +33,7 @@ in
   config = lib.mkIf config.gui {
     environment.systemPackages =
       [
+        pkgs.firefox-beta
         pkgs.todoist
         pkgs.qalculate-qt
       ]
@@ -57,7 +58,7 @@ in
     };
 
     # home-manager.users = utils.mapUsers (username: {
-    #   "${username}".services.syncthing = {
+    #   services.syncthing = {
     #     enable = true;
     #     tray.enable = lib.mkIf isLinux true;
     #   };

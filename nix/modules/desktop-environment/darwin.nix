@@ -5,7 +5,7 @@
   ...
 }:
 let
-  enabled = config.desktop-environment == "macOS";
+  enabled = config.gui && config.desktop-environment == "macOS";
   utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
@@ -49,7 +49,7 @@ in
         orientation = "right";
 
         persistent-apps = [
-          "/Applications/Firefox Nightly.app"
+          "${pkgs.firefox-beta}/Applications/Firefox Beta.app"
           "${pkgs.alacritty}/Applications/Alacritty.app"
         ];
 
@@ -100,19 +100,32 @@ in
     security.pam.services.sudo_local.touchIdAuth = true;
 
     homebrew = {
+      onActivation.cleanup = "zap";
+      brews = lib.traceVal [
+        "batt" # Keep battery at specific percentage
+      ];
+
       casks = [
         "raycast" # App launcher
         "mechvibes" # cross-platform, but not in nixpkgs...
         "betterdisplay" # macos specific
-        "battery" # Keep battery at specific percentage
 
         # TODO: Remove, replace with kanata
         "karabiner-elements"
       ];
     };
 
+    # home-manager.users."*".programs = {
+    #   aerospace.enable = true;
+    #   firefox.enable = true;
+    # };
+
     home-manager.users = utils.mapUsers (username: {
       programs.aerospace.enable = true;
+      programs.firefox = {
+        enable = true;
+        package = pkgs.firefox-beta;
+      };
     });
   };
 }

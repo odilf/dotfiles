@@ -4,7 +4,7 @@
   ...
 }:
 let
-  enabled = config.desktop-environment == "gnome";
+  enabled = config.gui && config.desktop-environment == "gnome";
 in
 {
   config = lib.mkIf enabled {

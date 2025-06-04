@@ -5,7 +5,7 @@
   ...
 }:
 let
-  enable = config.desktop-environment == "gnome";
+  enable = config.gui && config.desktop-environment == "hyprland";
 in
 {
   config = lib.mkIf enable {

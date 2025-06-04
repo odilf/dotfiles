@@ -28,6 +28,7 @@ in
           "hyprland"
         ]
     );
+    default = "none";
   };
 
   config = lib.mkIf config.gui {

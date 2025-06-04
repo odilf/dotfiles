@@ -60,7 +60,7 @@ rec {
   */
   globalCfgExcept =
     modules: attr: exceptAttr:
-    lib.foldl lib.recursiveUpdate { } (
+    lib.mkMerge (
       map (module: builtins.removeAttrs (lib.attrByPath [ attr ] { } module) [ exceptAttr ]) modules
     );
 
@@ -70,7 +70,7 @@ rec {
   */
   perUserCfg =
     modules: attrPath:
-    lib.foldl lib.recursiveUpdate { } (
+    lib.mkMerge (
       map (
         module:
         let

@@ -37,6 +37,7 @@ in
 
   homebrew.casks = lib.optionals isDarwin [
     "whatsapp" # workaround
+    "signal"
     "element"
     "thunderbird"
   ];

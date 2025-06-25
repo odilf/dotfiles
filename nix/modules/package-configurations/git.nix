@@ -3,7 +3,6 @@
 }:
 {
   home-manager.users."*".programs.git = {
-    enable = true;
     delta.enable = true;
     userEmail = "odysseas.maheras@gmail.com";
     userName = "odilf";

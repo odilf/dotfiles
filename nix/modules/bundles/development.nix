@@ -75,6 +75,7 @@ in
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
+        broot.enable = true;
       };
     };
 

@@ -9,7 +9,7 @@
 
       ui = {
         default-command = "log";
-        merge-editor = ":builting";
+        merge-editor = ":builtin";
       };
     };
   };

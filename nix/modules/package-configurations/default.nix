@@ -40,7 +40,6 @@ in
       "*"
     ];
 
-    # home-manager = globalCfg "home-manager";
     home-manager = globalAndPerUserCfg "home-manager" [
       "home-manager"
       "users"

@@ -54,7 +54,7 @@ in
         ];
 
         persistent-others = [
-          "~/Downloads"
+          "/Users/odilf/Downloads"
         ];
 
         show-recents = false;
@@ -101,7 +101,7 @@ in
 
     homebrew = {
       onActivation.cleanup = "zap";
-      brews = lib.traceVal [
+      brews = [
         "batt" # Keep battery at specific percentage
       ];
 

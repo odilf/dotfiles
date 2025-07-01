@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   home-manager.users."*".programs.ghostty = {
-    enable = true;
     package = null;
     settings = {
       font-family = "IosevkaTerm Nerd Font";

@@ -47,40 +47,7 @@ let
     ;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-  # perUserCfg =
-  #   modules: attrPath:
-  #   lib.mkMerge (
-  #     map (
-  #       module:
-  #       utils.mapUsers (
-  #         user:
-  #         lib.mkIf config.custom.bundles."${user}".development.enable (lib.attrByPath attrPath { } module)
-  #       )
-  #     ) modules
-  #   );
-
-  # globalCfgExcept =
-  #   modules: attr: exceptAttr:
-  #   lib.mkMerge (
-  #     map (module: builtins.removeAttrs (lib.attrByPath [ attr ] { } module) [ exceptAttr ]) modules
-  #   );
-
-  # globalAndPerUserCfg' =
-  #   modules: globalAttr: userAttrPath:
-  #   let
-  #     perUserCfg' = perUserCfg modules;
-  #     globalCfgExcept' = globalCfgExcept modules;
-
-  #     # The `users` in `home-manager.users.*` or `users.users.*`
-  #     userAttrDistinct = lib.elemAt userAttrPath 1;
-  #   in
-  #   lib.mkMerge [
-  #     (globalCfgExcept' globalAttr userAttrDistinct)
-  #     { users = perUserCfg' userAttrPath; }
-  #   ];
-
   globalCfg = utils.globalCfg modules;
-  # globalAndPerUserCfg = globalAndPerUserCfg' modules { guard = user: config.custom.bundles."${user}".};
   globalAndPerUserCfg = utils.globalAndPerUserCfg modules;
 in
 {

@@ -1,6 +1,12 @@
-{ ... }:
+{ config, lib, ... }:
 {
-  home-manager.users."*".home.file.".cargo/config.toml" = {
-    text = ''build.target-dir = "$HOME/.cargo/.global-cache"'';
-  };
+  home-manager.users."*" =
+    user:
+    let
+      home = config.home-manager.users."${user}".home.homeDirectory;
+      target-dir = "${home}/.cargo/.global-target";
+    in
+    {
+      home.file.".cargo/config.toml".text = ''build.target-dir = "${target-dir}"'';
+    };
 }

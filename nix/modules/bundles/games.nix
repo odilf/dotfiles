@@ -36,6 +36,7 @@ in
             pkgs.rare # Epic games GUI (linux)
             pkgs.dolphin-emu
             pkgs.clonehero
+            pkgs.retroarch # Broken on darwin
           ]
         );
     };
@@ -46,5 +47,6 @@ in
     "steam"
     "dolphin"
     "clone-hero"
+    "retroarch"
   ];
 }

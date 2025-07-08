@@ -70,13 +70,14 @@ in
     lib.mkIf (enable user) {
       programs = {
         alacritty.enable = config.gui;
-        ghostty.enable = config.gui;
         bat.enable = true;
+        broot.enable = true;
         fish.enable = true;
+        ghostty.enable = config.gui;
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
-        broot.enable = true;
+        ssh.enable = true;
       };
     };
 

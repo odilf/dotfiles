@@ -50,7 +50,6 @@ let
     ]
     ++ lib.optionals isLinux [
       pkgs.vscodium
-      pkgs.neovide
     ]
   );
 

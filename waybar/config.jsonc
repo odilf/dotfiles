@@ -23,7 +23,7 @@
     "hyprland/window": {
         "rewrite": {
             "(.*) — Mozilla Firefox": "🌎 $1",
-            "nvim (.*)": "⌨️ $1",
+            "hx (.*)": "⌨️ $1",
         },
     },
     "tray": {

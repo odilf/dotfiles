@@ -39,16 +39,6 @@
   nixpkgs.config.allowUnfree = true; # TODO: Make it whitelist, don't allow all
 
   # TODO: This should be in package-configurations.
-  nix = {
-    gc.automatic = true;
-    optimise.automatic = true;
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-    };
-  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

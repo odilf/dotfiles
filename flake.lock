@@ -141,11 +141,11 @@
     "nix-on-droid": {
       "inputs": {
         "home-manager": [
-          "home-manager-24-05"
+          "home-manager"
         ],
         "nix-formatter-pack": "nix-formatter-pack",
         "nixpkgs": [
-          "nixpkgs-24-05"
+          "nixpkgs"
         ],
         "nixpkgs-docs": "nixpkgs-docs",
         "nixpkgs-for-bootstrap": "nixpkgs-for-bootstrap",

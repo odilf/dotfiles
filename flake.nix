@@ -27,9 +27,14 @@
     };
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-24-05";
-      inputs.home-manager.follows = "home-manager-24-05";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
+    # nix-on-droid = {
+    #   url = "github:nix-community/nix-on-droid/release-24.05";
+    #   inputs.nixpkgs.follows = "nixpkgs-24-05";
+    #   inputs.home-manager.follows = "home-manager-24-05";
+    # };
   };
 
   outputs =
@@ -69,10 +74,9 @@
 
           nixOnDroidModule = {
             imports = [
+              # inputs.home-manager-24-05.nixosModules.default
+              ./nix/modules/polyfill/nix-on-droid.nix
               ./nix/modules
-              # home-manager.nixosModules.default
-              # TODO: Surely we'll need to change this...
-              # ./nix/modules/polyfill/nixos.nix
             ];
           };
         in
@@ -102,7 +106,7 @@
           nixOnDroidConfigurations."vermeer" = nix-on-droid.lib.nixOnDroidConfiguration {
             pkgs = import nixpkgs { system = "aarch64-linux"; };
             modules = [
-              # nixOnDroidModule
+              nixOnDroidModule
               ./nix/hosts/vermeer/configuration.nix
             ];
           };

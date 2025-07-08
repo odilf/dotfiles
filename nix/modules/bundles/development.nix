@@ -14,13 +14,14 @@ let
       pkgs.curl
       pkgs.dua
       pkgs.fd
+      pkgs.hyperfine
+      pkgs.mosh
       pkgs.nh
       pkgs.pfetch-rs
       pkgs.ripgrep
       pkgs.rsync
       pkgs.tokei
       pkgs.vim
-      pkgs.mosh
       pkgs.wget
       pkgs.yazi
       pkgs.zellij

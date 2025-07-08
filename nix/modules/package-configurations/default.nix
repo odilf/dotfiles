@@ -17,6 +17,7 @@ let
     ./helix.nix
     ./home-manager.nix
     ./jujutsu.nix
+    ./nix.nix
   ];
 
   knownAttrs = [
@@ -25,6 +26,7 @@ let
     "fonts"
     "environment"
     "system"
+    "nix"
   ];
 
   globalCfg = utils.globalCfg modules;
@@ -46,8 +48,9 @@ in
       "*"
     ];
 
-    fonts = globalCfg "fonts";
     environment = globalCfg "environment";
+    fonts = globalCfg "fonts";
+    nix = globalCfg "nix";
     system = globalCfg "system";
   };
 }

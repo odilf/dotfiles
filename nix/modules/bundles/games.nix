@@ -19,7 +19,7 @@ in
     lib.mkIf (enable user) {
       packages =
         [
-          pkgs.smassh
+          # pkgs.smassh # Dependency broken on darwin
           pkgs.vitetris # Kinda mediocre
           pkgs.terminal-parrot
         ]

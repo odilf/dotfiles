@@ -20,21 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs-24-05.url = "github:NixOS/nixpkgs/nixos-24.05";
-    home-manager-24-05 = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-24-05";
-    };
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    # nix-on-droid = {
-    #   url = "github:nix-community/nix-on-droid/release-24.05";
-    #   inputs.nixpkgs.follows = "nixpkgs-24-05";
-    #   inputs.home-manager.follows = "home-manager-24-05";
-    # };
   };
 
   outputs =
@@ -74,7 +64,6 @@
 
           nixOnDroidModule = {
             imports = [
-              # inputs.home-manager-24-05.nixosModules.default
               ./nix/modules/polyfill/nix-on-droid.nix
               ./nix/modules
             ];

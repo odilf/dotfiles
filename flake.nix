@@ -25,6 +25,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
   };
 
   outputs =
@@ -75,13 +77,24 @@
           darwinModules.default = darwinModule;
 
           # Configurations
-          nixosConfigurations."nixbook" = nixpkgs.lib.nixosSystem {
-            system = "aarch64-linux";
-            modules = [
-              nixosModule
-              ./nix/hosts/nixbook/configuration.nix
-              inputs.apple-silicon.nixosModules.default
-            ];
+          nixosConfigurations = {
+            "nixbook" = nixpkgs.lib.nixosSystem {
+              system = "aarch64-linux";
+              modules = [
+                nixosModule
+                ./nix/hosts/nixbook/configuration.nix
+                inputs.apple-silicon.nixosModules.default
+              ];
+            };
+
+            "ada" = nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              modules = [
+		nixosModule
+                inputs.nixos-wsl.nixosModules.default
+		./nix/hosts/ada/configuration.nix
+              ];
+            };
           };
 
           darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {

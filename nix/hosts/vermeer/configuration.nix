@@ -23,16 +23,4 @@
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
-
-  # # TODO: Copied from macbook, should be in package configurations.
-  # nix = {
-  #   gc.automatic = true;
-  #   optimise.automatic = true;
-  #   settings = {
-  #     experimental-features = [
-  #       "nix-command"
-  #       "flakes"
-  #     ];
-  #   };
-  # };
 }

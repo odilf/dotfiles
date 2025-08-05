@@ -30,6 +30,7 @@ let
       pkgs.rust-analyzer
       pkgs.nil
       pkgs.nixd
+      pkgs.taplo
     ]
     ++ lib.optionals isDarwin [
       pkgs.darwin.trash

@@ -49,6 +49,7 @@ let
     [
       pkgs.cool-retro-term
       pkgs.qbittorrent
+      pkgs.zed-editor-fhs
     ]
     ++ lib.optionals isLinux [
       pkgs.vscodium

@@ -36,6 +36,7 @@ let
     "home-manager"
     "programs"
     "homebrew"
+    "nixpkgs"
   ];
 
   modules = mapAttrsToList (name: bundle: utils.importModule bundle.path) bundles;
@@ -95,6 +96,7 @@ in
 
     programs = globalCfg "programs";
     homebrew = lib.mkIf isDarwin (globalCfg "homebrew");
+    nixpkgs = globalCfg "nixpkgs";
   };
 
 }

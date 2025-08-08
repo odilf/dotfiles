@@ -9,6 +9,12 @@ let
   enable = user: config.custom.bundles."${user}".social.enable;
 in
 {
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "reaper"
+    ];
+
   users.users."*" =
     user:
     lib.mkIf (enable user) {
@@ -45,8 +51,9 @@ in
       "wacom-tablet"
     ];
 
-    masApps = lib.mkIf isDarwin {
-      "Logic Pro" = 634148309;
-    };
+    # NOTE: Better to just install manually...
+    # masApps = lib.mkIf isDarwin {
+    #   "Logic Pro" = 634148309;
+    # };
   };
 }

@@ -40,8 +40,6 @@
     settings.General.EnableNetworkConfiguration = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   # Flakes
   nix.settings.experimental-features = [
     "nix-command"

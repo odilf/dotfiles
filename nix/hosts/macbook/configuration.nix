@@ -36,9 +36,6 @@
   ids.gids.nixbld = 350;
 
   nixpkgs.hostPlatform = "aarch64-darwin";
-  nixpkgs.config.allowUnfree = true; # TODO: Make it whitelist, don't allow all
-
-  # TODO: This should be in package-configurations.
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

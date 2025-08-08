@@ -27,6 +27,8 @@
 
           auto-save.focus-lost = true;
           inline-diagnostics.cursor-line = "warning";
+
+          lsp.display-progress-messages = true;
         };
 
         # Open yazi in helix

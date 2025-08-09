@@ -47,12 +47,12 @@ let
 
   gui = lib.optionals config.gui (
     [
-      pkgs.cool-retro-term
       pkgs.qbittorrent
-      pkgs.zed-editor-fhs
     ]
     ++ lib.optionals isLinux [
+      pkgs.cool-retro-term
       pkgs.vscodium
+      pkgs.zed-editor
     ]
   );
 
@@ -84,6 +84,9 @@ in
     };
 
   homebrew.casks = lib.optionals (isDarwin && config.gui) [
+    "cool-retro-term"
+    "ghostty"
     "vscodium"
+    "zed"
   ];
 }

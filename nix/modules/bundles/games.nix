@@ -47,6 +47,6 @@ in
     "steam"
     "dolphin"
     "clone-hero"
-    "retroarch"
+    "retroarch-metal"
   ];
 }

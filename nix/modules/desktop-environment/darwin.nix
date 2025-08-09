@@ -120,7 +120,10 @@ in
     # };
 
     home-manager.users = utils.mapUsers (username: {
-      programs.aerospace.enable = true;
+      programs.aerospace = {
+        enable = true;
+        launchd.enable = true;
+      };
       programs.firefox = {
         enable = true;
         package = pkgs.firefox-beta;

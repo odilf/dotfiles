@@ -6,7 +6,6 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
-  utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
   imports = [
@@ -51,18 +50,17 @@ in
     homebrew = lib.mkIf isDarwin {
       casks = [
         "bitwarden"
-        "todoist"
         "surfshark" # VPN
-        "syncthing"
         "deadbeef@nightly"
       ];
     };
 
-    # home-manager.users = utils.mapUsers (username: {
-    #   services.syncthing = {
-    #     enable = true;
-    #     tray.enable = lib.mkIf isLinux true;
-    #   };
-    # });
+    # TODO: Don't hardcode main user
+    home-manager.users.odilf = {
+      services.syncthing = {
+        enable = true;
+        tray.enable = lib.mkIf isLinux true;
+      };
+    };
   };
 }

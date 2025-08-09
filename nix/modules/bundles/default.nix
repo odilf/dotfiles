@@ -95,8 +95,16 @@ in
     ];
 
     programs = globalCfg "programs";
-    homebrew = lib.mkIf isDarwin (globalCfg "homebrew");
     nixpkgs = globalCfg "nixpkgs";
+    homebrew = lib.mkIf isDarwin (
+      lib.mkMerge [
+        (globalCfg "homebrew")
+        {
+          enable = true;
+          onActivation.cleanup = "uninstall";
+        }
+      ]
+    );
   };
 
 }

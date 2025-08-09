@@ -100,7 +100,6 @@ in
     security.pam.services.sudo_local.touchIdAuth = true;
 
     homebrew = {
-      onActivation.cleanup = "zap";
       brews = [
         "batt" # Keep battery at specific percentage
       ];

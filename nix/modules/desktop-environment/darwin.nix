@@ -50,7 +50,7 @@ in
 
         persistent-apps = [
           "${pkgs.firefox-beta}/Applications/Firefox Beta.app"
-          "${pkgs.alacritty}/Applications/Alacritty.app"
+          "/Applications/Ghostty.app"
         ];
 
         persistent-others = [

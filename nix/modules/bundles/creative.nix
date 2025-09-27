@@ -20,10 +20,10 @@ in
     lib.mkIf (enable user) {
       packages = lib.optionals config.gui (
         [
-          pkgs.reaper
           pkgs.cmus
         ]
         ++ lib.optionals isLinux [
+          pkgs.reaper
           pkgs.blender
           pkgs.musescore
           pkgs.obs-studio
@@ -46,6 +46,8 @@ in
       "blender"
       "musescore"
       "obs"
+
+      "reaper"
 
       # TODO: Same as above
       "wacom-tablet"

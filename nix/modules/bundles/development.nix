@@ -28,6 +28,11 @@ let
 
       # Should arguably be in project devShells, but are convinient to always have
       pkgs.rust-analyzer
+      pkgs.rustc
+      pkgs.cargo
+      pkgs.bacon
+      pkgs.rustfmt
+
       pkgs.nil
       pkgs.nixd
       pkgs.taplo
@@ -38,12 +43,6 @@ let
     ++ lib.optionals isLinux [
       pkgs.trashy
     ];
-
-  rust = [
-    pkgs.cargo
-    pkgs.rust-analyzer
-    pkgs.bacon
-  ];
 
   gui = lib.optionals config.gui (
     [
@@ -62,7 +61,7 @@ in
   users.users."*" =
     user:
     lib.mkIf (enable user) {
-      packages = cli ++ rust ++ gui;
+      packages = cli ++ gui;
     };
 
   programs.fish.enable = true;
@@ -81,6 +80,10 @@ in
         jujutsu.enable = true;
         ssh.enable = true;
       };
+
+      home.sessionVariables = {
+        RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+      };
     };
 
   homebrew.casks = lib.optionals (isDarwin && config.gui) [
@@ -89,4 +92,5 @@ in
     "vscodium"
     "zed"
   ];
+
 }

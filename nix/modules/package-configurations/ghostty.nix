@@ -11,8 +11,8 @@ in
       command = "${pkgs.fish}/bin/fish";
       theme =
         let
-          light = "BlulocoLight";
-          dark = "carbonfox";
+          light = "Bluloco Light";
+          dark = "Horizon";
         in
         "light:${light},dark:${dark}";
       font-size = if isDarwin then 16 else 12;

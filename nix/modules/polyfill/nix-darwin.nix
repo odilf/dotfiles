@@ -14,12 +14,14 @@ in
       hyprlock = fill;
       waybar = fill;
       neovim = fill;
+      niri = fill;
     };
 
     services = {
       hypridle = fill;
       xserver = fill;
       tlp = fill;
+      displayManager = fill;
     };
 
     systemd = fill;

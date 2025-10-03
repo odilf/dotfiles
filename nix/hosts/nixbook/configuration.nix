@@ -9,16 +9,34 @@
   # ---
 
   gui = true;
-  packages = {
-    users = [ "odilf" ];
-    social.enable = true;
-    games.enable = true;
-    creative.enable = true;
-  };
-  desktop-environment.gnome.enable = true;
-
-  peripherals.sidecar.enable = true;
+  desktop-environment = "niri";
   laptop.enable = true;
+
+  custom.bundles = {
+    odilf = {
+      development.enable = true;
+      social.enable = false;
+      games.enable = false;
+      creative.enable = false;
+      productivity.enable = false;
+    };
+
+    # study = {
+    #   development.enable = true;
+    #   productivity.enable = true;
+    # };
+  };
+
+  nix.settings = {
+    extra-substituters = [
+      "https://nixos-apple-silicon.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
+    ];
+  };
+
+  hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 
   # Regular NixOS options
   # ---
@@ -27,30 +45,21 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
-  hardware.asahi.peripheralFirmwareDirectory = ./firmware;
-  hardware.asahi.useExperimentalGPUDriver = true;
-
   # don’t shutdown when power button is short-pressed
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-  '';
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+  };
 
   networking.wireless.iwd = {
     enable = true;
     settings.General.EnableNetworkConfiguration = true;
   };
 
-  # Flakes
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  networking.hostName = "odilf-nixbook";
+  networking.hostName = "nixbook";
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "Europe/Madrid";
 
   services.kanata = {
     enable = true;

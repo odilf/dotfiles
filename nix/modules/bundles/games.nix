@@ -14,6 +14,7 @@ let
   enable = user: config.custom.bundles."${user}".games.enable;
 in
 {
+  
   users.users."*" =
     user:
     lib.mkIf (enable user) {
@@ -26,6 +27,7 @@ in
         ++ lib.optionals (isLinux && isx86) [
           pkgs.steam-run
           pkgs.steam-tui
+          pkgs.clonehero
         ]
         ++ lib.optionals config.gui (
           [
@@ -35,12 +37,11 @@ in
           ++ lib.optionals isLinux [
             pkgs.rare # Epic games GUI (linux)
             pkgs.dolphin-emu
-            pkgs.clonehero
             pkgs.retroarch # Broken on darwin
           ]
         );
     };
-
+  
   homebrew.casks = lib.optionals isDarwin [
     "epic-games"
     "minecraft"

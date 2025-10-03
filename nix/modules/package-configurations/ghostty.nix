@@ -1,7 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+in
 {
   home-manager.users."*".programs.ghostty = {
-    package = null;
+    package = lib.mkIf (!isLinux) null;
     settings = {
       font-family = "IosevkaTerm Nerd Font";
       font-style = "Regular";
@@ -12,7 +15,7 @@
           dark = "carbonfox";
         in
         "light:${light},dark:${dark}";
-      font-size = 16;
+      font-size = if isDarwin then 16 else 12;
       window-decoration = "none";
       macos-option-as-alt = "left";
       adjust-underline-thickness = 1;

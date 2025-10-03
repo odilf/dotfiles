@@ -12,6 +12,7 @@ in
     ./darwin.nix
     ./gnome.nix
     ./hyprland.nix
+    ./niri.nix
 
     ./laptop.nix
   ];
@@ -22,7 +23,7 @@ in
         [ "macOS" ]
       else
         [
-          "cosmic"
+          "niri"
           "gnome"
           "hyprland"
         ]
@@ -39,8 +40,8 @@ in
       ]
       ++ lib.optionals isLinux [
         pkgs.bitwarden
-        pkgs.todoist-electron
-        pkgs.deadbeef
+        # TODO: Re-enable this!
+        # pkgs.todoist-electron
         pkgs.vlc # TODO: Check if this is good.
       ]
       ++ lib.optionals isDarwin [
@@ -51,7 +52,6 @@ in
       casks = [
         "bitwarden"
         "surfshark" # VPN
-        "deadbeef@nightly"
       ];
     };
 

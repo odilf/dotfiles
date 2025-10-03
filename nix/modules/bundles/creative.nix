@@ -5,16 +5,10 @@
   ...
 }:
 let
-  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86_64;
   enable = user: config.custom.bundles."${user}".social.enable;
 in
 {
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "reaper"
-    ];
-
   users.users."*" =
     user:
     lib.mkIf (enable user) {
@@ -30,13 +24,10 @@ in
           pkgs.musescore
           pkgs.obs-studio
 
-          # Wacom tablet drivers thingy
-          # TODO: Maybe this should go in peripherals...
-          pkgs.wacomtablet
-
           # VST-plugins
           pkgs.lsp-plugins
           pkgs.zam-plugins
+        ] ++ lib.optionals (isLinux && isx86_64) [
           pkgs.surge
           pkgs.oxefmsynth
         ]

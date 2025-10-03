@@ -17,6 +17,7 @@ let
     ./helix.nix
     ./home-manager.nix
     ./jujutsu.nix
+    ./niri.nix
     ./nix.nix
   ];
 

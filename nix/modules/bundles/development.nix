@@ -78,7 +78,10 @@ in
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
-        ssh.enable = true;
+        ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+        };
       };
 
       home.sessionVariables = {

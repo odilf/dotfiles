@@ -32,6 +32,11 @@
     description = "User for studying/working";
   };
 
+  homebrew = {
+    casks = [ "vorta" ];
+    brews = [ "borgbackup" ];
+  };
+
   # TODO: Maybe do clean uninstall/reinstall thingy... but meh.
   ids.gids.nixbld = 350;
 

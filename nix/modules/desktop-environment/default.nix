@@ -20,9 +20,13 @@ in
   options.desktop-environment = lib.mkOption {
     type = lib.types.enum (
       if isDarwin then
-        [ "macOS" ]
+        [
+          "none"
+          "macOS"
+        ]
       else
         [
+          "none"
           "niri"
           "gnome"
           "hyprland"

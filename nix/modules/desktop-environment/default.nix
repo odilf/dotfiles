@@ -21,7 +21,6 @@ in
     type = lib.types.enum (
       if isDarwin then
         [
-          "none"
           "macOS"
         ]
       else

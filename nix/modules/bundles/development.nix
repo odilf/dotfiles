@@ -12,7 +12,7 @@ let
       pkgs.bottom
       pkgs.btop
       pkgs.curl
-      pkgs.dua
+      pkgs.dust
       pkgs.fd
       pkgs.hyperfine
       pkgs.mosh

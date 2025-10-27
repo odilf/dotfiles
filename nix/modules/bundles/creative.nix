@@ -20,9 +20,11 @@ in
     lib.mkIf (enable user) {
       packages = lib.optionals config.gui (
         [
-          pkgs.cmus
         ]
         ++ lib.optionals isLinux [
+          # TODO: Mirrors dont' seem to work for darwin...
+          pkgs.blockbench
+
           pkgs.reaper
           pkgs.blender
           pkgs.musescore
@@ -51,6 +53,7 @@ in
 
       # TODO: Same as above
       "wacom-tablet"
+      "blockbench"
     ];
 
     # NOTE: Better to just install manually...

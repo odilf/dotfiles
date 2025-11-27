@@ -12,10 +12,10 @@
       productivity.enable = true;
     };
 
-    study = {
-      development.enable = true;
-      productivity.enable = true;
-    };
+    # study = {
+    #   development.enable = true;
+    #   productivity.enable = true;
+    # };
   };
 
   system.primaryUser = "odilf";
@@ -26,11 +26,11 @@
     description = "Main user";
   };
 
-  users.users.study = {
-    createHome = true;
-    home = /Users/study;
-    description = "User for studying/working";
-  };
+  # users.users.study = {
+  #   createHome = true;
+  #   home = /Users/study;
+  #   description = "User for studying/working";
+  # };
 
   homebrew = {
     casks = [ "vorta" ];

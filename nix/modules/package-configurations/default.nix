@@ -19,6 +19,8 @@ let
     ./jujutsu.nix
     ./niri.nix
     ./nix.nix
+    ./ssh.nix
+    ./taskwarrior.nix
   ];
 
   knownAttrs = [
@@ -28,6 +30,7 @@ let
     "environment"
     "system"
     "nix"
+    "age"
   ];
 
   globalCfg = utils.globalCfg modules;
@@ -53,5 +56,6 @@ in
     fonts = globalCfg "fonts";
     nix = globalCfg "nix";
     system = globalCfg "system";
+    age = globalCfg "age";
   };
 }

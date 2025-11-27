@@ -49,7 +49,7 @@ in
         orientation = "right";
 
         persistent-apps = [
-          "${pkgs.firefox-beta}/Applications/Firefox Beta.app"
+          "/Applications/Firefox.app"
           "/Applications/Ghostty.app"
         ];
 
@@ -124,10 +124,10 @@ in
         enable = true;
         launchd.enable = true;
       };
-      programs.firefox = {
-        enable = true;
-        package = pkgs.firefox-beta;
-      };
+      # programs.firefox = {
+      #   enable = true;
+      #   package = pkgs.firefox-beta;
+      # };
     });
   };
 }

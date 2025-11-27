@@ -7,48 +7,44 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
-  cli =
-    [
-      pkgs.bottom
-      pkgs.btop
-      pkgs.curl
-      pkgs.dust
-      pkgs.fd
-      pkgs.hyperfine
-      pkgs.mosh
-      pkgs.nh
-      pkgs.pfetch-rs
-      pkgs.ripgrep
-      pkgs.rsync
-      pkgs.tokei
-      pkgs.vim
-      pkgs.wget
-      pkgs.yazi
-      pkgs.zellij
+  cli = [
+    pkgs.bottom
+    pkgs.btop
+    pkgs.curl
+    pkgs.dust
+    pkgs.fd
+    pkgs.hyperfine
+    pkgs.mosh
+    pkgs.nh
+    pkgs.pfetch-rs
+    pkgs.ripgrep
+    pkgs.rsync
+    pkgs.tokei
+    pkgs.vim
+    pkgs.wget
+    pkgs.yazi
+    pkgs.zellij
 
-      # Should arguably be in project devShells, but are convinient to always have
-      pkgs.rust-analyzer
-      pkgs.rustc
-      pkgs.cargo
-      pkgs.bacon
-      pkgs.rustfmt
+    # Should arguably be in project devShells, but are convinient to always have
+    pkgs.rust-analyzer
+    pkgs.rustc
+    pkgs.cargo
+    pkgs.bacon
+    pkgs.rustfmt
 
-      pkgs.nil
-      pkgs.nixd
-      pkgs.taplo
-    ]
-    ++ lib.optionals isDarwin [
-      pkgs.darwin.trash
-    ]
-    ++ lib.optionals isLinux [
-      pkgs.trashy
-    ];
+    pkgs.nil
+    pkgs.nixd
+    pkgs.taplo
+  ]
+  ++ lib.optionals isDarwin [
+    pkgs.darwin.trash
+  ]
+  ++ lib.optionals isLinux [
+    pkgs.trashy
+  ];
 
   gui = lib.optionals config.gui (
-    [
-      pkgs.qbittorrent
-    ]
-    ++ lib.optionals isLinux [
+    lib.optionals isLinux [
       pkgs.cool-retro-term
       pkgs.vscodium
       pkgs.zed-editor
@@ -78,10 +74,7 @@ in
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
-        ssh = {
-          enable = true;
-          enableDefaultConfig = false;
-        };
+        ssh.enable = true;
       };
 
       home.sessionVariables = {

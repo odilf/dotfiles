@@ -15,6 +15,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     apple-silicon = {
       url = "github:nix-community/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +40,7 @@
       flake-parts,
       nix-darwin,
       home-manager,
+      agenix,
       nix-on-droid,
       ...
     }@inputs:
@@ -53,6 +59,7 @@
               ./nix/modules
               ./nix/modules/polyfill/nixos.nix
               home-manager.nixosModules.default
+              agenix.nixosModules.default
             ];
           };
 
@@ -61,6 +68,7 @@
               ./nix/modules
               ./nix/modules/polyfill/nix-darwin.nix
               home-manager.darwinModules.default
+              agenix.darwinModules.default
             ];
           };
 
@@ -90,9 +98,9 @@
             "ada" = nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               modules = [
-		nixosModule
+                nixosModule
                 inputs.nixos-wsl.nixosModules.default
-		./nix/hosts/ada/configuration.nix
+                ./nix/hosts/ada/configuration.nix
               ];
             };
           };
@@ -115,13 +123,14 @@
         };
 
       perSystem =
-        { pkgs, ... }:
+        { pkgs, system, ... }:
         {
           devShells.default = pkgs.mkShell {
             packages = [
               pkgs.nil
               pkgs.nixd
               pkgs.jujutsu
+              agenix.packages."${system}".default
             ];
           };
           formatter = pkgs.nixfmt-rfc-style;

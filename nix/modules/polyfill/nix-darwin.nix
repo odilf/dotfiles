@@ -23,9 +23,5 @@ in
       tlp = fill;
       displayManager = fill;
     };
-
-    systemd = fill;
-
-    fileSystems = fill;
   };
 }

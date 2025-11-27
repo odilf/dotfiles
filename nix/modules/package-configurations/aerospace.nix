@@ -19,7 +19,6 @@
 
     mode.main.binding = {
       alt-enter = "exec-and-forget open -n /Applications/Ghostty.app";
-      alt-shift-enter = "exec-and-forget open -n /Applications/Firefox Nightly.app";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#layout
       alt-slash = "layout tiles horizontal vertical";

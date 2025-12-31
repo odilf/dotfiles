@@ -1,11 +1,11 @@
-{
+inputs@{
   lib,
   config,
   pkgs,
   ...
 }:
 let
-  utils = import ../utils.nix { inherit config lib pkgs; };
+  utils = import ../utils.nix inputs;
 
   # TODO: Move this to each bundle module?
   bundles = {

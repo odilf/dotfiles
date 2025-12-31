@@ -60,6 +60,9 @@
               ./nix/modules/polyfill/nixos.nix
               home-manager.nixosModules.default
               agenix.nixosModules.default
+              {
+                passthru.agenix-hm = agenix.homeManagerModules.default;
+              }
             ];
           };
 
@@ -69,6 +72,9 @@
               ./nix/modules/polyfill/nix-darwin.nix
               home-manager.darwinModules.default
               agenix.darwinModules.default
+              {
+                passthru.agenix-hm = agenix.homeManagerModules.default;
+              }
             ];
           };
 

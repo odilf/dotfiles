@@ -55,7 +55,7 @@ let
 in
 {
   users.users."*" =
-    user:
+    { user, ... }:
     lib.mkIf (enable user) {
       packages = cli ++ gui;
     };
@@ -63,7 +63,7 @@ in
   programs.fish.enable = true;
 
   home-manager.users."*" =
-    user:
+    { user, ... }:
     lib.mkIf (enable user) {
       programs = {
         alacritty.enable = config.gui;

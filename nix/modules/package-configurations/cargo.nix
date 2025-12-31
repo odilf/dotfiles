@@ -1,9 +1,9 @@
-{ config, lib, ... }:
+{ ... }:
 {
   home-manager.users."*" =
-    user:
+    { hmConfig, ... }:
     let
-      home = config.home-manager.users."${user}".home.homeDirectory;
+      home = hmConfig.home.homeDirectory;
       target-dir = "${home}/.cargo/.global-target";
     in
     {

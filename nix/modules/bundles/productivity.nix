@@ -5,13 +5,12 @@
   ...
 }:
 let
-  enable = user: config.custom.bundles."${user}".productivity.enable;
   inherit (pkgs.stdenv.hostPlatform) isLinux isx86_64;
 in
 {
   users.users."*" =
-    user:
-    lib.mkIf (enable user) {
+    { enableBundle, ... }:
+    lib.mkIf (enableBundle "productivity") {
       packages = lib.optionals config.gui (
         [
           pkgs.vit

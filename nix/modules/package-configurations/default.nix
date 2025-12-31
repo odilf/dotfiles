@@ -5,7 +5,7 @@
   ...
 }:
 let
-  utils = import ../utils.nix { inherit config lib pkgs; };
+  utils = import ../utils.nix { inherit lib pkgs config; };
   modules = map utils.importModule [
     ./aerospace.nix
     ./alacritty.nix

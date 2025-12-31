@@ -11,12 +11,11 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
-  enable = user: config.custom.bundles."${user}".social.enable;
 in
 {
   users.users."*" =
-    user:
-    lib.mkIf (enable user) {
+    { enableBundle, ... }:
+    lib.mkIf (enableBundle "social") {
       packages =
         # discord ommited, just use the web app.
         [

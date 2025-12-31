@@ -11,13 +11,12 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
-  enable = user: config.custom.bundles."${user}".games.enable;
 in
 {
 
   users.users."*" =
-    user:
-    lib.mkIf (enable user) {
+    { enableBundle, ... }:
+    lib.mkIf (enableBundle "games") {
       packages = [
         # pkgs.smassh # Dependency broken on darwin
         pkgs.vitetris # Kinda mediocre

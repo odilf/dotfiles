@@ -6,12 +6,11 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86_64;
-  enable = user: config.custom.bundles."${user}".social.enable;
 in
 {
   users.users."*" =
-    user:
-    lib.mkIf (enable user) {
+    { enableBundle, ... }:
+    lib.mkIf (enableBundle "social") {
       packages = lib.optionals config.gui (
         [
         ]
@@ -27,7 +26,8 @@ in
           # VST-plugins
           pkgs.lsp-plugins
           pkgs.zam-plugins
-        ] ++ lib.optionals (isLinux && isx86_64) [
+        ]
+        ++ lib.optionals (isLinux && isx86_64) [
           pkgs.surge
           pkgs.oxefmsynth
         ]

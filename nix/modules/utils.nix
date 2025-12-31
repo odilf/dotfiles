@@ -1,7 +1,7 @@
-{
+inputs@{
   config,
   lib,
-  pkgs,
+  ...
 }:
 rec {
   /**
@@ -26,15 +26,7 @@ rec {
       builtins.map (username: { "${username}" = f username; }) users
     ));
 
-  importModule =
-    modulePath:
-    import modulePath {
-      inherit
-        lib
-        pkgs
-        config
-        ;
-    };
+  importModule = modulePath: import modulePath inputs;
 
   importModules = map importModule;
 
@@ -77,7 +69,14 @@ rec {
           originalAttr = lib.attrByPath attrPath { } module;
           attrFn = if builtins.isFunction originalAttr then originalAttr else _: originalAttr;
         in
-        mapUsers attrFn
+        mapUsers (
+          user:
+          attrFn {
+            user = user;
+            hmConfig = config.home-manager.users."${user}";
+            enableBundle = bundleName: config.custom.bundles."${user}"."${bundleName}".enable;
+          }
+        )
       ) modules
     );
 

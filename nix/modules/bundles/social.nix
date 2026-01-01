@@ -1,7 +1,7 @@
 # TODO:
-# - [ ] Matrix
-# - [ ] Mail?
-# - [ ] Terminal clients for all of the above
+# - [ ] gurk-rs for signal on terminal
+# - [ ] matrix terminal
+# - [ ] Mail terminal
 
 {
   pkgs,

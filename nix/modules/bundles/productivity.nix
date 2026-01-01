@@ -13,8 +13,8 @@ in
     lib.mkIf (enableBundle "productivity") {
       packages = lib.optionals config.gui (
         [
-          pkgs.vit
           pkgs.taskwarrior-tui
+          pkgs.tasksh
         ]
         ++ lib.optionals isx86_64 [
           pkgs.zotero

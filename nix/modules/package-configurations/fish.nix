@@ -38,7 +38,7 @@
         end
 
         ${lib.getExe pkgs.pfetch}
-        ${lib.getExe pkgs.taskwarrior3} due:today list
+        ${lib.getExe pkgs.taskwarrior3}
       '';
 
       shellAbbrs = {
@@ -54,6 +54,7 @@
         g = "git";
         c = "cargo";
         t = "task";
+        tt = "taskwarrior-tui";
 
         ## Git
         gc = "git commit";
@@ -67,17 +68,10 @@
 
         ## Nix
         ns = "nix shell nixpkgs#";
-        # rebuild = let
-        #   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-        #   command = if isDarwin then "darwin-rebuild" else "sudo nixos-rebuild";
-        #   host-raw = config.networking.hostName; # TODO: This will not be correct probably
-        #   host = if host-raw == null then "" else host-raw; # TODO: Is there really no "null or" concept in nix?
-        # in "${command} switch --flake github:odilf/dotfiles?dir=nix#${host}";
       };
     };
   };
 
   users.users."*".shell = lib.mkIf config.programs.fish.enable pkgs.fish;
-  # programs.fish.enable = true;
   environment.variables.SHELL = "fish";
 }

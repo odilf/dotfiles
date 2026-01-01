@@ -37,7 +37,8 @@
             set -x PATH $PATH /opt/homebrew/bin/
         end
 
-        ${pkgs.pfetch}/bin/pfetch 
+        ${lib.getExe pkgs.pfetch}
+        ${lib.getExe pkgs.taskwarrior3} due:today list
       '';
 
       shellAbbrs = {
@@ -52,6 +53,7 @@
         e = "$EDITOR";
         g = "git";
         c = "cargo";
+        t = "task";
 
         ## Git
         gc = "git commit";

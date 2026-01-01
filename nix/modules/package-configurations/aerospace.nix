@@ -4,7 +4,7 @@
 # - Make firefox always on 1
 # - Maybe Todoist always on something too?
 {
-  home-manager.users."*".programs.aerospace.userSettings = {
+  home-manager.users."*".programs.aerospace.settings = {
     # If I ever want to use sketchybar again:
     # after-startup-command = [
     # 	'exec-and-forget borders active_color=0xffffff inactive_color=0x000000 width=10.0 style=round',

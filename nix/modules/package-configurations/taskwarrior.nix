@@ -18,6 +18,7 @@ in
         package = pkg;
         config = {
           confirmation = false;
+          urgency.user.tag.next.coefficient = -5;
         };
         extraConfig = "include ${hmConfig.age.secrets.taskwarrior.path}";
       };

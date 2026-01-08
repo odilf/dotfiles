@@ -40,7 +40,7 @@ in
       # pkgs.feishin
     ]
     ++ lib.optionals isLinux [
-      pkgs.bitwarden
+      pkgs.bitwarden-desktop
       pkgs.vlc # TODO: Check if this is good.
       pkgs.qalculate-qt # problem with qtbase
       pkgs.qbittorrent # problem with qtbase

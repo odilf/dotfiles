@@ -12,22 +12,16 @@
   desktop-environment = "niri";
   laptop.enable = true;
 
-  custom.bundles = {
-    odilf = {
-      development.enable = true;
-      social.enable = false;
-      games.enable = false;
-      creative.enable = false;
-      productivity.enable = false;
-    };
-
-    # study = {
-    #   development.enable = true;
-    #   productivity.enable = true;
-    # };
+  custom.bundles.odilf = {
+    development.enable = true;
+    social.enable = false;
+    games.enable = false;
+    creative.enable = false;
+    productivity.enable = true;
   };
 
   nix.settings = {
+    trusted-users = [ "odilf" ];
     extra-substituters = [
       "https://nixos-apple-silicon.cachix.org"
     ];
@@ -36,6 +30,7 @@
     ];
   };
 
+  # hardware.asahi.extractPeripheralFirmware = false;
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 
   # Regular NixOS options
@@ -50,17 +45,19 @@
     HandlePowerKey = "ignore";
   };
 
+  networking.wireless.enable = false;
   networking.wireless.iwd = {
     enable = true;
     settings.General.EnableNetworkConfiguration = true;
   };
-
   networking.hostName = "nixbook";
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Madrid";
 
+  services.openssh.enable = true;
+
+  # TODO: Move out of here
   services.kanata = {
     enable = true;
     keyboards.main = {
@@ -75,9 +72,6 @@
 
         (deflayermap (main)
           caps @cap
-          lctrl lmet
-          lmet lctrl 
-          rmet rctrl 
         )
 
         (defalias
@@ -113,6 +107,5 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.11"; # Did you read the comment?
-
+  system.stateVersion = "25.11"; # Did you read the comment?
 }

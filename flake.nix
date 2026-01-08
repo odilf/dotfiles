@@ -34,6 +34,16 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
   };
 
+  nixConfig = {
+    trusted-users = [ "odilf" ];
+    extra-substituters = [
+      "https://nixos-apple-silicon.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
+    ];
+  };
+
   outputs =
     {
       nixpkgs,
@@ -139,7 +149,7 @@
               agenix.packages."${system}".default
             ];
           };
-          formatter = pkgs.nixfmt-rfc-style;
+          formatter = pkgs.nixfmt;
         };
     };
 }

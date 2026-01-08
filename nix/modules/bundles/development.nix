@@ -47,7 +47,7 @@ let
     lib.optionals isLinux [
       pkgs.cool-retro-term
       pkgs.vscodium
-      pkgs.zed-editor
+      # pkgs.zed-editor
     ]
   );
 

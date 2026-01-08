@@ -19,8 +19,4 @@
     creative.enable = false;
     productivity.enable = false;
   };
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
 }

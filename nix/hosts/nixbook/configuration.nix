@@ -12,19 +12,12 @@
   desktop-environment = "niri";
   laptop.enable = true;
 
-  custom.bundles = {
-    odilf = {
-      development.enable = true;
-      social.enable = false;
-      games.enable = false;
-      creative.enable = false;
-      productivity.enable = false;
-    };
-
-    # study = {
-    #   development.enable = true;
-    #   productivity.enable = true;
-    # };
+  custom.bundles.odilf = {
+    development.enable = true;
+    social.enable = false;
+    games.enable = false;
+    creative.enable = false;
+    productivity.enable = true;
   };
 
   nix.settings = {
@@ -54,13 +47,12 @@
     enable = true;
     settings.General.EnableNetworkConfiguration = true;
   };
-
   networking.hostName = "nixbook";
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Madrid";
 
+  # TODO: Move out of here
   services.kanata = {
     enable = true;
     keyboards.main = {
@@ -113,6 +105,6 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
 
 }

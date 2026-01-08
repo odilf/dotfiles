@@ -19,6 +19,8 @@ in
         config = {
           confirmation = false;
           urgency.user.tag.next.coefficient = -5;
+          report.next.columns = "id,description,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,urgency";
+          report.next.labels = "ID,Description,P,Project,Tag,Recur,S,Due,Until,Urg";
         };
         extraConfig = "include ${hmConfig.age.secrets.taskwarrior.path}";
       };

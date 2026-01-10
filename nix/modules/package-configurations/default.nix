@@ -19,6 +19,7 @@ let
     ./jujutsu.nix
     ./niri.nix
     ./nix.nix
+    ./noctalia.nix
     ./ssh.nix
     ./taskwarrior.nix
   ];
@@ -26,10 +27,16 @@ let
   knownAttrs = [
     "home-manager"
     "users"
-    "fonts"
-    "environment"
+
     "system"
+    "programs"
+    "services"
+    "systemd"
+    "hardware"
+    "networking"
     "nix"
+    "environment"
+    "fonts"
     "age"
   ];
 
@@ -52,10 +59,15 @@ in
       "*"
     ];
 
+    system = globalCfg "system";
+    programs = globalCfg "programs";
+    services = globalCfg "services";
+    systemd = globalCfg "systemd";
+    hardware = globalCfg "hardware";
+    networking = globalCfg "networking";
+    nix = globalCfg "nix";
     environment = globalCfg "environment";
     fonts = globalCfg "fonts";
-    nix = globalCfg "nix";
-    system = globalCfg "system";
     age = globalCfg "age";
   };
 }

@@ -37,9 +37,10 @@ in
   config = lib.mkIf config.gui {
     environment.systemPackages = [
       pkgs.firefox-esr
-      # pkgs.feishin
+      pkgs.feishin
     ]
     ++ lib.optionals isLinux [
+      pkgs.qimgv
       pkgs.bitwarden-desktop
       pkgs.vlc # TODO: Check if this is good.
       pkgs.qalculate-qt # problem with qtbase

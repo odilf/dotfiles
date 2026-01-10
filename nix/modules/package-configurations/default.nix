@@ -16,6 +16,7 @@ let
     ./git.nix
     ./helix.nix
     ./home-manager.nix
+    ./iamb.nix
     ./jujutsu.nix
     ./niri.nix
     ./nix.nix

@@ -6,6 +6,7 @@ let
 
     # Nixbook
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHkQJf8Nu9cHGFbqKXxIYmXUbPSAINx3ip/CSvXovs+z root@nixos"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKs7dVmctkkZn5gb+Vj0m9shYgtQYRJAPrKIyNk5gZ5A odilf@nixbook"
 
     # From github
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfj3d1BRSRa7ddiKfZghyStS5UI3GomjGcAQZ5iEgMn"
@@ -21,4 +22,5 @@ in
 {
   "taskwarrior.age".publicKeys = keys;
   "ssh-host-shorthands.age".publicKeys = keys;
+  "navidrome.age".publicKeys = keys;
 }

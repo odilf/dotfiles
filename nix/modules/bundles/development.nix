@@ -74,6 +74,7 @@ in
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
+        opencode.enable = true;
         ssh.enable = true;
       };
 

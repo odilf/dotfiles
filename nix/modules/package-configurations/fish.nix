@@ -37,8 +37,7 @@
             set -x PATH $PATH /opt/homebrew/bin/
         end
 
-        ${lib.getExe pkgs.pfetch}
-        ${lib.getExe pkgs.taskwarrior3}
+        ${lib.getExe pkgs.pfetch-rs}
       '';
 
       shellAbbrs = {

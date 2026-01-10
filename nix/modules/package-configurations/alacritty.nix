@@ -10,7 +10,7 @@ in
     settings = {
       terminal.shell = "${pkgs.fish}/bin/fish";
 
-      font.size = if isDarwin then 16.0 else 13.0;
+      font.size = if isDarwin then 16.0 else 12.0;
       font.normal.family = "IosevkaTerm Nerd Font";
       font.normal.style = "Regular";
 

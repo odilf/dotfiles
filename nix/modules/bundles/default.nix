@@ -35,6 +35,7 @@ let
     "users"
     "home-manager"
     "programs"
+    "boot"
     "homebrew"
     "nixpkgs"
   ];
@@ -75,7 +76,7 @@ in
         inUsers = name: hasAttr name config.users.users;
         # TODO: This doesn't do anything because the configuration below adds the entries by itself...
         # I don't know if it's fixable.
-        usersWarning = builtins.map (
+        usersWarning = map (
           name: lib.mkIf (!inUsers name) "${name} is not declared in `users.users`"
         ) users;
         attrsWarning = utils.checkAttrs knownAttrs modules;
@@ -95,6 +96,7 @@ in
     ];
 
     programs = globalCfg "programs";
+    boot = globalCfg "boot";
     nixpkgs = globalCfg "nixpkgs";
     homebrew = lib.mkIf isDarwin (
       lib.mkMerge [

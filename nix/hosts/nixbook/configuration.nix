@@ -14,9 +14,9 @@
 
   custom.bundles.odilf = {
     development.enable = true;
-    social.enable = false;
-    games.enable = false;
-    creative.enable = false;
+    social.enable = true;
+    games.enable = true;
+    creative.enable = true;
     productivity.enable = true;
   };
 
@@ -42,14 +42,11 @@
     }
   ];
 
+  hardware.graphics.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
-
-  # don’t shutdown when power button is short-pressed
-  services.logind.settings.Login = {
-    HandlePowerKey = "ignore";
-  };
 
   # networking.wireless.network-manager.enable = lib.mkForce false;
   networking.networkmanager.enable = lib.mkForce false;

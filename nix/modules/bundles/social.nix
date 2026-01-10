@@ -1,8 +1,3 @@
-# TODO:
-# - [ ] gurk-rs for signal on terminal
-# - [ ] matrix terminal
-# - [ ] Mail terminal
-
 {
   pkgs,
   lib,
@@ -16,23 +11,29 @@ in
   users.users."*" =
     { enableBundle, ... }:
     lib.mkIf (enableBundle "social") {
-      packages =
-        # discord ommited, just use the web app.
-        [
-          pkgs.nchat
+      packages = [
+        pkgs.nchat
+        pkgs.discordo
+        pkgs.termsonic
+      ]
+      ++ lib.optionals config.gui (
+        lib.optionals isLinux [
+          pkgs.signal-desktop
+          pkgs.wasistlos
+          pkgs.element-desktop
+          pkgs.thunderbird
         ]
-        ++ lib.optionals config.gui (
-          lib.optionals isLinux [
-            pkgs.signal-desktop
-            pkgs.whatsapp-for-linux
-            pkgs.element-desktop
-            pkgs.thunderbird
-          ]
-          ++ lib.optionals isDarwin [
-            # pkgs.whatsapp-for-mac # Fails to download
-          ]
-        );
+        ++ lib.optionals isDarwin [
+          # pkgs.whatsapp-for-mac # Fails to download
+        ]
+      );
     };
+
+  home-manager.users."*".programs = {
+    gurk-rs.enable = true;
+    meli.enable = true;
+    iamb.enable = true;
+  };
 
   homebrew.casks = lib.optionals isDarwin [
     "whatsapp" # workaround

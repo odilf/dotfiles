@@ -2,6 +2,10 @@ debug {
 	render-drm-device "/dev/dri/renderD128"
 }
 
+environment {
+    QT_QPA_PLATFORM "wayland"
+}
+
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
@@ -315,16 +319,17 @@ window-rule {
     open-on-workspace "browser"
 }
 
+window-rule {
+    match app-id="com.mitchellh.ghostty"
+    default-column-width { proportion 0.7; }
+}
+
 // Example: block out two password managers from screen capture.
-// (This example rule is commented out with a "/-" in front.)
 /-window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
     block-out-from "screen-capture"
-
-    // Use this instead if you want them visible on third-party screenshot tools.
-    // block-out-from "screencast"
 }
 
 // Enable rounded corners for all windows.

@@ -13,6 +13,13 @@ let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
 in
 {
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "clonehero"
+    ];
+
+  boot.binfmt.emulatedSystems = lib.mkIf (!isx86) [ "x86_64-linux" ];
 
   users.users."*" =
     { enableBundle, ... }:
@@ -25,7 +32,6 @@ in
       ++ lib.optionals (isLinux && isx86) [
         pkgs.steam-run
         pkgs.steam-tui
-        pkgs.clonehero
       ]
       ++ lib.optionals config.gui (
         [
@@ -34,6 +40,8 @@ in
         ++ lib.optionals isLinux [
           # TODO: Move back to darwin when qtbase6 is fixed
           pkgs.prismlauncher
+          # pkgs.clonehero
+          pkgs.pkgsCross.gnu64.clonehero
           pkgs.rare # Epic games GUI (linux)
           pkgs.dolphin-emu
           pkgs.retroarch # Broken on darwin

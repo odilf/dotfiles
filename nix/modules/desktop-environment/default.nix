@@ -42,13 +42,17 @@ in
     ++ lib.optionals isLinux [
       pkgs.qimgv
       pkgs.bitwarden-desktop
-      pkgs.vlc # TODO: Check if this is good.
+      pkgs.vlc
       pkgs.qalculate-qt # problem with qtbase
       pkgs.qbittorrent # problem with qtbase
+
+      pkgs.wl-clipboard
     ]
     ++ lib.optionals isDarwin [
       pkgs.iina
     ];
+
+    programs.localsend.enable = true;
 
     homebrew = lib.mkIf isDarwin {
       casks = [

@@ -20,8 +20,9 @@ in
 
           pkgs.reaper
           pkgs.blender
-          pkgs.musescore
           pkgs.obs-studio
+          pkgs.musescore
+          pkgs.ardour
 
           # VST-plugins
           pkgs.lsp-plugins

@@ -15,7 +15,7 @@ in
           dark = "Horizon";
         in
         "light:${light},dark:${dark}";
-      font-size = if isDarwin then 16 else 12;
+      font-size = if isDarwin then 16 else 13;
       window-decoration = "none";
       macos-option-as-alt = "left";
       adjust-underline-thickness = 1;

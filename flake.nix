@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -72,6 +77,7 @@
               agenix.nixosModules.default
               {
                 passthru.agenix-hm = agenix.homeManagerModules.default;
+                passthru.noctalia = inputs.noctalia.homeModules.default;
               }
             ];
           };

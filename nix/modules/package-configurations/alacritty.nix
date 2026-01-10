@@ -2,12 +2,15 @@
   pkgs,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
+in
 {
   home-manager.users."*".programs.alacritty = {
     settings = {
       terminal.shell = "${pkgs.fish}/bin/fish";
 
-      font.size = 16.0;
+      font.size = if isDarwin then 16.0 else 13.0;
       font.normal.family = "IosevkaTerm Nerd Font";
       font.normal.style = "Regular";
 

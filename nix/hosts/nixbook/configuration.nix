@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -30,11 +30,17 @@
     ];
   };
 
-  # hardware.asahi.extractPeripheralFirmware = false;
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 
   # Regular NixOS options
   # ---
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024; # 16GB
+    }
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -45,7 +51,8 @@
     HandlePowerKey = "ignore";
   };
 
-  networking.wireless.enable = false;
+  # networking.wireless.network-manager.enable = lib.mkForce false;
+  networking.networkmanager.enable = lib.mkForce false;
   networking.wireless.iwd = {
     enable = true;
     settings.General.EnableNetworkConfiguration = true;
@@ -55,7 +62,10 @@
   # Set your time zone.
   time.timeZone = "Europe/Madrid";
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
 
   # TODO: Move out of here
   services.kanata = {

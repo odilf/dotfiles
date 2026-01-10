@@ -50,7 +50,7 @@ in
             sleep 5
             if [ -f "'"$FLAGFILE"'" ]; then
               rm "'"$FLAGFILE"'"
-              '"${lib.getExe pkg}"' rc.hooks=off sync
+              timeout 1 '"${lib.getExe pkg}"' rc.hooks=off sync
             fi
             rm -f "'"$PIDFILE"'"
           ' > /dev/null 2>&1 </dev/null &

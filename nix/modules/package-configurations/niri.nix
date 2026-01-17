@@ -13,12 +13,37 @@
 
   home-manager.users."*" = lib.mkIf config.programs.niri.enable {
     home.packages = [
-      pkgs.quickshell
+      pkgs.xwayland-satellite
     ];
 
     xdg.configFile."niri/config.kdl".source = ./niri/config.kdl;
 
     programs.noctalia-shell.enable = true;
+
+    dconf = {
+      enable = true;
+      settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+        };
+      };
+    };
+
+    gtk = {
+      enable = true;
+      theme = {
+        name = "orchis-theme";
+        package = pkgs.orchis-theme;
+      };
+      iconTheme = {
+        name = "Adwaita";
+        package = pkgs.adwaita-icon-theme;
+      };
+      cursorTheme = {
+        name = "Adwaita";
+        package = pkgs.adwaita-icon-theme;
+      };
+    };
 
     services.swayidle = {
       enable = true;

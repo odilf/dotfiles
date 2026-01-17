@@ -59,6 +59,13 @@
         } # 15min suspend
       ];
     };
+
+    programs.swaylock = {
+      enable = true;
+      settings = {
+        color = "101010";
+      };
+    };
   };
 
 }

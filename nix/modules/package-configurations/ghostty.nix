@@ -25,6 +25,8 @@ in
       mouse-hide-while-typing = true;
       background-opacity = 0.9;
       background-blur = true;
+
+      gtk-single-instance = true;
     };
   };
 }

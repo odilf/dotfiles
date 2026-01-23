@@ -18,6 +18,7 @@ let
     ./home-manager.nix
     ./iamb.nix
     ./jujutsu.nix
+    ./khal.nix
     ./niri.nix
     ./nix.nix
     ./noctalia.nix

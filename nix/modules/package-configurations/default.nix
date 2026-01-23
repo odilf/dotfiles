@@ -23,6 +23,7 @@ let
     ./noctalia.nix
     ./ssh.nix
     ./taskwarrior.nix
+    ./zathura.nix
   ];
 
   knownAttrs = [

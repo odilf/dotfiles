@@ -26,7 +26,20 @@ in
       );
     };
 
-  home-manager.users."*".programs.taskwarrior.enable = true;
+  home-manager.users."*" = {
+    programs = {
+      taskwarrior.enable = true;
+      zathura.enable = true;
+      khal.enable = true;
+    };
+
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = [ "zathura.desktop" ];
+      };
+    };
+  };
 
   homebrew.casks = [
     "musicbrainz-picard"

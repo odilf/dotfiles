@@ -16,12 +16,12 @@ let
     pkgs.hyperfine
     pkgs.mosh
     pkgs.nh
-    pkgs.pfetch-rs
     pkgs.ripgrep
     pkgs.rsync
     pkgs.tokei
     pkgs.vim
     pkgs.wget
+    pkgs.wiki-tui
     pkgs.yazi
     pkgs.zellij
 
@@ -47,7 +47,7 @@ let
     lib.optionals isLinux [
       pkgs.cool-retro-term
       pkgs.vscodium
-      # pkgs.zed-editor
+      pkgs.zed-editor
     ]
   );
 
@@ -75,6 +75,8 @@ in
         helix.enable = true;
         jujutsu.enable = true;
         opencode.enable = true;
+        ripgrep.enable = true;
+        ripgrep-all.enable = true;
         ssh.enable = true;
       };
 

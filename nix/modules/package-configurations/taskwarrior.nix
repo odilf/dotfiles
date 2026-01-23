@@ -19,8 +19,30 @@ in
         config = {
           confirmation = false;
           urgency.user.tag.next.coefficient = -5;
-          report.next.columns = "id,description,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,urgency";
+          report.next.columns = "id,description.desc,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,urgency";
           report.next.labels = "ID,Description,P,Project,Tag,Recur,S,Due,Until,Urg";
+
+          # Don't color if it's tagged
+          color.tagged = "";
+
+          # Foreground for dynamic (due, blocking)
+          color.due = "bold rgb520";
+          color.overdue = "rgb510";
+          color.blocking = "yellow";
+          color.scheduled = "blue";
+          color.uda.priority.H = "bold";
+          color.uda.priority.M = "bold";
+          color.uda.priority.L = "gray7";
+
+          # Background for static (project, tag)
+          color.project.master = "on rgb100";
+          color.tag.prog = "on rgb001";
+
+          # Except for org and recurring tasks, which are never _too_ important
+          color.tag.org = "gray12";
+          color.recurring = "gray15 on gray3";
+
+          rule.precedence.color = "deleted,completed,active,keyword.,recurring,due.today,tag.,project.,overdue,scheduled,due,blocked,blocking,recurring,tagged,uda.";
         };
         extraConfig = "include ${hmConfig.age.secrets.taskwarrior.path}";
       };

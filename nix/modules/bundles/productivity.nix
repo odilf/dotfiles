@@ -15,6 +15,7 @@ in
         [
           pkgs.taskwarrior-tui
           pkgs.tasksh
+          pkgs.libreoffice
         ]
         ++ lib.optionals isx86_64 [
           pkgs.zotero

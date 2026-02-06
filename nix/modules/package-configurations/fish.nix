@@ -52,6 +52,7 @@
         e = "$EDITOR";
         g = "git";
         c = "cargo";
+        o = "open \\$argv &; disown";
         t = "task";
         tt = "taskwarrior-tui";
 

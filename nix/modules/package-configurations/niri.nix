@@ -45,20 +45,40 @@
       };
     };
 
-    services.swayidle = {
-      enable = true;
-      events.before-sleep = "${pkgs.swaylock}/bin/swaylock";
-      timeouts = [
-        {
-          timeout = 300;
-          command = "niri msg action power-off-monitors";
-        } # 5min display off
-        {
-          timeout = 900;
-          command = "systemctl suspend";
-        } # 15min suspend
-      ];
-    };
+    services.swayidle =
+      let
+        lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
+        display = status: "${pkgs.niri}/bin/niri msg action power-${status}-monitors";
+      in
+      {
+        enable = true;
+        events = {
+          before-sleep = (display "off") + "; " + lock;
+          after-resume = display "on";
+          lock = (display "off") + "; " + lock;
+          unlock = display "on";
+        };
+
+        timeouts = [
+          {
+            timeout = 55;
+            command = "${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 2000";
+          }
+          {
+            timeout = 60;
+            command = display "off";
+            resumeCommand = display "on";
+          }
+          {
+            timeout = 125;
+            command = lock;
+          }
+          {
+            timeout = 135;
+            command = "${pkgs.systemd}/bin/systemctl suspend";
+          }
+        ];
+      };
 
     programs.swaylock = {
       enable = true;

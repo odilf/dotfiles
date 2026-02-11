@@ -35,6 +35,8 @@
   # Regular NixOS options
   # ---
 
+  programs.nix-ld.enable = true;
+
   swapDevices = [
     {
       device = "/var/lib/swapfile";

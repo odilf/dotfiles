@@ -86,6 +86,24 @@
         color = "101010";
       };
     };
+
+    programs.rofi = {
+      enable = true;
+      plugins = [
+        pkgs.rofi-calc
+        pkgs.rofi-emoji
+      ];
+
+      modes = [
+        "window"
+        "run"
+        "drun"
+        "ssh"
+        "filebrowser"
+        "emoji"
+        "calc"
+      ];
+    };
   };
 
 }

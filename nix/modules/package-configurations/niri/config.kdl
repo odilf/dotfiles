@@ -328,7 +328,7 @@ window-rule {
 
 // Enable rounded corners for all windows.
 window-rule {
-    geometry-corner-radius 20
+    geometry-corner-radius 10
     clip-to-geometry true
 }
 
@@ -337,10 +337,13 @@ binds {
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    // Suggested binds for running programs: terminal, app launcher, screen locker.
+    // Running programs: terminal, app launcher, screen locker.
     Alt+Return  hotkey-overlay-title="Open terminal" { spawn "alacritty"; }
-    Super+Space hotkey-overlay-title="Launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    Mod+T       hotkey-overlay-title="Open terminal" { spawn "alacritty"; }
+    Mod+D       hotkey-overlay-title="Launcher" { spawn "rofi" "-show" "drun"; }
+    Super+Space hotkey-overlay-title="Calculator" { spawn "rofi" "-show" "calc"; }
     Super+Alt+L hotkey-overlay-title="Lock screen" { spawn  "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
+    Mod+Period  hotkey-overlay-title="Emoji copy" { spawn "rofi" "-show" "emoji"; }
 
     Alt+Mod+V   hotkey-overlay-title="Clipboard" { spawn "noctalia-shell" "ipc" "call" "launcher" "clipboard"; }
     Shift+Mod+C hotkey-overlay-title="Calculator" { spawn "noctalia-shell" "ipc" "call" "launcher" "calculator"; }
@@ -516,7 +519,7 @@ binds {
     // Consume one window from the right to the bottom of the focused column.
     Mod+Comma  { consume-window-into-column; }
     // Expel the bottom window from the focused column to the right.
-    Mod+Period { expel-window-from-column; }
+    // Mod+Period { expel-window-from-column; }
 
     Mod+R { switch-preset-column-width; }
     // Cycling through the presets in reverse order is also possible.

@@ -58,5 +58,6 @@ in
     "dolphin"
     "clone-hero"
     "retroarch-metal"
+    "slackow/apps/slackowwall"
   ];
 }

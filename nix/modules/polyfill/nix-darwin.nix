@@ -15,6 +15,8 @@ in
       waybar = fill;
       neovim = fill;
       niri = fill;
+      localsend = fill;
+      xwayland = fill;
     };
 
     services = {
@@ -22,6 +24,12 @@ in
       xserver = fill;
       tlp = fill;
       displayManager = fill;
+      upower = fill;
     };
+
+    boot = fill;
+    hardware = fill;
+    networking.networkmanager = fill;
+    systemd = fill;
   };
 }

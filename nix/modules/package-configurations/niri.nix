@@ -4,14 +4,18 @@
   lib,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+  enable = isLinux && config.programs.niri.enable;
+in
 {
-  services = lib.mkIf config.programs.niri.enable {
+  services = lib.mkIf enable {
     displayManager = {
       cosmic-greeter.enable = true;
     };
   };
 
-  home-manager.users."*" = lib.mkIf config.programs.niri.enable {
+  home-manager.users."*" = lib.mkIf enable {
     home.packages = [
       pkgs.xwayland-satellite
     ];

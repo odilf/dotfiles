@@ -14,6 +14,8 @@ in
       packages = [
         pkgs.nchat
         pkgs.discordo
+      ]
+      ++ lib.optionals isLinux [
         pkgs.termsonic
       ]
       ++ lib.optionals config.gui (

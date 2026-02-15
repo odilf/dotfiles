@@ -4,13 +4,16 @@
   pkgs,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
   networking.networkmanager.enable = lib.mkDefault true;
   hardware.bluetooth.enable = lib.mkDefault true;
   # services.tuned.enable = lib.mkDefault true;
   services.upower.enable = lib.mkDefault true;
 
-  home-manager.users."*" = {
+  home-manager.users."*" = lib.mkIf isLinux {
     imports = [
       config.passthru.noctalia
     ];

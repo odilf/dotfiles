@@ -14,16 +14,17 @@ in
       config.passthru.agenix-hm
     ];
 
-    age =
-      lib.mkIf isDarwin {
+    age = lib.mkMerge [
+      (lib.mkIf isDarwin {
         secretsMountPoint = "/tmp/agenix.d";
         secretsDir = "/tmp/agenix";
-      }
+      })
       # TODO: Absolutely horrible :(
-      // lib.mkIf isLinux {
+      (lib.mkIf isLinux {
         secretsMountPoint = "/run/user/1000/agenix.d";
         secretsDir = "/run/user/1000/agenix";
-      };
+      })
+    ];
   };
 
   home-manager.useGlobalPkgs = true;

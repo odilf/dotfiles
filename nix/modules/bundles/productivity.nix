@@ -15,13 +15,13 @@ in
         [
           pkgs.taskwarrior-tui
           pkgs.tasksh
-          pkgs.libreoffice
           pkgs.localsend
         ]
         ++ lib.optionals isx86_64 [
           pkgs.zotero
         ]
         ++ lib.optionals isLinux [
+          pkgs.libreoffice
           pkgs.picard
           pkgs.calibre
         ]
@@ -36,7 +36,7 @@ in
       cmus.enable = true;
     };
 
-    xdg.mimeApps = {
+    xdg.mimeApps = lib.mkIf isLinux {
       enable = true;
       defaultApplications = {
         "application/pdf" = [ "org.pwmt.zathura.desktop" ];

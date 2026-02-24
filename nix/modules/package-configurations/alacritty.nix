@@ -15,13 +15,19 @@ in
         font.normal.family = "IosevkaTerm Nerd Font";
         font.normal.style = "Regular";
 
-        # TODO: Review these settings
         window = {
           decorations = "none";
           dynamic_title = true;
           option_as_alt = "OnlyLeft";
-          startup_mode = "Maximized";
         };
+
+        keyboard.bindings = [
+          {
+            key = "N";
+            mods = "Control|Shift";
+            action = "CreateNewWindow";
+          }
+        ];
       };
     };
 

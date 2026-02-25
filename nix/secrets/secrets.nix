@@ -23,4 +23,5 @@ in
   "taskwarrior.age".publicKeys = keys;
   "ssh-host-shorthands.age".publicKeys = keys;
   "navidrome.age".publicKeys = keys;
+  "radicale.age".publicKeys = keys;
 }

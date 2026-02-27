@@ -53,6 +53,7 @@ in
       let
         lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
         display = status: "${pkgs.niri}/bin/niri msg action power-${status}-monitors";
+        mediaPlaying = "${pkgs.playerctl}/bin/playerctl status 2>/dev/null | ${pkgs.gnugrep}/bin/grep -q Playing";
       in
       {
         enable = true;
@@ -66,20 +67,20 @@ in
         timeouts = [
           {
             timeout = 55;
-            command = "${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 2000";
+            command = "${mediaPlaying} || ${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 2000";
           }
           {
             timeout = 60;
-            command = display "off";
+            command = "${mediaPlaying} || ${display "off"}";
             resumeCommand = display "on";
           }
           {
             timeout = 125;
-            command = lock;
+            command = "${mediaPlaying} || ${lock}";
           }
           {
             timeout = 135;
-            command = "${pkgs.systemd}/bin/systemctl suspend";
+            command = "${mediaPlaying} || ${pkgs.systemd}/bin/systemctl suspend";
           }
         ];
       };

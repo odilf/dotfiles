@@ -11,6 +11,7 @@ let
     ./alacritty.nix
     ./bat.nix
     ./cargo.nix
+    ./cmus.nix
     ./fish.nix
     ./ghostty.nix
     ./git.nix

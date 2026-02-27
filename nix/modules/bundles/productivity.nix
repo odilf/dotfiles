@@ -33,6 +33,7 @@ in
       taskwarrior.enable = true;
       zathura.enable = true;
       khal.enable = true;
+      cmus.enable = true;
     };
 
     xdg.mimeApps = {

@@ -44,8 +44,7 @@ in
       pkgs.bitwarden-desktop
       pkgs.vlc
       pkgs.qalculate-qt # problem with qtbase
-      pkgs.qbittorrent # problem with qtbase
-
+      pkgs.qbittorrent
       pkgs.wl-clipboard
     ]
     ++ lib.optionals isDarwin [
@@ -59,6 +58,7 @@ in
         "bitwarden"
         "surfshark" # VPN
         "firefox" # TODO: Move back to nixpkgs version when it works
+        "transmission"
       ];
     };
 

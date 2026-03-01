@@ -23,7 +23,6 @@ in
           pkgs.signal-desktop
           pkgs.wasistlos
           pkgs.element-desktop
-          pkgs.thunderbird
         ]
         ++ lib.optionals isDarwin [
           # pkgs.whatsapp-for-mac # Fails to download
@@ -41,6 +40,5 @@ in
     "whatsapp" # workaround
     "signal"
     "element"
-    "thunderbird"
   ];
 }

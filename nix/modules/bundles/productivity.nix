@@ -33,7 +33,10 @@ in
       taskwarrior.enable = true;
       zathura.enable = true;
       khal.enable = true;
+      khard.enable = true;
       cmus.enable = true;
+      meli.enable = true;
+      himalaya.enable = true;
     };
 
     xdg.mimeApps = lib.mkIf isLinux {

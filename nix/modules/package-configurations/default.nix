@@ -7,6 +7,7 @@
 let
   utils = import ../utils.nix { inherit lib pkgs config; };
   modules = map utils.importModule [
+    ./accounts.nix
     ./aerospace.nix
     ./alacritty.nix
     ./bat.nix
@@ -19,7 +20,6 @@ let
     ./home-manager.nix
     ./iamb.nix
     ./jujutsu.nix
-    ./khal.nix
     ./niri.nix
     ./nix.nix
     ./noctalia.nix

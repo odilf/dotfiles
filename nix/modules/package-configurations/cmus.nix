@@ -39,6 +39,7 @@ in
         extraConfig = ''
           set status_display_program=${cmus-status-scrobbler}/bin/cmus-status-scrobbler
           set lib_sort=-filemtime
+          fset jazz=genre="Jazz"
         '';
       };
 

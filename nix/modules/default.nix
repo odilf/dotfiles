@@ -7,6 +7,7 @@
     ./package-configurations
     ./bundles
     ./desktop-environment
+    ./services
   ];
 
   options = {

@@ -1,0 +1,8 @@
+{
+  ...
+}:
+{
+  imports = [
+    ./immich-downloader.nix
+  ];
+}

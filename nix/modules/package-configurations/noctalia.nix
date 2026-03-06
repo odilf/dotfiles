@@ -106,77 +106,21 @@ in
       wallpaper = {
         automationEnabled = true;
         enabled = true;
-        directory = ../../../wallpapers;
+        directory = "/var/lib/immich-pics/wallpapers_desktop";
         overviewEnabled = false;
         randomIntervalSec = 600;
       };
     };
   };
-}
-// {
-  systemd =
-    let
-      # Configuration
-      immichUrl = "https://photos.odilf.com";
-      albumId = "https://photos.odilf.com/share/ta7p-JiU5xRpFzF90ggnwP-WTsS9YGBTVDPYgl0qAge02KVyziACs3InEzyzLaEcKfA";
-      photosDir = "/var/lib/wallpapers-immich";
 
-      # Sync script
-      syncScript = pkgs.writeShellScript "sync-immich-album" ''
-        set -e
-
-        PHOTOS_DIR="${photosDir}"
-        mkdir -p "$PHOTOS_DIR"
-
-        # Fetch album metadata
-        album_json=$(${pkgs.curl}/bin/curl -s "${immichUrl}/api/albums/${albumId}")
-
-        # Extract asset IDs and download photos
-        echo "$album_json" | ${pkgs.jq}/bin/jq -r '.assets[].id' | while read asset_id; do
-          # Get original filename
-          asset_info=$(${pkgs.curl}/bin/curl -s \
-            "${immichUrl}/api/assets/$asset_id")
-          
-          filename=$(echo "$asset_info" | ${pkgs.jq}/bin/jq -r '.originalFileName')
-          filepath="$PHOTOS_DIR/$filename"
-          
-          # Download if not already present
-          if [ ! -f "$filepath" ]; then
-            echo "Downloading $filename..."
-            ${pkgs.curl}/bin/curl -s \
-              "${immichUrl}/api/assets/$asset_id/original" \
-              -o "$filepath"
-          fi
-        done
-
-        echo "Sync complete. Photos in $PHOTOS_DIR"
-      '';
-
-    in
-    {
-      # Systemd service to sync photos
-      services.immich-photo-sync = {
-        description = "Sync photos from Immich album";
-
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${syncScript}";
-          StateDirectory = "wallpapers-immich";
-          DynamicUser = true;
-        };
-      };
-
-      # Timer to run sync periodically (daily at 3am)
-      timers.immich-photo-sync = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
-          RandomizedDelaySec = "1h";
-        };
-      };
-
-      # Photos will be available at: /var/lib/wallpapers-immich
-      # Run manually with: systemctl start immich-photo-sync
-    };
+  age.secrets.immich-wallpapers-token.file = ../../secrets/immich-wallpapers-token.age;
+  services.immich-album-downloader = {
+    enable = true;
+    localUrl = "http://192.168.0.40:2283";
+    remoteUrl = "https://photos.odilf.com";
+    albumId = "665dd9ea-a89e-4094-9fdf-d5998580c98b";
+    sessionTokenFile = "${config.age.secrets.immich-wallpapers-token.path}";
+    downloadDir = "/var/lib/immich-pics";
+    schedule = "*-*-* 03:00:00"; # 3 AM daily
+  };
 }

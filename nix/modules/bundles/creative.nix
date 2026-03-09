@@ -19,7 +19,7 @@ in
           pkgs.blockbench
 
           pkgs.reaper
-          pkgs.blender
+          # pkgs.blender
           pkgs.obs-studio
           pkgs.musescore
           pkgs.ardour

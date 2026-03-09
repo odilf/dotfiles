@@ -276,6 +276,7 @@ layer-rule {
 
 spawn-at-startup "noctalia-shell"
 
+
 hotkey-overlay {
     skip-at-startup
 }

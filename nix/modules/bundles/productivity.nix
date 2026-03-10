@@ -11,11 +11,15 @@ in
   users.users."*" =
     { enableBundle, ... }:
     lib.mkIf (enableBundle "productivity") {
-      packages = lib.optionals config.gui (
+      packages = [
+        pkgs.taskwarrior-tui
+        pkgs.tasksh
+        pkgs.ytermusic
+      ]
+      ++ lib.optionals config.gui (
         [
-          pkgs.taskwarrior-tui
-          pkgs.tasksh
           pkgs.localsend
+
         ]
         ++ lib.optionals isx86_64 [
           pkgs.zotero

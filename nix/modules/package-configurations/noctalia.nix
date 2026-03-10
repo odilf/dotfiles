@@ -20,8 +20,8 @@ in
 
     programs.noctalia-shell.settings = {
       bar = {
-        density = "mini";
-        position = "right";
+        density = "compact";
+        position = "top";
         showCapsule = false;
         widgets = {
           left = [
@@ -33,11 +33,9 @@ in
               formatHorizontal = "HH:mm";
               formatVertical = "HH mm";
               id = "Clock";
-              useMonospacedFont = true;
-              usePrimaryColor = true;
             }
             {
-              displayMode = "alwaysShow";
+              displayMode = "graphic";
               alwaysShowPercentage = true;
               id = "Battery";
               warningThreshold = 20;
@@ -49,13 +47,16 @@ in
             {
               hideUnoccupied = false;
               id = "Workspace";
-              labelMode = "none";
-              colorizeIcons = true;
+              labelMode = "name";
+              colorizeIcons = false;
               iconScale = 0.7;
-              unfocusedIconsOpacity = 0.3;
+              unfocusedIconsOpacity = 0.4;
             }
           ];
           right = [
+            {
+              id = "plugin:network-indicator";
+            }
             {
               id = "WiFi";
             }
@@ -64,6 +65,7 @@ in
             }
             {
               id = "Brightness";
+              displayMode = "alwaysShow";
             }
             {
               "id" = "plugin:catwalk";
@@ -81,7 +83,7 @@ in
         useWallpaperColors = true;
       };
       dock = {
-        animationSpeeed = 2;
+        animationSpeeed = 1;
         deadOpacity = 0.6;
       };
       general = {
@@ -96,12 +98,16 @@ in
       nightLight = {
         autoSchedule = true;
       };
+      notifications = {
+        backgroundOpacity = 0.9;
+        density = "compact";
+      };
 
       wallpaper = {
+        automationEnabled = true;
         enabled = true;
         directory = ../../../wallpapers;
         overviewEnabled = false;
-        randomEnabled = true;
         randomIntervalSec = 600;
       };
     };

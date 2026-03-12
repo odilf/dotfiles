@@ -114,20 +114,11 @@ in
       ];
     };
 
-    # home-manager.users."*".programs = {
-    #   aerospace.enable = true;
-    #   firefox.enable = true;
-    # };
-
     home-manager.users = utils.mapUsers (username: {
       programs.aerospace = {
         enable = true;
         launchd.enable = true;
       };
-      # programs.firefox = {
-      #   enable = true;
-      #   package = pkgs.firefox-beta;
-      # };
     });
   };
 }

@@ -14,6 +14,8 @@ in
       packages = [
         pkgs.taskwarrior-tui
         pkgs.tasksh
+      ]
+      ++ lib.optionals isLinux [
         pkgs.ytermusic
       ]
       ++ lib.optionals config.gui (

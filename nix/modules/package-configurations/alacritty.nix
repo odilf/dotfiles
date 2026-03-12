@@ -13,10 +13,10 @@ in
 
         font.size = if isDarwin then 16.0 else 12.0;
         font.normal.family = "IosevkaTerm Nerd Font";
-        font.normal.style = "Regular";
+        font.normal.style = if isDarwin then "Light" else "Regular";
 
         window = {
-          decorations = "none";
+          decorations = if isDarwin then "buttonless" else "none";
           dynamic_title = true;
           option_as_alt = "OnlyLeft";
         };

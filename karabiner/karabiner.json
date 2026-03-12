@@ -1,23 +1,36 @@
 {
-    "global": { "show_in_menu_bar": false },
     "profiles": [
         {
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Caps lock to escape if alone or ctrl if held",
+                        "description": "Ctrl + Left Click to Left Click",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "modifiers": {
+                                        "mandatory": ["left_control"],
+                                        "optional": ["caps_lock"]
+                                    },
+                                    "pointing_button": "button1"
+                                },
+                                "to": [
+                                    { "pointing_button": "button1" },
+                                    { "key_code": "left_control" }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Caps Lock to Esc and Ctrl",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "caps_lock",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "left_control",
-                                        "lazy": true
-                                    }
-                                ],
+                                "to": [{ "key_code": "right_control" }],
                                 "to_if_alone": [{ "key_code": "escape" }],
                                 "type": "basic"
                             }
@@ -25,12 +38,51 @@
                     }
                 ]
             },
+            "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": true,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 591,
+                        "vendor_id": 1452
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        },
+                        {
+                            "from": { "key_code": "right_command" },
+                            "to": [{ "key_code": "right_option" }]
+                        }
+                    ]
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": true,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 332,
+                        "vendor_id": 76
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        }
+                    ]
+                }
+            ],
             "name": "Default profile",
             "selected": true,
-            "virtual_hid_keyboard": {
-                "country_code": 0,
-                "keyboard_type_v2": "iso"
-            }
+            "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
         }
     ]
 }

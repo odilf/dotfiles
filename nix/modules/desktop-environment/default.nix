@@ -36,10 +36,10 @@ in
 
   config = lib.mkIf config.gui {
     environment.systemPackages = [
-      pkgs.firefox-esr
       pkgs.feishin
     ]
     ++ lib.optionals isLinux [
+      pkgs.firefox-esr
       pkgs.qimgv
       pkgs.bitwarden-desktop
       pkgs.vlc

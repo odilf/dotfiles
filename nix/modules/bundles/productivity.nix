@@ -36,6 +36,7 @@ in
     programs = {
       taskwarrior.enable = true;
       zathura.enable = true;
+      sioyek.enable = true;
       khal.enable = true;
       khard.enable = true;
       cmus.enable = true;
@@ -46,7 +47,7 @@ in
     xdg.mimeApps = lib.mkIf isLinux {
       enable = true;
       defaultApplications = {
-        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+        "application/pdf" = [ "sioyek.desktop" ];
       };
     };
   };

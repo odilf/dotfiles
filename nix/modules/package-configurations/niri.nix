@@ -51,17 +51,18 @@ in
 
     services.swayidle =
       let
-        lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
+        # lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
+        lock = "${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock";
         display = status: "${pkgs.niri}/bin/niri msg action power-${status}-monitors";
-        mediaPlaying = "${pkgs.playerctl}/bin/playerctl status 2>/dev/null | ${pkgs.gnugrep}/bin/grep -q Playing";
+        mediaPlaying = "${pkgs.playerctl}/bin/playerctl status 2>/dev/null | ${pkgs.ripgrep}/bin/rg -q Playing";
       in
       {
         enable = true;
         events = {
-          before-sleep = (display "off") + "; " + lock;
-          after-resume = display "on";
-          lock = (display "off") + "; " + lock;
-          unlock = display "on";
+          # before-sleep = (display "off") + "; " + lock;
+          # after-resume = display "on";
+          # lock = (display "off") + "; " + lock;
+          # unlock = display "on";
         };
 
         timeouts = [

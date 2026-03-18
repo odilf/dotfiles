@@ -151,6 +151,50 @@ if [[ -z "$ASSET_IDS" ]]; then
     exit 1
 fi
 
+# Build a list of expected filenames from the album
+echo "Building list of files that should exist..."
+declare -A EXPECTED_FILES
+
+while IFS= read -r ASSET_ID; do
+    # Get asset info to determine filename
+    ASSET_INFO=$(curl -s -f \
+        -H "x-api-key: $IMMICH_API_KEY" \
+        "$IMMICH_URL/api/assets/$ASSET_ID")
+    
+    ORIGINAL_FILENAME=$(echo "$ASSET_INFO" | jq -r '.originalFileName // "unknown"')
+    FILE_EXT=$(echo "$ASSET_INFO" | jq -r '.originalPath' | grep -oE '\.[^.]+$' || echo ".jpg")
+    
+    # Use original filename if available, otherwise use asset ID
+    if [[ "$ORIGINAL_FILENAME" != "unknown" ]]; then
+        EXPECTED_FILES["$ORIGINAL_FILENAME"]=1
+    else
+        EXPECTED_FILES["${ASSET_ID}${FILE_EXT}"]=1
+    fi
+done <<< "$ASSET_IDS"
+
+# Clean up files that are no longer in the album
+if [[ -d "$ALBUM_DIR" ]]; then
+    echo "Checking for files to remove..."
+    REMOVED_COUNT=0
+    
+    while IFS= read -r FILE; do
+        BASENAME=$(basename "$FILE")
+        
+        # If this file is not in our expected files list, delete it
+        if [[ ! -v EXPECTED_FILES["$BASENAME"] ]]; then
+            echo "  🗑 Removing (not in album): $FILE"
+            rm -f "$FILE"
+            REMOVED_COUNT=$((REMOVED_COUNT + 1))
+        fi
+    done < <(find "$ALBUM_DIR" -type f)
+    
+    if [[ $REMOVED_COUNT -gt 0 ]]; then
+        echo "Removed $REMOVED_COUNT file(s) that are no longer in the album"
+    else
+        echo "No orphaned files found"
+    fi
+fi
+
 # Download each asset
 COUNT=0
 TOTAL=$(echo "$ASSET_IDS" | wc -l)

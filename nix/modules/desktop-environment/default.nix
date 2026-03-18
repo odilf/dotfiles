@@ -46,6 +46,7 @@ in
       pkgs.qalculate-qt # problem with qtbase
       pkgs.qbittorrent
       pkgs.wl-clipboard
+      pkgs.kdePackages.dolphin
     ]
     ++ lib.optionals isDarwin [
       pkgs.iina

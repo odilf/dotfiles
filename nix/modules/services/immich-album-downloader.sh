@@ -49,7 +49,7 @@ echo ""
 
 # Create download directory
 mkdir -p "$DOWNLOAD_DIR"
-chmod 755 "$DOWNLOAD_DIR"
+chmod o+rwx g+rx o+rx "$DOWNLOAD_DIR"
 
 echo "Download directory: $DOWNLOAD_DIR"
 
@@ -141,7 +141,7 @@ fi
 # Create album-specific directory
 ALBUM_DIR="$DOWNLOAD_DIR/${ALBUM_NAME// /_}"
 mkdir -p "$ALBUM_DIR"
-chmod 755 "$ALBUM_DIR"
+chmod o+rwx g+rx o+rx "$ALBUM_DIR"
 
 echo "Downloading to: $ALBUM_DIR"
 

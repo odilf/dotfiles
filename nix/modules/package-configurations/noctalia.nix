@@ -13,106 +13,217 @@ in
   # services.tuned.enable = lib.mkDefault true;
   services.upower.enable = lib.mkDefault true;
 
-  home-manager.users."*" = lib.mkIf isLinux {
-    imports = [
-      config.passthru.noctalia
-    ];
+  home-manager.users."*" =
+    { hmConfig, ... }:
+    lib.mkIf isLinux {
+      imports = [
+        config.passthru.noctalia
+      ];
 
-    programs.noctalia-shell.settings = {
-      bar = {
-        density = "compact";
-        position = "top";
-        showCapsule = false;
-        widgets = {
-          left = [
-            {
-              id = "ControlCenter";
-              useDistroLogo = true;
-            }
-            {
-              formatHorizontal = "HH:mm";
-              formatVertical = "HH mm";
-              id = "Clock";
-            }
-            {
-              displayMode = "graphic";
-              alwaysShowPercentage = true;
-              id = "Battery";
-              warningThreshold = 20;
-              showNoctaliaPerformance = true;
-              showPowerProfiles = true;
-            }
-          ];
-          center = [
-            {
-              hideUnoccupied = false;
-              id = "Workspace";
-              labelMode = "name";
-              colorizeIcons = false;
-              iconScale = 0.7;
-              unfocusedIconsOpacity = 0.4;
-            }
-          ];
-          right = [
-            {
-              id = "plugin:network-indicator";
-            }
-            {
-              id = "WiFi";
-            }
-            {
-              id = "Bluetooth";
-            }
-            {
-              id = "Brightness";
-              displayMode = "alwaysShow";
-            }
-            {
-              "id" = "plugin:catwalk";
-            }
-          ];
+      programs.noctalia-shell.settings = {
+        bar = {
+          density = "compact";
+          position = "top";
+          showCapsule = false;
+          widgets = {
+            left = [
+              {
+                id = "ControlCenter";
+                useDistroLogo = true;
+              }
+              {
+                formatHorizontal = "HH:mm";
+                formatVertical = "HH mm";
+                id = "Clock";
+              }
+              {
+                displayMode = "graphic";
+                alwaysShowPercentage = true;
+                id = "Battery";
+                warningThreshold = 20;
+                showNoctaliaPerformance = true;
+                showPowerProfiles = true;
+              }
+            ];
+            center = [
+              {
+                hideUnoccupied = false;
+                id = "Workspace";
+                labelMode = "name";
+                colorizeIcons = false;
+                iconScale = 0.7;
+                unfocusedIconsOpacity = 0.4;
+              }
+            ];
+            right = [
+              {
+                id = "plugin:network-indicator";
+              }
+              {
+                id = "WiFi";
+              }
+              {
+                id = "Bluetooth";
+              }
+              {
+                id = "Brightness";
+                displayMode = "alwaysShow";
+              }
+              {
+                "id" = "plugin:catwalk";
+              }
+            ];
+          };
+        };
+
+        controlCenter = {
+          shortcuts = {
+            left = [
+              {
+                id = "Network";
+              }
+              {
+                id = "Bluetooth";
+              }
+              {
+                id = "WallpaperSelector";
+              }
+              {
+                id = "NoctaliaPerformance";
+              }
+            ];
+            right = [
+              {
+                id = "Notifications";
+              }
+              {
+                id = "PowerProfile";
+              }
+              {
+                id = "KeepAwake";
+              }
+              {
+                id = "NightLight";
+              }
+              {
+                id = "DarkMode";
+              }
+            ];
+          };
+        };
+
+        brightness = {
+          brightnessStep = 2;
+        };
+        colorSchemes = {
+          predefinedScheme = "Eldritch";
+          schedulingMode = "location";
+          useWallpaperColors = true;
+        };
+        dock = {
+          animationSpeed = 0.1;
+          deadOpacity = 0.6;
+        };
+        general = {
+          avatarImage = ../../../logo.svg;
+          radiusRatio = 0.2;
+          animationSpeed = 1.5;
+        };
+        location = {
+          monthBeforeDay = true;
+          name = "Madrid, Spain";
+        };
+        nightLight = {
+          autoSchedule = true;
+        };
+        notifications = {
+          backgroundOpacity = 0.9;
+          density = "compact";
+        };
+
+        wallpaper = {
+          automationEnabled = true;
+          enabled = true;
+          directory = "/var/lib/immich-pics/wallpapers_desktop";
+          overviewEnabled = false;
+          randomIntervalSec = 600;
+        };
+
+        templates = {
+          activeTemplates =
+            lib.map
+              (id: {
+                enabled = true;
+                id = id;
+              })
+              [
+                "btop"
+                "gtk"
+                "qt"
+                "helix"
+                "niri"
+                "discord"
+                "alacritty"
+              ];
+          enableUserTheming = false;
         };
       };
 
-      brightness = {
-        brightnessStep = 2;
-      };
-      colorSchemes = {
-        predefinedScheme = "Eldritch";
-        schedulingMode = "location";
-        useWallpaperColors = true;
-      };
-      dock = {
-        animationSpeeed = 1;
-        deadOpacity = 0.6;
-      };
-      general = {
-        avatarImage = ../../../logo.svg;
-        radiusRatio = 0.2;
-        animationSpeed = 1.5;
-      };
-      location = {
-        monthBeforeDay = true;
-        name = "Madrid, Spain";
-      };
-      nightLight = {
-        autoSchedule = true;
-      };
-      notifications = {
-        backgroundOpacity = 0.9;
-        density = "compact";
+      # --
+      # Dynamic dark and light mode
+      # --
+      gtk = {
+        enable = true;
+
+        theme = {
+          name = "noctalia";
+          package = null; # Theme is generated by noctalia
+        };
+
+        gtk3.extraConfig = {
+          gtk-application-prefer-dark-theme = false; # Let noctalia control this
+        };
+
+        gtk4.extraConfig = {
+          gtk-application-prefer-dark-theme = false;
+        };
       };
 
-      wallpaper = {
-        automationEnabled = true;
-        enabled = true;
-        directory = "/var/lib/immich-pics/wallpapers_desktop";
-        overviewEnabled = false;
-        randomIntervalSec = 600;
+      qt = {
+        enable = true;
+        # platformTheme = "qtct";
+        style.name = "kvantum"; # or "breeze" or others
       };
+
+      # Set the environment variable
+      home.sessionVariables = {
+        QT_QPA_PLATFORMTHEME = "qt6ct";
+      };
+
+      # For qt6ct/qt5ct config files
+      xdg.configFile."qt5ct/qt5ct.conf".text = ''
+        [Appearance]
+        color_scheme_path=${hmConfig.home.homeDirectory}/.config/noctalia/templates/noctalia.conf
+        custom_palette=true
+
+        [Interface]
+        stylesheets=${hmConfig.home.homeDirectory}/.config/noctalia/templates/noctalia.qss
+      '';
+
+      xdg.configFile."qt6ct/qt6ct.conf".text = ''
+        [Appearance]
+        color_scheme_path=${hmConfig.home.homeDirectory}/.config/noctalia/templates/noctalia.conf
+        custom_palette=true
+
+        [Interface]
+        stylesheets=${hmConfig.home.homeDirectory}/.config/noctalia/templates/noctalia.qss
+      '';
+
+      # Change helix theme
+      programs.helix.settings.theme = lib.mkOverride 50 "noctalia";
     };
-  };
 
+  # Download wallpepers from immich (always active)
   age.secrets.immich-wallpapers-token.file = ../../secrets/immich-wallpapers-token.age;
   services.immich-album-downloader = {
     enable = true;

@@ -23,6 +23,7 @@ let
     ./niri.nix
     ./nix.nix
     ./noctalia.nix
+    ./reaper.nix
     ./rofi.nix
     ./sioyek.nix
     ./ssh.nix

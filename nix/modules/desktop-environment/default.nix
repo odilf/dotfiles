@@ -43,7 +43,8 @@ in
       pkgs.qimgv
       pkgs.bitwarden-desktop
       pkgs.vlc
-      pkgs.qalculate-qt # problem with qtbase
+      pkgs.qalculate-qt
+      pkgs.libqalculate
       pkgs.qbittorrent
       pkgs.wl-clipboard
       pkgs.kdePackages.dolphin

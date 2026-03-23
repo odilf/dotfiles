@@ -5,7 +5,7 @@
 {
   home-manager.users."*" = {
     programs.helix = {
-      enable = true;
+      package = pkgs.steelix;
       settings = {
         # Alternative options for themes:
         # Non-underline errors: ["ao", "iroaseta", "vim_dark_high_contrast", "yo", "yo_berry", "zenburn"]

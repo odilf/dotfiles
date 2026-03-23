@@ -33,7 +33,7 @@ in
   home-manager.users."*".programs = {
     gurk-rs.enable = true;
     meli.enable = true;
-    iamb.enable = true;
+    # iamb.enable = true;
   };
 
   homebrew.casks = lib.optionals isDarwin [

@@ -40,7 +40,7 @@ in
       zathura.enable = true;
       sioyek.enable = true;
       khal.enable = true;
-      khard.enable = true;
+      # khard.enable = true;
       cmus.enable = true;
       meli.enable = true;
       himalaya.enable = true;

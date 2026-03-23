@@ -14,6 +14,9 @@
         gpg.format = "ssh";
         user.signingkey = "~/.ssh/id_ed25519.pub";
       };
+
+      # Old home stateVersion
+      signing.format = null;
     };
 
     delta = {

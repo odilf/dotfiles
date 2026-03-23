@@ -23,9 +23,11 @@ let
     ./niri.nix
     ./nix.nix
     ./noctalia.nix
+    ./rofi.nix
     ./sioyek.nix
     ./ssh.nix
     ./taskwarrior.nix
+    ./tofi.nix
     ./zathura.nix
   ];
 

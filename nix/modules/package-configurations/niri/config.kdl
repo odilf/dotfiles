@@ -341,8 +341,8 @@ binds {
     // Running programs: terminal, app launcher, screen locker.
     Alt+Return  hotkey-overlay-title="Open terminal" { spawn "alacritty"; }
     Mod+T       hotkey-overlay-title="Open terminal" { spawn "alacritty"; }
-    Mod+D       hotkey-overlay-title="Launcher" { spawn "rofi" "-show" "drun"; }
-    Super+Space hotkey-overlay-title="Calculator" { spawn "rofi" "-show" "calc"; }
+    Mod+D       hotkey-overlay-title="Launcher" { spawn "tofi-run"; }
+    Super+Space hotkey-overlay-title="Launcher" { spawn "tofi-drun"; }
     Super+Alt+L hotkey-overlay-title="Lock screen" { spawn  "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
     Mod+Period  hotkey-overlay-title="Emoji copy" { spawn "rofi" "-show" "emoji"; }
 

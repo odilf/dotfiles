@@ -187,6 +187,9 @@ in
         gtk4.extraConfig = {
           gtk-application-prefer-dark-theme = false;
         };
+
+        # Old home stateVersion
+        gtk4.theme = null;
       };
 
       qt = {

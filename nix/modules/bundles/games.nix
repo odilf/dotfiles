@@ -41,7 +41,7 @@ in
           # TODO: Move back to darwin when qtbase6 is fixed
           pkgs.prismlauncher
           # pkgs.clonehero
-          pkgs.pkgsCross.gnu64.clonehero
+          # pkgs.pkgsCross.gnu64.clonehero
           pkgs.rare # Epic games GUI (linux)
           pkgs.dolphin-emu
           pkgs.retroarch # Broken on darwin

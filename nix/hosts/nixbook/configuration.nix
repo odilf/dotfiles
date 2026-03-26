@@ -12,12 +12,15 @@
   desktop-environment = "niri";
   laptop.enable = true;
 
-  custom.bundles.odilf = {
-    development.enable = true;
-    social.enable = true;
-    games.enable = true;
-    creative.enable = true;
-    productivity.enable = true;
+  custom = {
+    flake-path = "~/code/dotfiles#nixbook";
+    bundles.odilf = {
+      development.enable = true;
+      social.enable = true;
+      games.enable = true;
+      creative.enable = true;
+      productivity.enable = true;
+    };
   };
 
   nix.settings = {

@@ -20,6 +20,7 @@ let
     ./home-manager.nix
     ./iamb.nix
     ./jujutsu.nix
+    ./nh.nix
     ./niri.nix
     ./nix.nix
     ./noctalia.nix

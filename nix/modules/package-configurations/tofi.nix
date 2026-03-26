@@ -3,30 +3,22 @@
   home-manager.users."*" = {
     programs.tofi = {
       settings = {
-        # Window dimensions and positioning
-        width = "100%";
-        height = "100%";
+        width = "50%";
+        height = "50%";
+        margin-left = "25%";
+        margin-top = "25%";
         border-width = 2;
         outline-width = 0;
-        padding-left = "43%";
-        padding-top = "15%";
+        padding-left = 20;
+        padding-top = 20;
 
-        # Results
         result-spacing = 15;
-        num-results = 8;
+        font = "${pkgs.nerd-fonts.iosevka-term}/share/fonts/truetype/NerdFonts/IosevkaTerm/IosevkaTermNerdFontMono-Regular.ttf";
+        font-size = 26;
 
-        # Font
-        font = "${pkgs.nerd-fonts.iosevka-term}/share/fonts/truetype/NerdFonts/IosevkaTermNerdFontMono-Regular.ttf";
-        font-size = 16;
-
-        # Behavior
-        hide-cursor = true;
         history = true;
-        fuzzy-match = true;
-
-        # Performance
+        terminal = "${pkgs.alacritty}/bin/alacritty";
         drun-launch = true;
-        terminal = "alacritty"; # adjust to your terminal
       };
     };
   };

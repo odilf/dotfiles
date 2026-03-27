@@ -7,18 +7,18 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isx86_64;
   # TODO: Actually detect if reaper is enabled
-  enabled = false;
+  enabled = isx86_64 && false;
 in
-lib.mkIf (isx86_64 && enabled) {
+{
   # Enable 32-bit support (required for many Windows VSTs)
-  hardware.opengl = {
+  hardware.opengl = lib.mkIf enabled {
     enable = true;
     driSupport32Bit = true;
   };
 
   # Audio setup
-  security.rtkit.enable = true;
-  services.pipewire = {
+  security.rtkit.enable = lib.mkIf enabled true;
+  services.pipewire = lib.mkIf enabled {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
@@ -27,7 +27,7 @@ lib.mkIf (isx86_64 && enabled) {
   };
 
   # System packages
-  environment.systemPackages = [
+  environment.systemPackages = lib.mkIf enabled [
     # Reaper
     pkgs.reaper
 
@@ -45,19 +45,18 @@ lib.mkIf (isx86_64 && enabled) {
   ];
 
   # Add your user to audio group
-  # TODO: Do with mapUsers
-  users.users.odilf = {
+  users.users."*" = lib.mkIf enabled {
     extraGroups = [ "audio" ];
   };
 
   # Environment variables for yabridge
-  environment.variables = {
+  environment.variables = lib.mkIf enabled {
     # Point yabridge to Wine
     WINEPREFIX = "$HOME/.wine-vst";
   };
 
   # Optional: realtime audio privileges
-  security.pam.loginLimits = [
+  security.pam.loginLimits = lib.mkIf enabled [
     {
       domain = "@audio";
       type = "-";

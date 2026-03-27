@@ -118,6 +118,12 @@ in
         User = cfg.user;
         Group = cfg.group;
 
+        # Ensure correct permissions before running
+        ExecStartPre = [
+          "${pkgs.coreutils}/bin/chmod 755 ${cfg.downloadDir}"
+          "${pkgs.coreutils}/bin/chown ${cfg.user}:${cfg.group} ${cfg.downloadDir}"
+        ];
+
         # Environment variables
         Environment = [
           "IMMICH_LOCAL_URL=${cfg.localUrl}"

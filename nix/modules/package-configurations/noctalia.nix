@@ -60,12 +60,13 @@ in
             {
               id = "plugin:mpd";
             }
-            {
-              id = "syncthing-status";
-            }
-            {
-              id = "plugin:iwd";
-            }
+            # TODO: Not worky
+            # {
+            #   id = "syncthing-status";
+            # }
+            # {
+            #   id = "plugin:iwd";
+            # }
             {
               id = "Bluetooth";
             }
@@ -74,7 +75,14 @@ in
               displayMode = "alwaysShow";
             }
             {
-              id = "plugin:catwalk";
+              id = "SystemMonitor";
+              compactMode = true;
+              showCpuCores = false;
+              showCpuFreq = false;
+              showCpuTemp = true;
+              showCpuUsage = true;
+              showMemoryUsage = true;
+              showSwapUsage = true;
             }
           ];
         };

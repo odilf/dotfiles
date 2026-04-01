@@ -102,9 +102,10 @@ in
         brightnessStep = 2;
       };
       colorSchemes = {
-        predefinedScheme = "Eldritch";
+        darkMode = true;
         schedulingMode = "off";
         useWallpaperColors = true;
+        generationMethod = "rainbow";
       };
       dock = {
         animationSpeed = 0.1;

@@ -83,12 +83,24 @@
         )
 
         (deflayermap (main)
+          tab @tab
           caps @cap
         )
+
+        (deflayer arrows
+          _    _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    _    _    _    left down up   rght _    _    _
+          _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _              _          _    _
+        )
+
 
         (defalias
           cap-inner (tap-hold-press 0 200 esc lctrl)
           cap (multi f24 @cap-inner) ;; workaround https://github.com/jtroo/kanata/discussions/422
+
+          tab (tap-hold-press 200 200 tab (layer-while-held arrows))
         )
       '';
 

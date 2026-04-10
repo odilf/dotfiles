@@ -14,7 +14,7 @@
     accordion-padding = 30;
 
     mode.main.binding = {
-      alt-enter = "exec-and-forget ${pkgs.alacritty}/bin/alacritty";
+      alt-enter = "exec-and-forget open -n /Applications/Ghostty.app";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#layout
       alt-slash = "layout tiles horizontal vertical";

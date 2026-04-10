@@ -18,6 +18,7 @@
 with lib;
 
 let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
   cfg = config.services.immich-album-downloader;
 
   # Read the external script and substitute package paths
@@ -93,7 +94,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && isLinux) {
 
     # Create system user and group
     users.users.${cfg.user} = {

@@ -36,7 +36,6 @@ in
 
   config = lib.mkIf config.gui {
     environment.systemPackages = [
-      pkgs.feishin
     ]
     ++ lib.optionals isLinux [
       pkgs.firefox-esr

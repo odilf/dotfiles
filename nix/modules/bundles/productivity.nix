@@ -21,9 +21,6 @@ in
       ++ lib.optionals config.gui (
         [
           pkgs.localsend
-
-        ]
-        ++ lib.optionals isx86_64 [
           pkgs.zotero
         ]
         ++ lib.optionals isLinux [

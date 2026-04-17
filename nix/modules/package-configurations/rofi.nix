@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   home-manager.users."*".programs.rofi = {
-    enable = true;
     plugins = [
       pkgs.rofi-calc
       pkgs.rofi-emoji

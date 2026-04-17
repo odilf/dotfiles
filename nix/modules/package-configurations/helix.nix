@@ -47,23 +47,36 @@
       };
 
       languages = {
-        language-server.scls = {
-          command = "simple-completion-language-server";
-          config = {
-            max_completion_items = 100; # set max completion results len for each group: words, snippets, unicode-input
-            feature_words = false; # enable completion by word
-            feature_snippets = false; # enable snippets
-            snippets_first = true; # completions will return before snippets by default
-            snippets_inline_by_word_tail = false; # suggest snippets by WORD tail, for example text `xsq|` become `x^2|` when snippet `sq` has body `^2`
-            feature_unicode_input = true; # enable "unicode input"
-            feature_paths = false; # enable path completion
-            feature_citations = false; # enable citation completion (only on `citation` feature enabled)
+        language-server = {
+          scls = {
+            command = "simple-completion-language-server";
+            config = {
+              max_completion_items = 100; # set max completion results len for each group: words, snippets, unicode-input
+              feature_words = false; # enable completion by word
+              feature_snippets = false; # enable snippets
+              snippets_first = true; # completions will return before snippets by default
+              snippets_inline_by_word_tail = false; # suggest snippets by WORD tail, for example text `xsq|` become `x^2|` when snippet `sq` has body `^2`
+              feature_unicode_input = true; # enable "unicode input"
+              feature_paths = false; # enable path completion
+              feature_citations = false; # enable citation completion (only on `citation` feature enabled)
+            };
+
+            # write logs to /tmp/completion.log
+            environment = {
+              RUST_LOG = "info,simple-completion-language-server=info";
+              LOG_FILE = "/tmp/completion.log";
+            };
           };
 
-          # write logs to /tmp/completion.log
-          environment = {
-            RUST_LOG = "info,simple-completion-language-server=info";
-            LOG_FILE = "/tmp/completion.log";
+          tinimyst = {
+            command = "${pkgs.tinymist}/bin/tinymist";
+
+            config = {
+              preview.background.enabled = true;
+              preview.background.args = [
+                "--open"
+              ];
+            };
           };
         };
 
@@ -89,6 +102,10 @@
               "markdown-oxide"
               "scls"
             ];
+          }
+          {
+            name = "typst";
+            language-servers = [ "tinymist" ];
           }
         ];
       };

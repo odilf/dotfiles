@@ -30,6 +30,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri-session-manager = {
+      url = "github:MTeaHead/niri-session-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -75,6 +80,7 @@
               ./nix/modules/polyfill/nixos.nix
               home-manager.nixosModules.default
               agenix.nixosModules.default
+              inputs.niri-session-manager.nixosModules.niri-session-manager
               {
                 passthru.agenix-hm = agenix.homeManagerModules.default;
                 passthru.noctalia = inputs.noctalia.homeModules.default;

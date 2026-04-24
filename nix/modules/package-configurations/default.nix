@@ -22,6 +22,7 @@ let
     ./jujutsu.nix
     ./nh.nix
     ./niri.nix
+    ./niri-session-manager.nix
     ./nix.nix
     ./noctalia.nix
     # ./reaper.nix

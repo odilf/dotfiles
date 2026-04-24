@@ -10,9 +10,8 @@ let
 in
 {
   services = lib.mkIf enable {
-    displayManager = {
-      cosmic-greeter.enable = true;
-    };
+    displayManager.ly.enable = true;
+    niri-session-manager.enable = true;
   };
 
   home-manager.users."*" = lib.mkIf enable {
@@ -23,6 +22,14 @@ in
     xdg.configFile."niri/config.kdl".source = ./niri/config.kdl;
 
     programs.noctalia-shell.enable = true;
+    programs.tofi.enable = true;
+
+    programs.swaylock = {
+      enable = true;
+      settings = {
+        color = "101010";
+      };
+    };
 
     services.swayidle =
       let
@@ -60,15 +67,6 @@ in
           }
         ];
       };
-
-    programs.swaylock = {
-      enable = true;
-      settings = {
-        color = "101010";
-      };
-    };
-
-    programs.tofi.enable = true;
   };
 
 }

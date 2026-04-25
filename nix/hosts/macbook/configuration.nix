@@ -44,7 +44,7 @@
   # TODO: Maybe do clean uninstall/reinstall thingy... but meh.
   ids.gids.nixbld = 350;
 
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.stdenv.hostPlatform = "aarch64-darwin";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

@@ -27,6 +27,11 @@ in
             mods = "Control|Shift";
             action = "CreateNewWindow";
           }
+          {
+            key = "Return";
+            mods = "Alt";
+            action = "CreateNewWindow";
+          }
         ];
       };
     };

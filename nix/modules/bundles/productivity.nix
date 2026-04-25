@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (pkgs.stdenv.hostPlatform) isLinux isx86_64;
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
 in
 {
   users.users."*" =
@@ -34,7 +34,6 @@ in
   home-manager.users."*" = {
     programs = {
       taskwarrior.enable = true;
-      zathura.enable = true;
       sioyek.enable = true;
       khal.enable = true;
       # khard.enable = true;

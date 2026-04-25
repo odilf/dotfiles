@@ -33,6 +33,9 @@
     niri-session-manager = {
       url = "github:MTeaHead/niri-session-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    kanata-darwin = {
+      url = "github:not-in-stock/kanata-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-on-droid = {
@@ -94,6 +97,7 @@
               ./nix/modules/polyfill/nix-darwin.nix
               home-manager.darwinModules.default
               agenix.darwinModules.default
+              inputs.kanata-darwin.darwinModules.default
               {
                 passthru.agenix-hm = agenix.homeManagerModules.default;
               }

@@ -20,6 +20,7 @@ let
     ./home-manager.nix
     ./iamb.nix
     ./jujutsu.nix
+    ./kanata.nix
     ./nh.nix
     ./niri.nix
     ./niri-session-manager.nix

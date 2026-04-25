@@ -38,6 +38,8 @@
   # Regular NixOS options
   # ---
 
+  home-manager.users."odilf".programs.fish.shellAbbrs.wr =
+    "sudo systemctl restart iwd && sudo systemctl restart dhcpcd";
   programs.nix-ld.enable = true;
 
   swapDevices = [

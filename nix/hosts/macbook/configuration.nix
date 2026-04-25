@@ -32,6 +32,10 @@
   #   description = "User for studying/working";
   # };
 
+  home-manager.users."odilf".programs = {
+    nh.flake = "/Users/odilf/code/dotfiles#macbook";
+  };
+
   homebrew = {
     casks = [ "vorta" ];
     brews = [ "borgbackup" ];

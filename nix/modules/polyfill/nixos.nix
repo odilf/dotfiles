@@ -14,6 +14,8 @@ in
 
     services = {
       aerospace = fill;
+      kanata.kanata-bar = fill;
+      kanata.configSource = fill;
     };
 
     system.defaults = fill;

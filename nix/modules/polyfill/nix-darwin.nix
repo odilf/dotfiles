@@ -25,6 +25,8 @@ in
       tlp = fill;
       displayManager = fill;
       upower = fill;
+      kanata.keyboards = fill;
+      niri-session-manager = fill;
     };
 
     boot = fill;

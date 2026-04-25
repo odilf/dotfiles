@@ -108,8 +108,6 @@ in
         "raycast" # App launcher
         "mechvibes" # cross-platform, but not in nixpkgs...
         "betterdisplay" # macos specific
-
-        # TODO: Remove, replace with kanata
         "karabiner-elements"
       ];
     };

@@ -23,7 +23,7 @@ rec {
   mapUsers =
     f:
     (lib.foldl' lib.attrsets.unionOfDisjoint { } (
-      builtins.map (username: { "${username}" = f username; }) users
+      map (username: { "${username}" = f username; }) users
     ));
 
   importModule = modulePath: import modulePath inputs;
@@ -52,9 +52,7 @@ rec {
   */
   globalCfgExcept =
     modules: attr: exceptAttr:
-    lib.mkMerge (
-      map (module: builtins.removeAttrs (lib.attrByPath [ attr ] { } module) [ exceptAttr ]) modules
-    );
+    lib.mkMerge (map (module: removeAttrs (lib.attrByPath [ attr ] { } module) [ exceptAttr ]) modules);
 
   /**
     Gets the attr at `attrPath` for each module, and generates a per-users config, the way

@@ -17,13 +17,14 @@
 
       zoxide.enable = true;
       starship.enable = true;
-      pay-respects.enable = true;
 
       nix-index.enable = true;
 
       direnv.enable = true;
       direnv.nix-direnv.enable = true;
     };
+
+    home.packages = [ pkgs.comma ];
 
     programs.fish = {
       preferAbbrs = true;

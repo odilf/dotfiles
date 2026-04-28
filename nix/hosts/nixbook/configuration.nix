@@ -28,6 +28,11 @@
   # Regular NixOS options
   # ---
 
+  # Was failing before this
+  boot.kernel.sysctl = {
+    "vm.mmap_rnd_bits" = 28; # or remove this line entirely
+  };
+
   home-manager.users."odilf".programs = {
     fish.shellAbbrs.wr = "sudo systemctl restart iwd && sudo systemctl restart dhcpcd";
   };

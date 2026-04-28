@@ -13,7 +13,7 @@
   laptop.enable = true;
 
   custom = {
-    flake-path = "~/code/dotfiles#nixbook";
+    flake-path = "/home/odilf/code/dotfiles#nixbook";
     bundles.odilf = {
       development.enable = true;
       social.enable = true;
@@ -30,7 +30,6 @@
 
   home-manager.users."odilf".programs = {
     fish.shellAbbrs.wr = "sudo systemctl restart iwd && sudo systemctl restart dhcpcd";
-    nh.flake = "/home/odilf/code/dotfiles#nixbook";
   };
 
   nix.settings = {

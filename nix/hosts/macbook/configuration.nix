@@ -3,19 +3,22 @@
   gui = true;
   desktop-environment = "macOS";
 
-  custom.bundles = {
-    odilf = {
-      development.enable = true;
-      social.enable = true;
-      games.enable = true;
-      creative.enable = true;
-      productivity.enable = true;
-    };
+  custom = {
+    flake-path = "/Users/odilf/code/dotfiles#macbook";
+    bundles = {
+      odilf = {
+        development.enable = true;
+        social.enable = true;
+        games.enable = true;
+        creative.enable = true;
+        productivity.enable = true;
+      };
 
-    # study = {
-    #   development.enable = true;
-    #   productivity.enable = true;
-    # };
+      # study = {
+      #   development.enable = true;
+      #   productivity.enable = true;
+      # };
+    };
   };
 
   system.primaryUser = "odilf";
@@ -31,10 +34,6 @@
   #   home = /Users/study;
   #   description = "User for studying/working";
   # };
-
-  home-manager.users."odilf".programs = {
-    nh.flake = "/Users/odilf/code/dotfiles#macbook";
-  };
 
   homebrew = {
     casks = [ "vorta" ];

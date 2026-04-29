@@ -39,7 +39,7 @@ in
     ]
     ++ lib.optionals isLinux [
       pkgs.firefox-esr
-      pkgs.qimgv
+      # pkgs.qimgv
       pkgs.bitwarden-desktop
       pkgs.vlc
       pkgs.qalculate-qt

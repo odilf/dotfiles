@@ -8,6 +8,10 @@ let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
   cli = [
+    (pkgs.aspellWithDicts (d: [
+      d.en
+      d.es
+    ]))
     pkgs.bottom
     pkgs.btop
     pkgs.curl

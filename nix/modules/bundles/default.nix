@@ -103,7 +103,7 @@ in
         (globalCfg "homebrew")
         {
           enable = true;
-          onActivation.cleanup = "uninstall";
+          # onActivation.cleanup = "uninstall";
         }
       ]
     );

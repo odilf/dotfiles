@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
   config = ''
     (defsrc
       grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
@@ -34,22 +34,10 @@ let
   extraDefCfg = "process-unmapped-keys yes";
 in
 {
-  services.kanata = {
+  services.kanata = lib.mkIf isLinux {
     enable = true;
-    keyboards.main = lib.mkIf isLinux {
+    keyboards.main = {
       inherit config extraDefCfg;
     };
-
-    kanata-bar.enable = lib.mkIf isDarwin true;
-    # Adapted from https://github.com/NixOS/nixpkgs/blob/10e7ad5bbcb421fe07e3a4ad53a634b0cd57ffac/nixos/modules/services/hardware/kanata.nix#L98-L109
-    configSource = lib.mkIf isDarwin (
-      pkgs.writeText "kanata-main-config.kbd" ''
-        (defcfg
-            ${extraDefCfg}
-            linux-continue-if-no-devs-found yes)
-
-        ${config}
-      ''
-    );
   };
 }

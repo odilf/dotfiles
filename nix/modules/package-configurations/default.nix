@@ -16,6 +16,7 @@ let
     ./fish.nix
     ./ghostty.nix
     ./git.nix
+    ./karabiner.nix
     ./helix.nix
     ./home-manager.nix
     ./iamb.nix

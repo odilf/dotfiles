@@ -34,8 +34,8 @@
         # Open yazi in helix
         keys.normal = {
           C-y = [
-            ":sh rm -f /tmp/unique-file"
-            ":insert-output yazi %{buffer_name} --chooser-file=/tmp/unique-file"
+            ":sh rm -f /tmp/yazi-helix"
+            ":insert-output yazi %{buffer_name} --chooser-file=/tmp/yazi-helix"
             ":insert-output echo \"\x1b[?1049h\x1b[?2004h\" > /dev/tty"
             ":open %sh{cat /tmp/unique-file}"
             ":redraw"

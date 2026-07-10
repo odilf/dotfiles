@@ -140,6 +140,13 @@ let
             product_id = 332;
             simple_modifications = isoSwap;
           })
+
+          # Other
+          (externalKeyboard {
+            vendor_id = 1133;
+            product_id = 45081;
+            simple_modifications = isoSwap;
+          })
         ];
       }
     ];

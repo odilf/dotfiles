@@ -79,7 +79,7 @@ in
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
-        opencode.enable = true;
+        # opencode.enable = true;
         ripgrep.enable = true;
         ripgrep-all.enable = true;
         ssh.enable = true;

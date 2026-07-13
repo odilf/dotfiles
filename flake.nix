@@ -87,8 +87,8 @@
         let
           nixosModule = {
             imports = [
-              ./nix/modules
-              ./nix/modules/polyfill/nixos.nix
+              ./modules
+              ./modules/polyfill/nixos.nix
               home-manager.nixosModules.default
               agenix.nixosModules.default
               inputs.niri-session-manager.nixosModules.niri-session-manager
@@ -101,8 +101,8 @@
 
           darwinModule = {
             imports = [
-              ./nix/modules
-              ./nix/modules/polyfill/nix-darwin.nix
+              ./modules
+              ./modules/polyfill/nix-darwin.nix
               home-manager.darwinModules.default
               agenix.darwinModules.default
               inputs.kanata-darwin.darwinModules.default
@@ -114,8 +114,8 @@
 
           nixOnDroidModule = {
             imports = [
-              ./nix/modules/polyfill/nix-on-droid.nix
-              ./nix/modules
+              ./modules/polyfill/nix-on-droid.nix
+              ./modules
             ];
           };
         in
@@ -130,7 +130,7 @@
               system = "aarch64-linux";
               modules = [
                 nixosModule
-                ./nix/hosts/nixbook/configuration.nix
+                ./hosts/nixbook/configuration.nix
                 inputs.apple-silicon.nixosModules.default
               ];
             };
@@ -140,7 +140,7 @@
               modules = [
                 nixosModule
                 inputs.nixos-wsl.nixosModules.default
-                ./nix/hosts/ada/configuration.nix
+                ./hosts/ada/configuration.nix
               ];
             };
           };
@@ -149,7 +149,7 @@
             system = "aarch64-darwin";
             modules = [
               darwinModule
-              ./nix/hosts/macbook/configuration.nix
+              ./hosts/macbook/configuration.nix
             ];
           };
 
@@ -157,7 +157,7 @@
             pkgs = import nixpkgs { system = "aarch64-linux"; };
             modules = [
               nixOnDroidModule
-              ./nix/hosts/vermeer/configuration.nix
+              ./hosts/vermeer/configuration.nix
             ];
           };
         };

@@ -27,6 +27,7 @@ in
           # VST-plugins
           pkgs.lsp-plugins
           pkgs.zam-plugins
+          pkgs.kdePackages.kdenlive
         ]
         ++ lib.optionals (isLinux && isx86_64) [
           pkgs.surge
@@ -46,6 +47,7 @@ in
       # TODO: Same as above
       "wacom-tablet"
       "blockbench"
+      "kdenlive"
     ];
 
     # NOTE: Better to just install manually...

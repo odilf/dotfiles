@@ -9,6 +9,7 @@ in
       font-family = "IosevkaTerm Nerd Font";
       font-style = "Regular";
       command = "${pkgs.fish}/bin/fish";
+      shell-integration = "fish";
       theme =
         let
           light = "Bluloco Light";
@@ -23,8 +24,6 @@ in
       quit-after-last-window-closed = true;
       macos-window-shadow = false;
       mouse-hide-while-typing = true;
-      background-opacity = 0.9;
-      background-blur = true;
 
       gtk-single-instance = true;
     };

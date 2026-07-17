@@ -22,6 +22,8 @@
             select = "underline";
           };
 
+          soft-wrap.enable = true;
+
           completion-timeout = 5;
           completion-trigger-len = 1;
 

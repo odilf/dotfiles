@@ -8,8 +8,9 @@
       package = pkgs.steelix;
       settings = {
         # Alternative options for themes:
-        # Non-underline errors: ["ao", "iroaseta", "vim_dark_high_contrast", "yo", "yo_berry", "zenburn"]
+        # Non-underline errors: ["ao", "iroaseta", "vim_dark_high_contrast", "yo", "yo_berry", "zenburn", "naysayer", "ttox"]
         # Nice looking: ["starlight"]
+        # With backgrounds: ["flatwhite"]
         theme = "base16_default";
 
         editor = {
@@ -114,6 +115,7 @@
     };
 
     xdg.configFile."helix/unicode-input/base.toml".source = ./helix/unicode-input.toml;
+    xdg.configFile."helix/themes/".source = ./helix/themes;
   };
 
   # TODO: Watch out... this is global, actually.

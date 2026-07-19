@@ -1,0 +1,45 @@
+inherits = "flatwhite"
+
+"diagnostic.info" = { fg = "blue_text_sec" }
+"diagnostic.hint" = { fg = "teal_text_sec" }
+"diagnostic.warning" = { fg = "orange_text_sec" }
+"diagnostic.error" = { fg = "diff_delete" }
+# "diagnostic.unnecessary" = { modifiers = ["dim"] }
+# "diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+"info" = { fg = "blue_text_sec", modifiers = ["bold"] }
+"hint" = { fg = "teal_text_sec", modifiers = ["bold"] }
+"warning" = { fg = "orange_text_sec", modifiers = ["bold"] }
+"error" = { fg = "diff_delete", modifiers = ["bold"] }
+
+[palette]
+base1 = "#d6d1cb"
+base2 = "#b3a289"
+base3 = "#8f7a5b"
+base4 = "#5d4f3c"
+base5 = "#433a2d"
+base6 = "#2d271f"
+base7 = "#000000"
+# base7 = "default"
+accent = "#6a4cff"
+orange_text = "#e3cfb5"
+orange_text_sec = "#d7ac75"
+orange_bg = "#453521"
+green_text = "#d8e0b8"
+green_text_sec = "#bbcf6e"
+green_bg = "#3d4323"
+teal_text = "#b8e0d3"
+teal_text_sec = "#6ecfb0"
+teal_bg = "#234339"
+blue_text = "#b8c5e0"
+blue_text_sec = "#6e8ecf"
+blue_bg = "#232e43"
+purple_text = "#e0b8e0"
+purple_text_sec = "#cf6ecf"
+purple_bg = "#432343"
+diff_add = "#2db448"
+diff_change = "#f2a60d"
+diff_change_dark = "#795306"
+diff_delete = "#ff1414"
+diff_renamed = "#52aeff"
+white = "#ffffff"

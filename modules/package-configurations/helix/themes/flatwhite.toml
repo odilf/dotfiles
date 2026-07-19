@@ -1,0 +1,13 @@
+inherits = "flatwhite"
+
+"diagnostic.info" = { fg = "blue_text_sec" }
+"diagnostic.hint" = { fg = "teal_text_sec" }
+"diagnostic.warning" = { fg = "orange_text_sec" }
+"diagnostic.error" = { fg = "diff_delete" }
+# "diagnostic.unnecessary" = { modifiers = ["dim"] }
+# "diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+"info" = { fg = "blue_text_sec", modifiers = ["bold"] }
+"hint" = { fg = "teal_text_sec", modifiers = ["bold"] }
+"warning" = { fg = "orange_text_sec", modifiers = ["bold"] }
+"error" = { fg = "diff_delete", modifiers = ["bold"] }

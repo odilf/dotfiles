@@ -26,6 +26,10 @@ in
       mouse-hide-while-typing = true;
 
       gtk-single-instance = true;
+
+      # Reset OSC 11 background overrides some TUIs (e.g. Helix) leave behind
+      # after exit, which otherwise desync from the light/dark theme.
+      keybind = "super+alt+b=text:\\x1b]111\\x07";
     };
   };
 }

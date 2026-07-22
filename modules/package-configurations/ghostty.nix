@@ -11,11 +11,11 @@ in
       command = "${pkgs.fish}/bin/fish";
       shell-integration = "fish";
       theme =
-        let
-          light = "Bluloco Light";
-          dark = "Horizon";
-        in
-        "light:${light},dark:${dark}";
+        # let
+        #   light = "Bluloco Light";
+        #   dark = "Horizon";
+        # in
+        "light:${./ghostty/themes/flatwhite},dark:${./ghostty/themes/flatblack}";
       font-size = if isDarwin then 16 else 12;
       window-decoration = "none";
       macos-option-as-alt = "left";

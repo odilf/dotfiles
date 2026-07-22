@@ -1,0 +1,97 @@
+# Terminal-driven version of flatwhite/flatblack.
+#
+# Every color below is one of Helix's 16 named ANSI colors instead of a hex
+# value, so the actual colors come from the terminal's palette. Pointing
+# Ghostty (or any terminal) at a palette built from flatwhite's/flatblack's
+# hex values reproduces their look; switching the terminal's light/dark theme
+# switches this theme too, with no edit to `theme = ...` needed.
+#
+# Budget: only 16 slots are available, so the per-token pastel backgrounds
+# flatwhite/flatblack use (blue_bg, green_bg, etc.) are dropped in favor of
+# flat foregrounds. UI chrome (statusline, selection, cursor, jump-label)
+# keeps a background, since that's not per-token syntax highlighting.
+
+"diagnostic.info" = { fg = "light-blue" }
+"diagnostic.hint" = { fg = "light-cyan" }
+"diagnostic.warning" = { fg = "light-yellow" }
+"diagnostic.error" = { fg = "red" }
+
+"info" = { fg = "light-blue", modifiers = ["bold"] }
+"hint" = { fg = "light-cyan", modifiers = ["bold"] }
+"warning" = { fg = "light-yellow", modifiers = ["bold"] }
+"error" = { fg = "red", modifiers = ["bold"] }
+
+"attribute" = { fg = "blue" }
+"comment" = { fg = "gray", bg = "light-gray" }
+"comment.line" = { fg = "gray", bg = "light-gray" }
+"comment.block" = { fg = "gray", bg = "light-gray" }
+"comment.block.documentation" = { fg = "gray", bg = "light-gray" }
+"constant" = { fg = "blue" }
+"constructor" = { fg = "white" }
+"function" = { fg = "white", modifiers = ["bold"] }
+"keyword" = { fg = "magenta" }
+"label" = { modifiers = ["bold"] }
+"namespace" = { fg = "cyan" }
+"operator" = { fg = "white" }
+"punctuation.bracket" = { modifiers = ["bold"] }
+"special" = { fg = "blue" }
+"string" = { fg = "green" }
+"type" = { fg = "white" }
+"variable" = { fg = "white" }
+"variable.parameter" = { fg = "blue" }
+
+"diagnostic" = { modifiers = ["underlined"] }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+"markup.heading" = { fg = "magenta", modifiers = ["bold"] }
+"markup.raw" = { fg = "yellow" }
+"markup.raw.inline" = { fg = "yellow" }
+"markup.raw.block" = { fg = "yellow" }
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link.url" = { fg = "blue", modifiers = ["underlined"] }
+"markup.link.label" = { fg = "blue" }
+"markup.link.text" = { fg = "blue" }
+"markup.quote" = { fg = "cyan" }
+"markup.list" = { fg = "magenta" }
+
+"ui.background" = { fg = "white", bg = "black" }
+"ui.cursorline" = { bg = "light-gray" }
+"ui.cursor" = { fg = "white", bg = "black", modifiers = ["reversed"] }
+"ui.cursor.primary" = { fg = "white", bg = "black", modifiers = ["reversed"] }
+"ui.cursor.match" = { fg = "light-magenta", bg = "light-red", modifiers = ["reversed"] }
+"ui.selection" = { bg = "light-green" }
+"ui.selection.primary" = { fg = "light-gray", bg = "gray" }
+
+"ui.virtual" = { fg = "light-magenta", bg = "light-gray" }
+"ui.virtual.whitespace" = { fg = "light-magenta" }
+"ui.virtual.ruler" = { bg = "light-gray" }
+"ui.virtual.inlay-hint" = "light-green"
+"ui.virtual.inlay-hint.parameter" = "light-red"
+"ui.virtual.inlay-hint.type" = { fg = "light-red", modifiers = ["italic"] }
+"ui.virtual.jump-label" = { fg = "black", bg = "yellow", modifiers = ["bold"] }
+
+"ui.linenr" = { bg = "light-gray" }
+"ui.linenr.selected" = { bg = "light-gray", modifiers = ["reversed"] }
+
+"ui.statusline" = { fg = "black", bg = "white", modifiers = ["bold"] }
+"ui.statusline.inactive" = { fg = "black", bg = "light-red" }
+"ui.statusline.normal" = { fg = "black", bg = "white", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "black", bg = "magenta", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "black", bg = "cyan", modifiers = ["bold"] }
+
+"ui.text" = { fg = "white" }
+"ui.text.focus" = { fg = "white", modifiers = ["bold"] }
+
+"ui.menu" = { fg = "white", bg = "light-gray" }
+"ui.menu.selected" = { fg = "white", bg = "light-gray", modifiers = ["reversed"] }
+"ui.menu.scroll" = { fg = "white", bg = "light-gray" }
+"ui.help" = { fg = "white", bg = "light-gray" }
+"ui.popup" = { fg = "white", bg = "light-gray" }
+"ui.window" = { fg = "white", bg = "light-gray" }
+
+"diff.plus" = { fg = "green" }
+"diff.delta" = { fg = "yellow" }
+"diff.minus" = { fg = "red" }

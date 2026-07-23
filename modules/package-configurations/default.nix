@@ -34,6 +34,7 @@ let
     ./ssh.nix
     ./taskwarrior.nix
     ./tofi.nix
+    ./wezterm.nix
     ./zathura.nix
   ];
 

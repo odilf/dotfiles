@@ -14,7 +14,7 @@
     accordion-padding = 30;
 
     mode.main.binding = {
-      alt-enter = "exec-and-forget open -n /Applications/Ghostty.app";
+      alt-enter = "exec-and-forget ${pkgs.wezterm}/bin/wezterm";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#layout
       alt-slash = "layout tiles horizontal vertical";

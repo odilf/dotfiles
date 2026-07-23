@@ -85,6 +85,7 @@ in
         ripgrep.enable = true;
         ripgrep-all.enable = true;
         ssh.enable = true;
+        wezterm.enable = config.gui;
       };
 
       home.sessionVariables = {

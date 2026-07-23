@@ -54,8 +54,7 @@
         g = "git";
         c = "cargo";
         o = "open \\$argv &; disown";
-        t = "task";
-        tt = "taskwarrior-tui";
+        j = "jj";
 
         ## Git
         gc = "git commit";
@@ -66,6 +65,10 @@
         gd = "git diff";
         gD = "git diff --staged";
         gs = "git status";
+
+        jc = "jj commit";
+        jd = "jj diff";
+        js = "jj st";
 
         ## Nix
         ns = "nix shell nixpkgs#";

@@ -1,17 +1,31 @@
 #!/usr/bin/env python3
-"""Generate the ghostty theme files from base palettes with a saturation boost.
+# FIXME: I think I should use https://github.com/chriskempson/base16-templates-source
+"""Generate ghostty, alacritty, and wezterm theme files from base palettes
+with a saturation boost.
 
 Tweak SATURATION_BOOST (or a theme's palette colors) below, then run:
 
     ./generate.py
 
-This overwrites flatblack and flatwhite in this directory.
+This overwrites the generated files under ghostty/, alacritty/, and
+wezterm/ in this directory.
 """
 
 import colorsys
 from pathlib import Path
 
 THEMES_DIR = Path(__file__).parent
+
+ANSI_NAMES = [
+    "black",
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "magenta",
+    "cyan",
+    "white",
+]
 
 # Palette indices left untouched by the saturation boost: 0/15 are the
 # near-neutral black/white slots and 7 doubles as a background-ish tone in
@@ -97,13 +111,15 @@ def boost_saturation(hex_color: str, add: float) -> str:
     return rgb_to_hex(colorsys.hls_to_rgb(h, l, s))
 
 
-def render(theme: dict, boost: float) -> str:
-    lines = []
-    for idx in range(16):
-        color = theme["palette"][idx]
-        if idx not in SKIP_INDICES:
-            color = boost_saturation(color, boost)
-        lines.append(f"palette = {idx}={color}")
+def boosted_palette(theme: dict, boost: float) -> dict[int, str]:
+    return {
+        idx: color if idx in SKIP_INDICES else boost_saturation(color, boost)
+        for idx, color in theme["palette"].items()
+    }
+
+
+def render_ghostty(theme: dict, palette: dict[int, str]) -> str:
+    lines = [f"palette = {idx}={palette[idx]}" for idx in range(16)]
     for key in (
         "background",
         "foreground",
@@ -116,13 +132,66 @@ def render(theme: dict, boost: float) -> str:
     return "\n".join(lines) + "\n"
 
 
+def render_alacritty(theme: dict, palette: dict[int, str]) -> str:
+    lines = [
+        "[colors.primary]",
+        f"background = '{theme['background']}'",
+        f"foreground = '{theme['foreground']}'",
+        "",
+        "[colors.cursor]",
+        f"text = '{theme['cursor-text']}'",
+        f"cursor = '{theme['cursor-color']}'",
+        "",
+        "[colors.selection]",
+        f"text = '{theme['selection-foreground']}'",
+        f"background = '{theme['selection-background']}'",
+        "",
+        "[colors.normal]",
+    ]
+    for i, name in enumerate(ANSI_NAMES):
+        lines.append(f"{name} = '{palette[i]}'")
+    lines.append("")
+    lines.append("[colors.bright]")
+    for i, name in enumerate(ANSI_NAMES):
+        lines.append(f"{name} = '{palette[i + 8]}'")
+    return "\n".join(lines) + "\n"
+
+
+def render_wezterm(theme: dict, palette: dict[int, str]) -> str:
+    ansi = ", ".join(f'"{palette[i]}"' for i in range(8))
+    brights = ", ".join(f'"{palette[i + 8]}"' for i in range(8))
+    lines = [
+        "[colors]",
+        f"foreground = \"{theme['foreground']}\"",
+        f"background = \"{theme['background']}\"",
+        f"cursor_bg = \"{theme['cursor-color']}\"",
+        f"cursor_border = \"{theme['cursor-color']}\"",
+        f"cursor_fg = \"{theme['cursor-text']}\"",
+        f"selection_bg = \"{theme['selection-background']}\"",
+        f"selection_fg = \"{theme['selection-foreground']}\"",
+        f"ansi = [{ansi}]",
+        f"brights = [{brights}]",
+    ]
+    return "\n".join(lines) + "\n"
+
+
+RENDERERS = {
+    "ghostty": (render_ghostty, ""),
+    "alacritty": (render_alacritty, ".toml"),
+    "wezterm": (render_wezterm, ".toml"),
+}
+
+
 def main() -> None:
     for name, theme in THEMES.items():
         boost = SATURATION_BOOST.get(name, 0.0)
-        content = render(theme, boost)
-        out_path = THEMES_DIR / name
-        out_path.write_text(content)
-        print(f"wrote {out_path} (saturation +{boost * 100:.0f} pts)")
+        palette = boosted_palette(theme, boost)
+        for target, (render, ext) in RENDERERS.items():
+            out_dir = THEMES_DIR / target
+            out_dir.mkdir(exist_ok=True)
+            out_path = out_dir / f"{name}{ext}"
+            out_path.write_text(render(theme, palette))
+            print(f"wrote {out_path} (saturation +{boost * 100:.0f} pts)")
 
 
 if __name__ == "__main__":

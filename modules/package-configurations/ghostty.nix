@@ -15,7 +15,7 @@ in
         #   light = "Bluloco Light";
         #   dark = "Horizon";
         # in
-        "light:${./ghostty/themes/flatwhite},dark:${./ghostty/themes/flatblack}";
+        "light:${../../themes/ghostty/flatwhite},dark:${../../themes/ghostty/flatblack}";
       font-size = if isDarwin then 16 else 12;
       window-decoration = "none";
       macos-option-as-alt = "left";

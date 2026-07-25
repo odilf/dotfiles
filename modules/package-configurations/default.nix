@@ -33,6 +33,7 @@ let
     ./sioyek.nix
     ./ssh.nix
     ./taskwarrior.nix
+    ./theme-switch.nix
     ./tofi.nix
     ./wezterm.nix
     ./zathura.nix
@@ -52,6 +53,7 @@ let
     "environment"
     "fonts"
     "age"
+    "custom"
   ];
 
   globalCfg = utils.globalCfg modules;
@@ -83,5 +85,6 @@ in
     environment = globalCfg "environment";
     fonts = globalCfg "fonts";
     age = globalCfg "age";
+    custom = globalCfg "custom";
   };
 }

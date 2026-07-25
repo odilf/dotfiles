@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home-manager.users."*".programs.aerospace.settings = {
     # If I ever want to use sketchybar again:
@@ -62,6 +62,9 @@
       cmd-ctrl-9 = "move-node-to-workspace 9";
 
       cmd-shift-f = "fullscreen";
+
+      # Awkward bind hard to conflict or misshit
+      cmd-alt-ctrl-shift-t = "exec-and-forget ${config.custom.theme-switch-package}/bin/toggle-theme";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
       alt-tab = "workspace-back-and-forth";

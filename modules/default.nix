@@ -20,6 +20,17 @@
       example = "~/code/dotfiles#nixbook";
       default = null;
     };
+
+    custom.theme-switch.hooks = lib.mkOption {
+      description = "Snippets to run when switching themes";
+      type = lib.types.listOf lib.types.lines;
+      default = [ ];
+    };
+
+    custom.theme-switch.package = lib.mkPackageOption pkgs "theme-switcher" {
+      # Set in `theme-switcher.nix`
+      default = null;
+    };
   };
 
   config = {

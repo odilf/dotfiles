@@ -14,7 +14,7 @@
     accordion-padding = 30;
 
     mode.main.binding = {
-      alt-enter = "exec-and-forget ${pkgs.wezterm}/bin/wezterm";
+      alt-enter = "exec-and-forget ${pkgs.alacritty}/bin/alacritty";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#layout
       alt-slash = "layout tiles horizontal vertical";
@@ -64,7 +64,7 @@
       cmd-shift-f = "fullscreen";
 
       # Awkward bind hard to conflict or misshit
-      cmd-alt-ctrl-shift-t = "exec-and-forget ${config.custom.theme-switch-package}/bin/toggle-theme";
+      cmd-alt-ctrl-shift-t = "exec-and-forget ${config.custom.theme-switch.package}/bin/toggle-theme";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
       alt-tab = "workspace-back-and-forth";

@@ -7,33 +7,35 @@ let
 in
 {
   home-manager.users."*" = {
-    programs.alacritty = {
-      settings = {
-        terminal.shell = "${pkgs.fish}/bin/fish";
+    programs.alacritty.settings = {
+      general.import = [ "theme.toml" ];
+      terminal.shell = "${pkgs.fish}/bin/fish";
 
-        font.size = if isDarwin then 16.0 else 12.0;
-        font.normal.family = "IosevkaTerm Nerd Font";
-        font.normal.style = if isDarwin then "Light" else "Regular";
+      # TODO: It's really important to disable font smoothing on macos for
+      # this to look right. This should be in the config somewhere.
+      font.size = if isDarwin then 22.0 else 12.0;
+      font.normal.family = "IosevkaTerm Nerd Font";
+      font.normal.style = "Regular";
 
-        window = {
-          decorations = if isDarwin then "buttonless" else "none";
-          dynamic_title = true;
-          option_as_alt = "OnlyLeft";
-        };
-
-        keyboard.bindings = [
-          {
-            key = "N";
-            mods = "Control|Shift";
-            action = "CreateNewWindow";
-          }
-          {
-            key = "Return";
-            mods = "Alt";
-            action = "CreateNewWindow";
-          }
-        ];
+      window = {
+        opacity = 0.95;
+        decorations = if isDarwin then "buttonless" else "none";
+        dynamic_title = true;
+        option_as_alt = "OnlyLeft";
       };
+
+      keyboard.bindings = [
+        {
+          key = "N";
+          mods = "Control|Shift";
+          action = "CreateNewWindow";
+        }
+        {
+          key = "Return";
+          mods = "Alt";
+          action = "CreateNewWindow";
+        }
+      ];
     };
 
     home.packages = [
@@ -43,5 +45,16 @@ in
 
   fonts.packages = [
     pkgs.nerd-fonts.iosevka-term
+  ];
+
+  custom.theme-switch.hooks = [
+    # -f is needed otherwise we get permission errors.
+    ''
+      if [[ "$THEME_MODE" == "dark" ]]; then
+        cp -f ${../../themes/alacritty/flatblack.toml} $HOME/.config/alacritty/theme.toml
+      else
+        cp -f ${../../themes/alacritty/flatwhite.toml} $HOME/.config/alacritty/theme.toml
+      fi
+    ''
   ];
 }

@@ -29,7 +29,6 @@ let
         is_keyboard = true;
         inherit vendor_id product_id;
       };
-      disable_built_in_keyboard_if_exists = true;
       inherit simple_modifications;
     };
 

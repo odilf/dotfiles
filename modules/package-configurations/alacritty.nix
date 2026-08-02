@@ -13,7 +13,7 @@ in
 
       # TODO: It's really important to disable font smoothing on macos for
       # this to look right. This should be in the config somewhere.
-      font.size = if isDarwin then 22.0 else 12.0;
+      font.size = if isDarwin then 18.0 else 12.0;
       font.normal.family = "IosevkaTerm Nerd Font";
       font.normal.style = "Regular";
 

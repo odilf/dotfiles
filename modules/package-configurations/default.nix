@@ -28,6 +28,7 @@ let
     ./niri-session-manager.nix
     ./nix.nix
     ./noctalia.nix
+    ./osx-scrobbler.nix
     # ./reaper.nix
     ./rofi.nix
     ./sioyek.nix
@@ -50,6 +51,7 @@ let
     "hardware"
     "networking"
     "nix"
+    "nixpkgs"
     "environment"
     "fonts"
     "age"
@@ -82,6 +84,7 @@ in
     hardware = globalCfg "hardware";
     networking = globalCfg "networking";
     nix = globalCfg "nix";
+    nixpkgs = globalCfg "nixpkgs";
     environment = globalCfg "environment";
     fonts = globalCfg "fonts";
     age = globalCfg "age";

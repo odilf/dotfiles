@@ -15,9 +15,6 @@ in
         pkgs.taskwarrior-tui
         pkgs.tasksh
       ]
-      ++ lib.optionals isLinux [
-        pkgs.ytermusic
-      ]
       ++ lib.optionals config.gui (
         [
           pkgs.localsend

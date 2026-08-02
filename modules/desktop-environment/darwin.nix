@@ -105,9 +105,7 @@ in
       ];
 
       casks = [
-        "raycast" # App launcher
-        "mechvibes" # cross-platform, but not in nixpkgs...
-        "betterdisplay" # macos specific
+        "raycast"
         "karabiner-elements"
       ];
     };
@@ -117,6 +115,12 @@ in
         enable = true;
         launchd.enable = true;
       };
+
+      launchd.agents.osx-scrobbler.enable = true;
+
+      home.packages = [
+        pkgs.osx-scrobbler
+      ];
     });
   };
 }

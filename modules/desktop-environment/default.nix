@@ -36,14 +36,14 @@ in
 
   config = lib.mkIf config.gui {
     environment.systemPackages = [
+      pkgs.libqalculate
     ]
     ++ lib.optionals isLinux [
       pkgs.firefox-esr
-      # pkgs.qimgv
+      pkgs.qimgv
       pkgs.bitwarden-desktop
       pkgs.vlc
       pkgs.qalculate-qt
-      pkgs.libqalculate
       pkgs.qbittorrent
       pkgs.wl-clipboard
       pkgs.kdePackages.dolphin

@@ -73,6 +73,27 @@
         ## Nix
         ns = "nix shell nixpkgs#";
       };
+
+      # Adapted from https://gist.github.com/jarun/4f7f3fba4618054d999463f242a4b5b9
+      functions."fish_right_prompt".body =
+        let
+          notify =
+            body:
+            if pkgs.stdenv.hostPlatform.isLinux then
+              "${lib.getExe pkgs.notify-send} (echo ${body})"
+            else
+              "echo $body | ${lib.getExe pkgs.terminal-notifier} -title 'Finished command'";
+        in
+        ''
+          if test $CMD_DURATION
+            # Show notification if dration is more than 5 seconds
+            if test $CMD_DURATION -gt 5000
+              # Show duration of the last command in seconds
+              set duration (echo "$CMD_DURATION 1000" | awk '{printf "%.3fs", $1 / $2}')
+              ${notify "(history | head -1) returned $status after $duration"}
+            end
+          end
+        '';
     };
   };
 

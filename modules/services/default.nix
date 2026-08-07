@@ -3,6 +3,6 @@
 }:
 {
   imports = [
-    # ./immich-downloader.nix
+    ./immich-downloader.nix
   ];
 }

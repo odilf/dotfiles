@@ -6,6 +6,8 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
+  # TODO: Don't hardcode niri
+  enable = config.programs.niri.enable;
 in
 {
   networking.networkmanager.enable = lib.mkDefault true;
@@ -164,20 +166,17 @@ in
         enableUserTheming = false;
       };
     };
-
-    # Change helix theme
-    programs.helix.settings.theme = lib.mkOverride 50 "noctalia";
   };
 
-  # Download wallpepers from immich (always active)
+  # Download wallpepers from immich
   age.secrets.immich-wallpapers-token.file = ../../secrets/immich-wallpapers-token.age;
   services.immich-album-downloader = {
-    enable = true;
+    enable = enable;
     localUrl = "http://192.168.0.40:2283";
     remoteUrl = "https://photos.odilf.com";
     albumId = "665dd9ea-a89e-4094-9fdf-d5998580c98b";
     sessionTokenFile = "${config.age.secrets.immich-wallpapers-token.path}";
-    downloadDir = "/var/lib/immich-pics";
+    downloadDir = "/var/lib/immich-wallpapers";
     schedule = "*-*-* 03:00:00"; # 3 AM daily
   };
 }

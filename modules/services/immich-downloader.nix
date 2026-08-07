@@ -1,27 +1,13 @@
-# Immich Album Downloader NixOS Module
-# This module creates a systemd service and timer to run the Immich album downloader daily
-#
-# Usage:
-# 1. Place immich-album-downloader.sh in the same directory as this module
-# 2. Add this file to your NixOS configuration (e.g., /etc/nixos/immich-downloader.nix)
-# 3. Import it in your configuration.nix:
-#    imports = [ ./immich-downloader.nix ];
-# 4. Configure the service (see configuration example at bottom of file)
-
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-with lib;
-
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
   cfg = config.services.immich-album-downloader;
 
-  # Read the external script and substitute package paths
   downloadScript = pkgs.writeScriptBin "immich-album-downloader" ''
     #!${pkgs.bash}/bin/bash
     ${builtins.replaceStrings
@@ -30,73 +16,60 @@ let
       (builtins.readFile ./immich-album-downloader.sh)
     }
   '';
-
 in
 {
   options.services.immich-album-downloader = {
-    enable = mkEnableOption "Immich album downloader service";
+    enable = lib.mkEnableOption "Immich album downloader service";
 
-    localUrl = mkOption {
-      type = types.str;
+    localUrl = lib.mkOption {
+      type = lib.types.str;
       example = "http://192.168.1.100:2283";
-      description = "Local Immich instance URL (tried first)";
+      description = "Local Immich instance URL";
     };
 
-    remoteUrl = mkOption {
-      type = types.str;
+    remoteUrl = lib.mkOption {
+      type = lib.types.str;
       example = "https://immich.example.com";
-      description = "Remote Immich instance URL (fallback)";
+      description = "Remote Immich instance URL";
     };
 
-    albumId = mkOption {
-      type = types.str;
+    albumId = lib.mkOption {
+      type = lib.types.str;
       example = "abc123-def456-ghi789";
       description = "Immich album ID to download";
     };
 
-    sessionTokenFile = mkOption {
-      type = types.path;
+    sessionTokenFile = lib.mkOption {
+      type = lib.types.path;
       example = "/run/secrets/immich-token";
-      description = ''
-        Path to file containing the Immich session token.
-        This should be a secure file readable only by root.
-        The file should contain only the token string.
-      '';
     };
 
-    downloadDir = mkOption {
-      type = types.path;
+    downloadDir = lib.mkOption {
+      type = lib.types.path;
       default = "/var/lib/immich-downloads";
       description = "Directory where images will be downloaded";
     };
 
-    schedule = mkOption {
-      type = types.str;
+    schedule = lib.mkOption {
+      type = lib.types.str;
       default = "daily";
       example = "*-*-* 02:00:00";
-      description = ''
-        When to run the download (systemd timer format).
-        Default: "daily" (runs once per day at midnight)
-        For more control, use systemd calendar format like "*-*-* 02:00:00" (2 AM daily)
-      '';
     };
 
-    user = mkOption {
-      type = types.str;
+    user = lib.mkOption {
+      type = lib.types.str;
       default = "immich-downloader";
       description = "User to run the service as";
     };
 
-    group = mkOption {
-      type = types.str;
+    group = lib.mkOption {
+      type = lib.types.str;
       default = "immich-downloader";
       description = "Group to run the service as";
     };
   };
 
-  config = mkIf (cfg.enable && isLinux) {
-
-    # Create system user and group
+  config = lib.mkIf (cfg.enable && isLinux) {
     users.users.${cfg.user} = {
       isSystemUser = true;
       group = cfg.group;
@@ -107,7 +80,6 @@ in
 
     users.groups.${cfg.group} = { };
 
-    # Systemd service
     systemd.services.immich-album-downloader = {
       description = "Download Immich album";
       after = [ "network-online.target" ];
@@ -119,21 +91,20 @@ in
         User = cfg.user;
         Group = cfg.group;
 
+        ExecStart = "${downloadScript}/bin/immich-album-downloader";
+
         # Ensure correct permissions before running
         ExecStartPre = [
           "${pkgs.coreutils}/bin/chmod 755 ${cfg.downloadDir}"
           "${pkgs.coreutils}/bin/chown ${cfg.user}:${cfg.group} ${cfg.downloadDir}"
         ];
 
-        # Environment variables
         Environment = [
           "IMMICH_LOCAL_URL=${cfg.localUrl}"
           "IMMICH_REMOTE_URL=${cfg.remoteUrl}"
           "IMMICH_ALBUM_ID=${cfg.albumId}"
           "DOWNLOAD_DIR=${cfg.downloadDir}"
         ];
-
-        # Load session token from file
         EnvironmentFile = cfg.sessionTokenFile;
 
         # Security hardening
@@ -145,11 +116,6 @@ in
 
         # Set permissions on downloaded files to be world-readable
         UMask = "0022";
-
-        # Run the script
-        ExecStart = "${downloadScript}/bin/immich-album-downloader";
-
-        # Logging
         StandardOutput = "journal";
         StandardError = "journal";
       };
@@ -162,6 +128,7 @@ in
 
     # Systemd timer
     systemd.timers.immich-album-downloader = {
+      enable = cfg.enable;
       description = "Timer for Immich album downloader";
       wantedBy = [ "timers.target" ];
 

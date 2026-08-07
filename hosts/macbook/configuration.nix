@@ -13,11 +13,6 @@
         creative.enable = true;
         productivity.enable = true;
       };
-
-      # study = {
-      #   development.enable = true;
-      #   productivity.enable = true;
-      # };
     };
   };
 
@@ -27,17 +22,6 @@
     createHome = true;
     home = /Users/odilf;
     description = "Main user";
-  };
-
-  # users.users.study = {
-  #   createHome = true;
-  #   home = /Users/study;
-  #   description = "User for studying/working";
-  # };
-
-  homebrew = {
-    casks = [ "vorta" ];
-    brews = [ "borgbackup" ];
   };
 
   # TODO: Maybe do clean uninstall/reinstall thingy... but meh.

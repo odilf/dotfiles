@@ -26,7 +26,6 @@ let
     pkgs.vim
     pkgs.wget
     pkgs.wiki-tui
-    pkgs.yazi
     pkgs.zellij
 
     # Should arguably be in project devShells, but are convinient to always have
@@ -86,6 +85,7 @@ in
         ripgrep-all.enable = true;
         ssh.enable = true;
         wezterm.enable = config.gui;
+        yazi.enable = true;
       };
 
       home.sessionVariables = {

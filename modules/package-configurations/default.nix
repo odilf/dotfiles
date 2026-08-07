@@ -37,6 +37,7 @@ let
     ./theme-switch.nix
     ./tofi.nix
     ./wezterm.nix
+    ./yazi.nix
     ./zathura.nix
   ];
 

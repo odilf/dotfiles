@@ -80,7 +80,7 @@
           notify =
             body:
             if pkgs.stdenv.hostPlatform.isLinux then
-              "${lib.getExe pkgs.notify-send} (echo ${body})"
+              "${pkgs.libnotify}/bin/notify-send (echo ${body})"
             else
               "echo $body | ${lib.getExe pkgs.terminal-notifier} -title 'Finished command'";
         in

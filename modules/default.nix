@@ -40,7 +40,6 @@
       builtins.elem (lib.getName pkg) [
         "reaper"
         "clonehero"
-        "ouch"
       ];
   };
 }

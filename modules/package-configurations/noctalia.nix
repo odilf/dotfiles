@@ -7,7 +7,7 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
   # TODO: Don't hardcode niri
-  enable = config.programs.niri.enable;
+  enable = isLinux && config.programs.niri.enable;
 in
 {
   networking.networkmanager.enable = lib.mkDefault true;
@@ -20,7 +20,7 @@ in
       config.passthru.noctalia
     ];
 
-    programs.noctalia-shell.settings = {
+    programs.noctalia.settings = {
       bar = {
         density = "compact";
         position = "top";

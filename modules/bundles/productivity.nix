@@ -39,6 +39,10 @@ in
       himalaya.enable = true;
     };
 
+    home.packages = [
+      pkgs.noctavox
+    ];
+
     xdg.mimeApps = lib.mkIf isLinux {
       enable = true;
       defaultApplications = {

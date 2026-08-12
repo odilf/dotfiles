@@ -1,10 +1,4 @@
-{ pkgs, lib, ... }: {
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "ouch"
-    ];
-
+{ pkgs, ... }: {
   home-manager.users."*".programs.yazi = {
     extraPackages = [
       pkgs.exiftool

@@ -13,12 +13,6 @@ let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
 in
 {
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "clonehero"
-    ];
-
   boot.binfmt.emulatedSystems = lib.mkIf (!isx86) [ "x86_64-linux" ];
 
   users.users."*" =

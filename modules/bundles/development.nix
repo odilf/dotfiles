@@ -16,6 +16,7 @@ let
     pkgs.btop
     pkgs.curl
     pkgs.dust
+    pkgs.dua
     pkgs.fd
     pkgs.hyperfine
     pkgs.mosh

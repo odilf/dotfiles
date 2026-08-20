@@ -21,7 +21,7 @@ in
 
     xdg.configFile."niri/config.kdl".source = ./niri/config.kdl;
 
-    programs.noctalia-shell.enable = true;
+    programs.noctalia.enable = true;
     programs.tofi.enable = true;
 
     programs.swaylock = {

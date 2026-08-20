@@ -122,7 +122,7 @@ in
         deadOpacity = 0.6;
       };
       general = {
-        avatarImage = ../../../logo.svg;
+        avatarImage = ../../logo.svg;
         radiusRatio = 0.2;
         animationSpeed = 1.5;
         enableShadows = false;

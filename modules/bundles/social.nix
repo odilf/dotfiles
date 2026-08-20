@@ -21,7 +21,7 @@ in
       ++ lib.optionals config.gui (
         lib.optionals isLinux [
           pkgs.signal-desktop
-          pkgs.wasistlos
+          pkgs.karere
           pkgs.element-desktop
         ]
         ++ lib.optionals isDarwin [

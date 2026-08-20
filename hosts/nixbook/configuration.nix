@@ -23,7 +23,10 @@
     };
   };
 
-  hardware.asahi.peripheralFirmwareDirectory = ./firmware;
+  hardware.asahi = {
+    enable = true;
+    peripheralFirmwareDirectory = ./firmware;
+  };
 
   # Regular NixOS options
   # ---

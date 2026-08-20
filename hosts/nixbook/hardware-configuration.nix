@@ -35,5 +35,5 @@
 
   swapDevices = [ ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  nixpkgs.system = lib.mkDefault "aarch64-linux";
 }

@@ -158,10 +158,8 @@ in
               "btop"
               "gtk"
               "qt"
-              "helix"
               "niri"
               "discord"
-              "alacritty"
             ];
         enableUserTheming = false;
       };

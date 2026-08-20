@@ -40,7 +40,7 @@ in
     };
 
     home.packages = [
-      pkgs.noctavox
+      # pkgs.noctavox
     ];
 
     xdg.mimeApps = lib.mkIf isLinux {

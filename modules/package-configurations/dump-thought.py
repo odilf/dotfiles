@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Open $EDITOR to capture a fleeting thought into ~/brain/dump/{name}.md."""
 
 import os

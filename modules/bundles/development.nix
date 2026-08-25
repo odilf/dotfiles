@@ -14,6 +14,7 @@ let
     ]))
     pkgs.bottom
     pkgs.btop
+    pkgs.codex
     pkgs.curl
     pkgs.dust
     pkgs.dua
@@ -25,6 +26,7 @@ let
     pkgs.rsync
     pkgs.tokei
     pkgs.vim
+    pkgs.watchexec
     pkgs.wget
     pkgs.wiki-tui
     pkgs.zellij
@@ -76,12 +78,13 @@ in
         alacritty.enable = config.gui;
         bat.enable = true;
         broot.enable = true;
+        codex.enable = true;
         fish.enable = true;
         ghostty.enable = config.gui;
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
-        # opencode.enable = true;
+        opencode.enable = true;
         ripgrep.enable = true;
         ripgrep-all.enable = true;
         ssh.enable = true;

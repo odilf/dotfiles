@@ -43,10 +43,12 @@ in
       pkgs.qimgv
       pkgs.bitwarden-desktop
       pkgs.vlc
+      pkgs.mpv
       pkgs.qalculate-qt
       pkgs.qbittorrent
       pkgs.wl-clipboard
       pkgs.kdePackages.dolphin
+      pkgs.fooyin
     ]
     ++ lib.optionals isDarwin [
       pkgs.iina
@@ -58,13 +60,14 @@ in
       casks = [
         "bitwarden"
         "surfshark" # VPN
-        "firefox" # TODO: Move back to nixpkgs version when it works
+        "firefox"
         "transmission"
       ];
     };
 
     # TODO: Don't hardcode main user
     home-manager.users.odilf = {
+      programs.cmus.enable = true;
       services.syncthing = {
         enable = true;
         tray.enable = lib.mkIf isLinux true;

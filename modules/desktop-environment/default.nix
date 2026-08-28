@@ -43,7 +43,6 @@ in
       pkgs.qimgv
       pkgs.bitwarden-desktop
       pkgs.vlc
-      pkgs.mpv
       pkgs.qalculate-qt
       pkgs.qbittorrent
       pkgs.wl-clipboard
@@ -67,7 +66,11 @@ in
 
     # TODO: Don't hardcode main user
     home-manager.users.odilf = {
-      programs.cmus.enable = true;
+      programs = {
+        cmus.enable = true;
+        mpv.enable = true;
+      };
+
       services.syncthing = {
         enable = true;
         tray.enable = lib.mkIf isLinux true;

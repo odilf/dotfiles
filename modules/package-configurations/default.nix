@@ -23,6 +23,7 @@ let
     ./iamb.nix
     ./jujutsu.nix
     ./kanata.nix
+    ./mvp.nix
     ./nh.nix
     ./niri.nix
     ./niri-session-manager.nix

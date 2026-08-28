@@ -23,7 +23,15 @@
     };
   };
 
-  hardware.asahi.enable = true;
+  hardware.asahi = {
+    enable = true;
+    peripheralFirmwareDirectory =
+      (fetchTree {
+        type = "path";
+        path = "/boot/vendorfw/";
+        narHash = "sha256-+GcDPSFzMbfSnfxvwQaOjLs0nb1rF92r600w2tb2r1w=";
+      }).outPath;
+  };
 
   # Regular NixOS options
   # ---

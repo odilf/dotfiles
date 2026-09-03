@@ -9,6 +9,7 @@
     ./bundles
     ./desktop-environment
     ./services
+    ./derivations
   ];
 
   options = {

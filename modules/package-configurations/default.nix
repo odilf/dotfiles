@@ -29,7 +29,6 @@ let
     ./niri-session-manager.nix
     ./nix.nix
     ./noctalia.nix
-    ./noctavox.nix
     ./osx-scrobbler.nix
     # ./reaper.nix
     ./rofi.nix

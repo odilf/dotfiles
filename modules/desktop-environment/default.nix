@@ -35,24 +35,6 @@ in
   };
 
   config = lib.mkIf config.gui {
-    environment.systemPackages = [
-      pkgs.libqalculate
-    ]
-    ++ lib.optionals isLinux [
-      pkgs.firefox-esr
-      pkgs.qimgv
-      pkgs.bitwarden-desktop
-      pkgs.vlc
-      pkgs.qalculate-qt
-      pkgs.qbittorrent
-      pkgs.wl-clipboard
-      pkgs.kdePackages.dolphin
-      pkgs.fooyin
-    ]
-    ++ lib.optionals isDarwin [
-      pkgs.iina
-    ];
-
     programs.localsend.enable = true;
 
     homebrew = lib.mkIf isDarwin {
@@ -66,6 +48,24 @@ in
 
     # TODO: Don't hardcode main user
     home-manager.users.odilf = {
+      home.packages = [
+        pkgs.libqalculate
+      ]
+      ++ lib.optionals isLinux [
+        pkgs.firefox-esr
+        pkgs.qimgv
+        pkgs.bitwarden-desktop
+        pkgs.vlc
+        pkgs.qalculate-qt
+        pkgs.qbittorrent
+        pkgs.wl-clipboard
+        pkgs.kdePackages.dolphin
+        pkgs.fooyin
+      ]
+      ++ lib.optionals isDarwin [
+        pkgs.iina
+      ];
+
       programs = {
         cmus.enable = true;
         mpv.enable = true;

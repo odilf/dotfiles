@@ -164,6 +164,11 @@
             ];
           };
           formatter = pkgs.nixfmt;
+
+          packages = {
+            osx-scrobbler = pkgs.callPackage (import ./modules/derivations/osx-scrobbler.nix) { };
+            noctavox = pkgs.callPackage (import ./modules/derivations/noctavox.nix) { };
+          };
         };
     };
 }

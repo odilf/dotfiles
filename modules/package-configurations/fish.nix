@@ -19,6 +19,9 @@
       starship.enable = true;
 
       nix-index.enable = true;
+      nix-index.enableFishIntegration = false; # takes a long time to fail commands otherwise
+
+      navi.enable = true;
 
       direnv.enable = true;
       direnv.nix-direnv.enable = true;

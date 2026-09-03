@@ -7,8 +7,9 @@ let
 in
 {
   home-manager.users."*" = {
+    programs.alacritty.theme = "enfocado_dark";
     programs.alacritty.settings = {
-      general.import = [ "theme.toml" ];
+      # general.import = [ "theme.toml" ];
       terminal.shell = "${pkgs.fish}/bin/fish";
 
       # TODO: It's really important to disable font smoothing on macos for
@@ -18,7 +19,7 @@ in
       font.normal.style = "Regular";
 
       window = {
-        opacity = 0.95;
+        opacity = 0.90;
         decorations = if isDarwin then "buttonless" else "none";
         dynamic_title = true;
         option_as_alt = "OnlyLeft";

@@ -11,7 +11,7 @@
         # Non-underline errors: ["ao", "iroaseta", "vim_dark_high_contrast", "yo", "yo_berry", "zenburn", "naysayer", "ttox"]
         # Nice looking: ["starlight"]
         # With backgrounds: ["flatwhite"]
-        theme = "base16-bg";
+        theme = "base16_transparent";
 
         editor = {
           # auto-info = false;

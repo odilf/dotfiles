@@ -42,8 +42,9 @@ let
     pkgs.nixd
     pkgs.taplo
     pkgs.marksman
-    pkgs.ruff
     pkgs.uv
+    pkgs.ruff
+    pkgs.ty
   ]
   ++ lib.optionals isDarwin [
     pkgs.darwin.trash

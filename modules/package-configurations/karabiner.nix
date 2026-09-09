@@ -2,11 +2,13 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
+  nonCmdModifiers = [ "shift" "control" "option" "fn" "caps_lock" ];
+
   tabArrow = dir: key: {
     type = "basic";
     from = {
       key_code = key;
-      modifiers.optional = [ "any" ];
+      modifiers.optional = nonCmdModifiers;
     };
     to = [ { key_code = "${dir}_arrow"; } ];
     conditions = [
@@ -16,6 +18,27 @@ let
         value = 1;
       }
     ];
+  };
+
+  tabCondition = value: {
+    type = "variable_if";
+    name = "tab_layer_active";
+    value = value;
+  };
+
+  focusCmdKey = { key_code, fkey }: {
+    type = "basic";
+    from = {
+      key_code = key_code;
+      modifiers.mandatory = [ "command" ];
+    };
+    to = [
+      {
+        key_code = fkey;
+        modifiers = [ "command" ];
+      }
+    ];
+    conditions = [ (tabCondition 0) ];
   };
 
   externalKeyboard =
@@ -81,6 +104,27 @@ let
                 to = [ { key_code = "left_control"; } ];
                 to_if_alone = [ { key_code = "escape"; } ];
               }
+            ];
+          }
+          {
+            description = "Cmd+hjkl (no tab) = AeroSpace focus (cmd+f13..f16)";
+            manipulators = [
+              (focusCmdKey {
+                key_code = "h";
+                fkey = "f13";
+              })
+              (focusCmdKey {
+                key_code = "j";
+                fkey = "f14";
+              })
+              (focusCmdKey {
+                key_code = "k";
+                fkey = "f15";
+              })
+              (focusCmdKey {
+                key_code = "l";
+                fkey = "f16";
+              })
             ];
           }
           {

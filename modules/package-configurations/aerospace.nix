@@ -21,10 +21,12 @@
       alt-comma = "layout accordion horizontal vertical";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-      cmd-h = "focus left";
-      cmd-j = "focus down";
-      cmd-k = "focus up";
-      cmd-l = "focus right";
+      # cmd+hjkl is remapped by Karabiner to cmd+f13..f16 so that cmd+hjkl can
+      # still reach apps natively when prefixed with tab (cmd+tab+hjkl).
+      cmd-f13 = "focus left";
+      cmd-f14 = "focus down";
+      cmd-f15 = "focus up";
+      cmd-f16 = "focus right";
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#move
       cmd-ctrl-h = "move left";

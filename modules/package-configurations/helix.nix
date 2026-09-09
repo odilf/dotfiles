@@ -2,10 +2,19 @@
   pkgs,
   ...
 }:
+let
+  # TODO: drop this once upstream helix handles zellij like it does tmux
+  # (tracked in the patch file). `prePatch` not `patches`: steelix replaces `patches`.
+  helix-unwrapped = pkgs.helix-unwrapped.overrideAttrs (old: {
+    prePatch = (old.prePatch or "") + ''
+      patch -p1 --directory="$PWD" < ${./helix/osc11-zellij.patch}
+    '';
+  });
+in
 {
   home-manager.users."*" = {
     programs.helix = {
-      package = pkgs.steelix;
+      package = pkgs.steelix.override { inherit helix-unwrapped; };
       settings = {
         # Alternative options for themes:
         # Non-underline errors: ["ao", "iroaseta", "vim_dark_high_contrast", "yo", "yo_berry", "zenburn", "naysayer", "ttox"]

@@ -24,6 +24,7 @@ let
     ./jujutsu.nix
     ./kanata.nix
     ./mvp.nix
+    ./musicbrainz-picard.nix
     ./nh.nix
     ./niri.nix
     ./niri-session-manager.nix

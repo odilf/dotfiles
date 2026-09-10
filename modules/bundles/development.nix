@@ -14,7 +14,6 @@ let
     ]))
     pkgs.bottom
     pkgs.btop
-    pkgs.codex
     pkgs.curl
     pkgs.dust
     pkgs.dua
@@ -29,7 +28,6 @@ let
     pkgs.watchexec
     pkgs.wget
     pkgs.wiki-tui
-    pkgs.zellij
 
     # Should arguably be in project devShells, but are convinient to always have
     pkgs.rust-analyzer
@@ -79,18 +77,19 @@ in
         alacritty.enable = config.gui;
         bat.enable = true;
         broot.enable = true;
-        codex.enable = true;
         fish.enable = true;
         ghostty.enable = config.gui;
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
+        # TODO: Config opencode properly
         opencode.enable = true;
         ripgrep.enable = true;
         ripgrep-all.enable = true;
         ssh.enable = true;
         wezterm.enable = config.gui;
         yazi.enable = true;
+        zellij.enable = true;
       };
 
       home.sessionVariables = {

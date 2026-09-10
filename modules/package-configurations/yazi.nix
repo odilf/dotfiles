@@ -4,8 +4,8 @@
       pkgs.exiftool
       pkgs.mediainfo
       pkgs.glow
-      pkgs.ouch
-      pkgs.ouch-rar
+      # pkgs.ouch
+      # pkgs.ouch-rar
     ];
 
     shellWrapperName = "y";

@@ -52,6 +52,10 @@
       cmd-8 = "workspace 8";
       cmd-9 = "workspace 9";
 
+      # Mirror niri's Mod+U / Mod+I (focus-workspace-down/up)
+      cmd-u = "workspace next";
+      cmd-i = "workspace prev";
+
       # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
       cmd-ctrl-1 = "move-node-to-workspace 1";
       cmd-ctrl-2 = "move-node-to-workspace 2";

@@ -41,6 +41,7 @@ let
     ./wezterm.nix
     ./yazi.nix
     ./zathura.nix
+    ./zellij.nix
   ];
 
   knownAttrs = [

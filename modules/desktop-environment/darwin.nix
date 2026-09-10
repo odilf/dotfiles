@@ -50,7 +50,7 @@ in
 
         persistent-apps = [
           "/Applications/Firefox.app"
-          "/Applications/Ghostty.app"
+          "${pkgs.alacritty}/Applications/Alacritty.app"
         ];
 
         persistent-others = [
@@ -116,11 +116,10 @@ in
         launchd.enable = true;
       };
 
-      launchd.agents.osx-scrobbler.enable = true;
-
-      home.packages = [
-        pkgs.osx-scrobbler
-      ];
+      # launchd.agents.osx-scrobbler.enable = true;
+      # home.packages = [
+      #   pkgs.osx-scrobbler
+      # ];
     });
   };
 }

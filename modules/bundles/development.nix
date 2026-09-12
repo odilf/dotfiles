@@ -30,11 +30,12 @@ let
     pkgs.wiki-tui
 
     # Should arguably be in project devShells, but are convinient to always have
-    pkgs.rust-analyzer
-    pkgs.rustc
     pkgs.cargo
-    pkgs.bacon
+    pkgs.rust-analyzer
     pkgs.rustfmt
+    pkgs.clippy
+    pkgs.rustc
+    pkgs.bacon
 
     pkgs.nil
     pkgs.nixd

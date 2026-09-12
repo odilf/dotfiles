@@ -2,7 +2,13 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-  nonCmdModifiers = [ "shift" "control" "option" "fn" "caps_lock" ];
+  nonCmdModifiers = [
+    "shift"
+    "control"
+    "option"
+    "fn"
+    "caps_lock"
+  ];
 
   tabArrow = dir: key: {
     type = "basic";
@@ -23,6 +29,12 @@ let
   tabCondition = value: {
     type = "variable_if";
     name = "tab_layer_active";
+    value = value;
+  };
+
+  minecraftDisabledCondition = value: {
+    type = "variable_if";
+    name = "minecraft_hotkeys_disabled";
     value = value;
   };
 
@@ -65,6 +77,25 @@ let
       to = [ { key_code = "grave_accent_and_tilde"; } ];
     }
   ];
+
+  gameKey = from: to: {
+    type = "basic";
+    from = {
+      key_code = from;
+      modifiers.optional = [ "any" ];
+    };
+    to = [ { key_code = to; } ];
+    conditions = [
+      # Minecraft (Prism Launcher) runs as a plain Java process with no bundle
+      # identifier, so it is matched by file path instead.
+      {
+        type = "frontmost_application_if";
+        bundle_identifiers = [ "^com\\.slackow\\.SlackowWall$" ];
+        file_paths = [ "PrismLauncher/java/.*/bin/java$" ];
+      }
+      (minecraftDisabledCondition 0)
+    ];
+  };
 
   karabinerConfig = {
     profiles = [
@@ -158,6 +189,56 @@ let
               (tabArrow "down" "j")
               (tabArrow "up" "k")
               (tabArrow "right" "l")
+            ];
+          }
+          {
+            description = "Toggle Minecraft / SlackowWall hotkeys (Fn+M)";
+            manipulators = [
+              {
+                type = "basic";
+                from = {
+                  key_code = "m";
+                  modifiers.mandatory = [ "fn" ];
+                };
+                to = [
+                  {
+                    set_variable = {
+                      name = "minecraft_hotkeys_disabled";
+                      value = 1;
+                    };
+                  }
+                ];
+                conditions = [ (minecraftDisabledCondition 0) ];
+              }
+              {
+                type = "basic";
+                from = {
+                  key_code = "m";
+                  modifiers.mandatory = [ "fn" ];
+                };
+                to = [
+                  {
+                    set_variable = {
+                      name = "minecraft_hotkeys_disabled";
+                      value = 0;
+                    };
+                  }
+                ];
+                conditions = [ (minecraftDisabledCondition 1) ];
+              }
+            ];
+          }
+          {
+            description = "Minecraft / SlackowWall hotkeys";
+            manipulators = [
+              (gameKey "left_control" "f3")
+              (gameKey "1" "f12")
+              (gameKey "2" "f16")
+              (gameKey "3" "f17")
+              (gameKey "4" "f18")
+              (gameKey "left_shift" "f20")
+              (gameKey "left_option" "f19")
+              (gameKey "left_command" "left_shift")
             ];
           }
         ];

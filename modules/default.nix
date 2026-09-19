@@ -10,6 +10,7 @@
     ./desktop-environment
     ./services
     ./derivations
+    ./staging
   ];
 
   options = {

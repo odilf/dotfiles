@@ -23,6 +23,7 @@ let
     ./iamb.nix
     ./jujutsu.nix
     ./kanata.nix
+    ./mcsr.nix
     ./mvp.nix
     ./musicbrainz-picard.nix
     ./nh.nix

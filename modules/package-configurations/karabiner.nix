@@ -59,6 +59,23 @@ let
       inherit simple_modifications;
     };
 
+  # Karabiner does not modify pointing devices by default. A device must be
+  # listed here for pointing-button complex modifications to take effect.
+  externalPointingDevice =
+    {
+      vendor_id,
+      product_id,
+      simple_modifications ? [ ],
+    }:
+    {
+      identifiers = {
+        is_pointing_device = true;
+        inherit vendor_id product_id;
+      };
+      ignore = false;
+      inherit simple_modifications;
+    };
+
   isoSwap = [
     {
       from.key_code = "grave_accent_and_tilde";
@@ -101,6 +118,12 @@ in
         vendor_id = 1133;
         product_id = 45081;
         simple_modifications = isoSwap;
+      })
+
+      # Mouse (enables pointing-button modifications, e.g. button4 -> F3)
+      (externalPointingDevice {
+        vendor_id = 7511;
+        product_id = 44311;
       })
     ];
 

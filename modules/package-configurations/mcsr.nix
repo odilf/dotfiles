@@ -55,7 +55,7 @@ let
   };
 in
 {
-  custom.karabiner.rules = [
+  home-manager.users."*".programs.karabiner.rules = [
     {
       description = "Toggle mcsr hotkeys (Fn+M)";
       manipulators = [

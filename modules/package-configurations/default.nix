@@ -24,7 +24,6 @@ let
     ./jujutsu.nix
     ./kanata.nix
     ./mcsr.nix
-    ./mcsr-tools.nix
     ./mvp.nix
     ./musicbrainz-picard.nix
     ./nh.nix

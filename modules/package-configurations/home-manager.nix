@@ -12,6 +12,7 @@ in
     home.stateVersion = "24.11";
     imports = [
       config.passthru.agenix-hm
+      ../staging/home-manager
     ];
 
     age = lib.mkIf isDarwin {

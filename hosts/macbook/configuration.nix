@@ -14,13 +14,14 @@
         productivity.enable = true;
       };
     };
-    mcsr = {
-      enable = true;
-      standardsettings = {
-        Ranked = ./mcsr/standardsettings/ranked.json;
-        "Ranked Practice" = ./mcsr/standardsettings/ranked-practice.json;
-        Speedrunning = ./mcsr/standardsettings/speedrunning.json;
-      };
+  };
+
+  home-manager.users.odilf.programs.mcsr = {
+    enable = true;
+    standardsettings = {
+      Ranked = ./mcsr/standardsettings/ranked.json;
+      "Ranked Practice" = ./mcsr/standardsettings/ranked-practice.json;
+      Speedrunning = ./mcsr/standardsettings/speedrunning.json;
     };
   };
 

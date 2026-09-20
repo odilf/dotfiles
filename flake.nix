@@ -168,6 +168,10 @@
           packages = {
             osx-scrobbler = pkgs.callPackage (import ./modules/derivations/osx-scrobbler.nix) { };
             noctavox = pkgs.callPackage (import ./modules/derivations/noctavox.nix) { };
+            ninjabrain-bot-app = pkgs.callPackage (import ./modules/derivations/ninjabrain-bot-app.nix) { };
+            mac-speedrunning-tools =
+              pkgs.callPackage (import ./modules/derivations/mac-speedrunning-tools.nix)
+                { };
           };
         };
     };

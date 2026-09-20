@@ -4,5 +4,6 @@
   # Candidates for upstreaming.
   imports = [
     ./karabiner-module.nix
+    ./mcsr-module.nix
   ];
 }

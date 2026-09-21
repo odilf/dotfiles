@@ -5,14 +5,14 @@
   ...
 }:
 let
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
   cfg = config.programs.mcsr;
 
   syncStandardsettings = lib.concatStringsSep "\n" (
     lib.mapAttrsToList (
       instance: src:
       let
-        instanceDir = "${config.home.homeDirectory}/${cfg.prismInstancesDir}/${instance}";
+        instanceDir = "${cfg.prismInstancesDir}/${instance}";
       in
       ''
         if [ -d "${instanceDir}" ]; then
@@ -26,7 +26,7 @@ let
 in
 {
   options.programs.mcsr = {
-    enable = lib.mkEnableOption "Minecraft speedrunning tooling (NinjabrainBot, MST, StandardSettings sync)";
+    enable = lib.mkEnableOption "Minecraft speedrunning tooling (NinjabrainBot, StandardSettings sync, ...)";
 
     standardsettings = lib.mkOption {
       description = "Prism Launcher instance name -> standardsettings.json to sync into that instance";
@@ -40,15 +40,24 @@ in
     prismInstancesDir = lib.mkOption {
       description = "Prism Launcher instances directory, relative to the home directory";
       type = lib.types.str;
-      default = "Library/Application Support/PrismLauncher/instances";
+      default =
+        if isDarwin then
+          "${config.home.homeDirectory}/Library/Application Support/PrismLauncher/instances"
+        else
+          { todo = "set default on linux"; };
     };
   };
 
-  config = lib.mkIf (isDarwin && cfg.enable) {
-    home.packages = [
-      pkgs.ninjabrain-bot-app
-      pkgs.mac-speedrunning-tools
-    ];
+  config = lib.mkIf cfg.enable {
+    home.packages =
+      lib.optionals isDarwin [
+        pkgs.ninjabrain-bot-app
+        pkgs.mac-speedrunning-tools
+      ]
+      ++ lib.optionals isLinux [
+        pkgs.waywall
+        pkgs.ninjabrain-bot
+      ];
 
     home.activation.mcsrStandardsettings = lib.hm.dag.entryAfter [
       "writeBoundary"

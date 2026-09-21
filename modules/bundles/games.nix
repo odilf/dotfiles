@@ -54,4 +54,8 @@ in
     "retroarch-metal"
     "slackow/apps/slackowwall"
   ];
+
+  home-manager.users."*".programs = {
+    mcsr.enable = true;
+  };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 let
   minecraftDisabledCondition = value: {
     type = "variable_if";
@@ -55,41 +55,57 @@ let
   };
 in
 {
-  home-manager.users."*".programs.karabiner.rules = [
-    {
-      description = "Toggle mcsr hotkeys (Fn+M)";
-      manipulators = [
-        (toggleKey 1)
-        (toggleKey 0)
+  home-manager.users."*" = { hmConfig, ... }: {
+    programs = {
+      # Not declaratively configured:
+      # - NinjabrainBot settings
+      # - SlackowWall settings
+      # - MST settings
+      mcsr = {
+        standardsettings = {
+          "Ranked" = ./mcsr/standardsettings.json;
+          "Ranked Practice" = ./mcsr/standardsettings.json;
+          "Speedrunning" = ./mcsr/standardsettings.json;
+        };
+      };
+
+      karabiner.rules = lib.mkIf hmConfig.programs.mcsr.enable [
+        {
+          description = "Toggle mcsr hotkeys (Fn+M)";
+          manipulators = [
+            (toggleKey 1)
+            (toggleKey 0)
+          ];
+        }
+        {
+          # Free accessible keys:
+          # - alt
+          # - x
+          description = "mcsr hotkeys";
+          manipulators = [
+            (gameKey "1" "f12")
+            (gameKey "2" "f16")
+            (gameKey "3" "f17")
+            (gameKey "4" "f18")
+            (gameKey "5" "0")
+            (gameKey "f1" "1")
+            (gameKey "f2" "2")
+            (gameKey "f3" "3")
+            (gameKey "f4" "4")
+            (gameKey "f5" "5")
+            (gameKey "f6" "6")
+            (gameKey "f7" "7")
+            (gameKey "f8" "8")
+            (gameKey "f9" "9")
+            (gameKey "left_control" "right_shift")
+            (gameKey "a" "o")
+            (gameKey "o" "a")
+            (gameKey "d" "m")
+            (gameKey "m" "d")
+            (gamePointingButton "button4" "f3")
+          ];
+        }
       ];
-    }
-    {
-      # Free accessible keys:
-      # - alt
-      # - x
-      description = "mcsr hotkeys";
-      manipulators = [
-        (gameKey "1" "f12")
-        (gameKey "2" "f16")
-        (gameKey "3" "f17")
-        (gameKey "4" "f18")
-        (gameKey "5" "0")
-        (gameKey "f1" "1")
-        (gameKey "f2" "2")
-        (gameKey "f3" "3")
-        (gameKey "f4" "4")
-        (gameKey "f5" "5")
-        (gameKey "f6" "6")
-        (gameKey "f7" "7")
-        (gameKey "f8" "8")
-        (gameKey "f9" "9")
-        (gameKey "left_control" "right_shift")
-        (gameKey "a" "o")
-        (gameKey "o" "a")
-        (gameKey "d" "m")
-        (gameKey "m" "d")
-        (gamePointingButton "button4" "f3")
-      ];
-    }
-  ];
+    };
+  };
 }

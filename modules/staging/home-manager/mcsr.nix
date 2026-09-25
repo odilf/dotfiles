@@ -26,9 +26,16 @@ let
       # node with no predecessor (the root of the chain), then pair that
       # root with `target`.
       findRoot =
-        source: target:
-        if inverseBinds ? ${source} then
-          findRoot inverseBinds.${source} target
+        source: target: visited:
+        if builtins.elem source visited then
+          throw ''
+            programs.mcsr.rebinds: cannot create a one-to-one rebind cycle: the rebinds
+            contain a cycle (${lib.concatStringsSep " -> " (visited ++ [ source ])}) that has
+            no root. Remove one of the rebinds in the cycle so every chain ends at a key that
+            is not itself rebound.
+          ''
+        else if inverseBinds ? ${source} then
+          findRoot inverseBinds.${source} target (visited ++ [ source ])
         else
           {
             key = target;
@@ -37,7 +44,8 @@ let
     in
     lib.concatLists (
       lib.mapAttrsToList (
-        key: target: [ { inherit key target; } ] ++ lib.optional (!binds ? ${target}) (findRoot key target)
+        key: target:
+        [ { inherit key target; } ] ++ lib.optional (!binds ? ${target}) (findRoot key target [ ])
       ) binds
     );
 in

@@ -160,7 +160,7 @@
               pkgs.nil
               pkgs.nixd
               pkgs.jujutsu
-              agenix.packages."${system}".default
+              agenix.packages.${system}.default
             ];
           };
           formatter = pkgs.nixfmt;

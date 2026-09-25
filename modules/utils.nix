@@ -71,8 +71,8 @@ rec {
           user:
           attrFn {
             user = user;
-            hmConfig = config.home-manager.users."${user}";
-            enableBundle = bundleName: config.custom.bundles."${user}"."${bundleName}".enable;
+            hmConfig = config.home-manager.users.${user};
+            enableBundle = bundleName: config.custom.bundles.${user}.${bundleName}.enable;
           }
         )
       ) modules

@@ -60,7 +60,7 @@ let
     ]
   );
 
-  enable = user: config.custom.bundles."${user}".development.enable;
+  enable = user: config.custom.bundles.${user}.development.enable;
 in
 {
   users.users."*" =

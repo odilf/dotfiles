@@ -29,10 +29,10 @@ in
   };
 
   config = {
-    environment.packages = config.users.users."${config.mainUser}".packages;
+    environment.packages = config.users.users.${config.mainUser}.packages;
     environment.sessionVariables = config.environment.variables;
-    home-manager.config = config.home-manager.users."${config.mainUser}";
-    home-manager.users."${config.mainUser}".home.homeDirectory = config.user.home;
-    user.shell = "${lib.getExe config.users.users."${config.mainUser}".shell}";
+    home-manager.config = config.home-manager.users.${config.mainUser};
+    home-manager.users.${config.mainUser}.home.homeDirectory = config.user.home;
+    user.shell = "${lib.getExe config.users.users.${config.mainUser}.shell}";
   };
 }

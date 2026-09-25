@@ -9,7 +9,7 @@
   "graphicsMode": 0,
   "renderDistance": 8.0,
   "ao": 2,
-  "maxFps": 180.0,
+  "maxFps": 100.0,
   "enableVsync": false,
   "bobView": true,
   "guiScale": 3,
@@ -113,8 +113,8 @@
   },
   "pieDirectory": "root.gameRenderer.level.entities",
   "perspective": {
-    "enabled": false,
-    "value": 0
+    "enabled": true,
+    "value": 1
   },
   "f1": {
     "enabled": false,

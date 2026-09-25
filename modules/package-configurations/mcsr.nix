@@ -66,20 +66,17 @@
             (minecraftDisabledCondition 0)
           ];
 
+          # Karabiner uses `key_code` for keys and `pointing_button` for mouse
+          # buttons; `button*` names are pointing buttons.
+          buttonOrKey =
+            name: if lib.hasPrefix "button" name then { pointing_button = name; } else { key_code = name; };
+
           gameBind = from: to: {
             type = "basic";
-            from =
-              if lib.hasPrefix "button" from then
-                {
-                  pointing_button = from;
-                  modifiers.optional = [ "any" ];
-                }
-              else
-                {
-                  key_code = from;
-                  modifiers.optional = [ "any" ];
-                };
-            to = [ { key_code = to; } ];
+            from = (buttonOrKey from) // {
+              modifiers.optional = [ "any" ];
+            };
+            to = [ (buttonOrKey to) ];
             conditions = minecraftConditions;
           };
 
@@ -100,19 +97,16 @@
             conditions = [ (minecraftDisabledCondition (1 - value)) ];
           };
         in
-        lib.mkIf hmConfig.programs.mcsr.enable [
-          {
-            description = "Toggle mcsr hotkeys (Fn+M)";
+        lib.mkIf hmConfig.programs.mcsr.enable {
+          mcsr-hotkeys = {
+            description = "mcsr hotkeys";
             manipulators = [
               (toggleKey 1)
               (toggleKey 0)
-            ];
-          }
-          {
-            description = "mcsr hotkeys";
-            manipulators = lib.map ({ key, target }: gameBind key target) hmConfig.programs.mcsr.rebind-cycle;
-          }
-        ];
+            ]
+            ++ lib.map ({ key, target }: gameBind key target) hmConfig.programs.mcsr.rebind-cycle;
+          };
+        };
     };
   };
 }

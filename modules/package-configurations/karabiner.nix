@@ -69,6 +69,7 @@ let
     }:
     {
       identifiers = {
+        is_keyboard = false;
         is_pointing_device = true;
         inherit vendor_id product_id;
       };
@@ -93,9 +94,9 @@ in
 
     # Add new external keyboards here with their vendor_id and product_id.
     # `disable_built_in_keyboard_if_exists` is set automatically.
-    devices = [
+    devices = {
       # Apple Internal Keyboard
-      (externalKeyboard {
+      "Apple Internal Keyboard" = externalKeyboard {
         vendor_id = 1452;
         product_id = 591;
         simple_modifications = isoSwap ++ [
@@ -104,31 +105,31 @@ in
             to = [ { key_code = "right_option"; } ];
           }
         ];
-      })
+      };
 
       # Keychron K2
-      (externalKeyboard {
+      "Keychron K2" = externalKeyboard {
         vendor_id = 76;
         product_id = 332;
         simple_modifications = isoSwap;
-      })
+      };
 
       # Other
-      (externalKeyboard {
+      "Other" = externalKeyboard {
         vendor_id = 1133;
         product_id = 45081;
         simple_modifications = isoSwap;
-      })
+      };
 
       # Mouse (enables pointing-button modifications, e.g. button4 -> F3)
-      (externalPointingDevice {
+      "Mouse" = externalPointingDevice {
         vendor_id = 7511;
         product_id = 44311;
-      })
-    ];
+      };
+    };
 
-    rules = [
-      {
+    rules = {
+      ctrl-left-click = {
         description = "Ctrl + Left Click to Left Click";
         manipulators = [
           {
@@ -146,8 +147,8 @@ in
             ];
           }
         ];
-      }
-      {
+      };
+      caps-lock = {
         description = "Caps Lock to Esc (tap) / Left Ctrl (hold)";
         manipulators = [
           {
@@ -160,8 +161,8 @@ in
             to_if_alone = [ { key_code = "escape"; } ];
           }
         ];
-      }
-      {
+      };
+      cmd-hjkl-focus = {
         description = "Cmd+hjkl (no tab) = AeroSpace focus (cmd+f13..f16)";
         manipulators = [
           (focusCmdKey {
@@ -181,8 +182,8 @@ in
             fkey = "f16";
           })
         ];
-      }
-      {
+      };
+      tab-arrow-layer = {
         description = "Tab held = arrow layer (h/j/k/l)";
         manipulators = [
           {
@@ -214,7 +215,7 @@ in
           (tabArrow "up" "k")
           (tabArrow "right" "l")
         ];
-      }
-    ];
+      };
+    };
   };
 }

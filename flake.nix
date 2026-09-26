@@ -172,6 +172,9 @@
             mac-speedrunning-tools =
               pkgs.callPackage (import ./modules/derivations/mac-speedrunning-tools.nix)
                 { };
+            karabiner-cursor-state =
+              pkgs.callPackage (import ./modules/derivations/karabiner-cursor-state.nix)
+                { };
           };
         };
     };

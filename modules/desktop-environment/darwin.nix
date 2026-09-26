@@ -97,7 +97,8 @@ in
     };
 
     # TouchID for sudo
-    security.pam.services.sudo_local.touchIdAuth = true;
+    # On macOS 26 the dialog is annoying to type on keyboard
+    # security.pam.services.sudo_local.touchIdAuth = true;
 
     homebrew = {
       brews = [

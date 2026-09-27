@@ -18,7 +18,7 @@
 
             # pie chart
             # access to hotkeys without changing pie
-            "1" = "f12";
+            "1" = "f13";
             "2" = "f16";
             "3" = "f17";
             "4" = "f18";
@@ -36,13 +36,15 @@
             # pie without shifting
             "left_control" = "right_shift";
 
-            # strafing without triggering f3+a
-            "a" = "o";
-            "d" = "m";
+            # search-crafting
+            # (ref: https://docs.google.com/document/d/19nlwej-fUvKYNf1SX_u0Ks-WlfR30Ke2RQ-hYPxpMF4/edit?tab=t.0)
+            "q" = "o";
+            "a".trigger = "m";
+            "d" = "home";
+            "tab".trigger = "f12";
 
             # f3+f4 gamemode change
             "0" = "f4";
-
           };
 
           standardsettings = {
@@ -54,6 +56,7 @@
 
         karabiner.rules =
           let
+            # Karabiner condition matching the `minecraft_hotkeys_disabled` variable.
             minecraftDisabledCondition = value: {
               type = "variable_if";
               name = "minecraft_hotkeys_disabled";
@@ -76,26 +79,30 @@
             buttonOrKey =
               name: if lib.hasPrefix "button" name then { pointing_button = name; } else { key_code = name; };
 
-            # Keys that produce a character when typed. Rebinding these while the
-            # mouse is free (chat/menus) would corrupt what you type, so they only
-            # fire when Minecraft has the mouse captured.
-            isTypable = key: builtins.match "[a-z0-9]" key != null;
-
+            # Cursor captured (Minecraft grabbed the mouse) vs. free (chat, menus).
             cursorCapturedCondition = {
               type = "variable_if";
               name = "minecraft_cursor_captured";
               value = 1;
             };
 
-            gameBind = from: to: {
+            cursorFreeCondition = {
+              type = "variable_if";
+              name = "minecraft_cursor_captured";
+              value = 0;
+            };
+
+            # Build a Karabiner manipulator remapping `from` to `to`, gated by `extraConditions`.
+            gameBind = extraConditions: from: to: {
               type = "basic";
               from = (buttonOrKey from) // {
                 modifiers.optional = [ "any" ];
               };
               to = [ (buttonOrKey to) ];
-              conditions = minecraftConditions ++ lib.optionals (isTypable from) [ cursorCapturedCondition ];
+              conditions = minecraftConditions ++ extraConditions;
             };
 
+            # Manipulator that flips `minecraft_hotkeys_disabled` to `value` on fn+m.
             toggleKey = value: {
               type = "basic";
               from = {
@@ -120,7 +127,17 @@
                 (toggleKey 1)
                 (toggleKey 0)
               ]
-              ++ lib.map ({ key, target }: gameBind key target) hmConfig.programs.mcsr.rebind-cycle;
+              # `rebind-mappings` groups are gated by cursor state: unconditional
+              # always, triggered only while captured, typed only while free.
+              ++ lib.map (
+                { key, target }: gameBind [ ] key target
+              ) hmConfig.programs.mcsr.rebind-mappings.unconditional
+              ++ lib.map (
+                { key, target }: gameBind [ cursorCapturedCondition ] key target
+              ) hmConfig.programs.mcsr.rebind-mappings.triggered
+              ++ lib.map (
+                { key, target }: gameBind [ cursorFreeCondition ] key target
+              ) hmConfig.programs.mcsr.rebind-mappings.typed;
             };
           };
       };

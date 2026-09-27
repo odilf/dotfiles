@@ -75,7 +75,7 @@
   "key_key.loadToolbarActivator": "key.keyboard.n",
   "key_key.saveToolbarActivator": "key.keyboard.unknown",
   "key_key.playerlist": "key.keyboard.equal",
-  "key_key.chat": "key.keyboard.t",
+  "key_key.chat": "key.keyboard.space",
   "key_key.command": "key.keyboard.slash",
   "key_key.advancements": "key.keyboard.l",
   "key_key.spectatorOutlines": "key.keyboard.unknown",
@@ -112,21 +112,18 @@
     "value": false
   },
   "pieDirectory": "root.gameRenderer.level.entities",
-  "perspective": {
-    "enabled": true,
-    "value": 1
-  },
+  "perspective": 0,
   "f1": {
     "enabled": false,
     "value": false
   },
-  "sneaking": {
-    "enabled": false,
-    "value": false
-  },
+  "sneaking": false,
   "sprinting": true,
   "fovOnWorldJoin": 110.0,
-  "renderDistanceOnWorldJoin": 8.0,
+  "renderDistanceOnWorldJoin": {
+    "enabled": false,
+    "value": 8.0
+  },
   "entityDistanceScalingOnWorldJoin": {
     "enabled": false,
     "value": 1.0

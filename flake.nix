@@ -153,7 +153,12 @@
         };
 
       perSystem =
-        { pkgs, system, ... }:
+        {
+          pkgs,
+          system,
+          lib,
+          ...
+        }:
         {
           devShells.default = pkgs.mkShell {
             packages = [
@@ -165,16 +170,8 @@
           };
           formatter = pkgs.nixfmt;
 
-          packages = {
-            osx-scrobbler = pkgs.callPackage (import ./modules/derivations/osx-scrobbler.nix) { };
-            noctavox = pkgs.callPackage (import ./modules/derivations/noctavox.nix) { };
-            ninjabrain-bot-app = pkgs.callPackage (import ./modules/derivations/ninjabrain-bot-app.nix) { };
-            mac-speedrunning-tools =
-              pkgs.callPackage (import ./modules/derivations/mac-speedrunning-tools.nix)
-                { };
-            karabiner-cursor-state =
-              pkgs.callPackage (import ./modules/derivations/karabiner-cursor-state.nix)
-                { };
+          packages = import ./modules/derivations/package-set.nix {
+            inherit pkgs lib;
           };
         };
     };

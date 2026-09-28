@@ -195,6 +195,7 @@ in
       lib.optionals isDarwin [
         pkgs.ninjabrain-bot-app
         pkgs.mac-speedrunning-tools
+        pkgs.linuxscreen
       ]
       ++ lib.optionals isLinux [
         pkgs.waywall

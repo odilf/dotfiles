@@ -9,6 +9,7 @@ let
   modules = map utils.importModule [
     ./accounts.nix
     ./aerospace.nix
+    ./ai.nix
     ./alacritty.nix
     ./bat.nix
     ./cargo.nix

@@ -60,7 +60,6 @@ in
         pkgs.qbittorrent
         pkgs.wl-clipboard
         pkgs.kdePackages.dolphin
-        pkgs.fooyin
       ]
       ++ lib.optionals isDarwin [
         pkgs.iina

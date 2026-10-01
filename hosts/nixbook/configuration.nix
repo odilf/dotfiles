@@ -1,5 +1,21 @@
-{ lib, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 
+let
+  peripheralFirmware =
+    pkgs.runCommand "asahi-peripheral-firmware"
+      {
+        outputHash = "sha256-+GcDPSFzMbfSnfxvwQaOjLs0nb1rF92r600w2tb2r1w=";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p $out
+        cp -a /boot/vendorfw/. $out/
+      '';
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -25,12 +41,7 @@
 
   hardware.asahi = {
     enable = true;
-    peripheralFirmwareDirectory =
-      (fetchTree {
-        type = "path";
-        path = "/boot/vendorfw/";
-        narHash = "sha256-+GcDPSFzMbfSnfxvwQaOjLs0nb1rF92r600w2tb2r1w=";
-      }).outPath;
+    peripheralFirmwareDirectory = peripheralFirmware.outPath;
   };
 
   # Regular NixOS options
@@ -53,6 +64,7 @@
     extra-trusted-public-keys = [
       "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
     ];
+    extra-sandbox-paths = [ "/boot/vendorfw" ];
   };
 
   programs.nix-ld.enable = true;

@@ -164,7 +164,6 @@
             packages = [
               pkgs.nil
               pkgs.nixd
-              pkgs.jujutsu
               agenix.packages.${system}.default
             ];
           };

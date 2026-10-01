@@ -7,4 +7,6 @@
   custom.bundles.odilf = {
     development.enable = true;
   };
+
+  services.openssh.enable = true;
 }

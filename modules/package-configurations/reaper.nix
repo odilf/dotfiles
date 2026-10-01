@@ -76,4 +76,8 @@ in
       value = "-19";
     }
   ];
+
+  home-manager.users."*".home.linkLive.files = lib.mkIf enabled {
+    ".config/REAPER" = "live/reaper";
+  };
 }

@@ -19,7 +19,7 @@ in
       pkgs.xwayland-satellite
     ];
 
-    xdg.configFile."niri/config.kdl".source = ./niri/config.kdl;
+    home.linkLive.files.".config/niri" = "live/niri";
 
     programs.noctalia.enable = true;
     programs.tofi.enable = true;

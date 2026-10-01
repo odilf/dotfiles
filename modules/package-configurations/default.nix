@@ -18,12 +18,12 @@ let
     ./fish.nix
     ./ghostty.nix
     ./git.nix
-    ./karabiner.nix
     ./helix.nix
     ./home-manager.nix
     ./iamb.nix
     ./jujutsu.nix
     ./kanata.nix
+    ./karabiner.nix
     ./mvp.nix
     ./musicbrainz-picard.nix
     ./nh.nix

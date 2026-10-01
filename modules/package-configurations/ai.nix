@@ -3,7 +3,11 @@
 }:
 {
   home-manager.users."*".programs.opencode = {
-    settings.lsp = true;
+    settings = {
+      lsp = true;
+      plugin = [ "opencode-simple-notify" ];
+      permission.external_directory."~/.cargo/registry/**" = "allow";
+    };
 
     agents.discuss = ./ai/agents/discuss.md;
 

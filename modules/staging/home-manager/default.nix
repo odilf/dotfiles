@@ -5,6 +5,7 @@
   # niche.
   imports = [
     ./karabiner.nix
+    ./link-live.nix
     ./mcsr.nix
   ];
 }

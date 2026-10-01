@@ -15,6 +15,9 @@ in
       ../staging/home-manager
     ];
 
+    home.linkLive.repoPath =
+      if config.custom.flake-path == null then null else lib.head (lib.splitString "#" config.custom.flake-path);
+
     age = lib.mkIf isDarwin {
       secretsMountPoint = "/tmp/agenix.d";
       secretsDir = "/tmp/agenix";

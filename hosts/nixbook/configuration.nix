@@ -56,16 +56,7 @@ in
     fish.shellAbbrs.wr = "sudo systemctl restart iwd && sudo systemctl restart dhcpcd";
   };
 
-  nix.settings = {
-    trusted-users = [ "odilf" ];
-    extra-substituters = [
-      "https://nixos-apple-silicon.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
-    ];
-    extra-sandbox-paths = [ "/boot/vendorfw" ];
-  };
+  nix.settings.extra-sandbox-paths = [ "/boot/vendorfw" ];
 
   programs.nix-ld.enable = true;
 

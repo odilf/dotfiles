@@ -9,6 +9,10 @@
     in
     {
       programs.pi-coding-agent = {
+        keybindings = {
+          "app.editor.external" = "alt+e";
+        };
+
         settings = {
           packages = [
             "npm:@juicesharp/rpiv-todo"
@@ -37,6 +41,11 @@
           the same for any caller, not just the one in front of you. Never explain
           implementation, name a specific caller/ticket/date, or narrate a decision
           inline; that goes in docs instead. Full standard: ~/.pi/agent/skills/code-comments/SKILL.md
+
+          ## Git
+          Never create commits. `git commit`, amend, rebase, cherry-pick, and
+          anything else that writes history require explicit permission each time.
+          Leave changes in the working tree for me to review and commit myself.
         '';
       };
 

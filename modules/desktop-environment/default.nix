@@ -41,8 +41,10 @@ in
       casks = [
         "bitwarden"
         "surfshark" # VPN
-        "firefox"
         "transmission"
+        # TODO: Would be nice to use the nixpkgs version, but for some reason
+        # aerospace refuses to manage it on macos
+        "librewolf"
       ];
     };
 
@@ -67,6 +69,7 @@ in
 
       programs = {
         cmus.enable = true;
+        librewolf.enable = true;
         mpv.enable = true;
       };
 

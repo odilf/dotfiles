@@ -24,6 +24,7 @@ let
     ./jujutsu.nix
     ./kanata.nix
     ./karabiner.nix
+    ./librewolf.nix
     ./mvp.nix
     ./musicbrainz-picard.nix
     ./nh.nix

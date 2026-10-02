@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
+  addons = import ../derivations/firefox-addons.nix { inherit pkgs; };
 in
 {
   home-manager.users."*" = {
@@ -35,7 +36,7 @@ in
         "extensions.formautofill.creditCards.enabled" = false;
 
         # Downloads, updates, media
-        "browser.download.useDownloadDir" = false;
+        "browser.download.useDownloadDir" = true;
         "extensions.update.enabled" = false;
         "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
 
@@ -43,6 +44,14 @@ in
         "reader.content_width" = 5;
         "reader.font_size" = 4;
         "reader.text_alignment" = "left";
+      };
+
+      profiles.default = {
+        settings = {
+          "extensions.autoDisableScopes" = 0;
+        };
+
+        extensions.packages = builtins.attrValues addons;
       };
     };
   };

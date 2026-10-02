@@ -8,6 +8,7 @@ let
   excluded = [
     "default.nix"
     "package-set.nix"
+    "firefox-addons.nix"
   ];
 
   entries = builtins.readDir ./.;

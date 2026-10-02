@@ -83,8 +83,7 @@ in
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
-        # TODO: Config opencode properly
-        opencode.enable = true;
+        pi-coding-agent.enable = true;
         ripgrep.enable = true;
         ripgrep-all.enable = true;
         ssh.enable = true;

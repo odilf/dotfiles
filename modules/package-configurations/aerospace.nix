@@ -1,6 +1,20 @@
 { pkgs, config, ... }:
 {
   home-manager.users."*".programs.aerospace.settings = {
+    config-version = 2;
+
+    persistent-workspaces = [
+      "1"
+      "2"
+      "3"
+      "4"
+      "5"
+      "6"
+      "7"
+      "8"
+      "9"
+    ];
+
     # If I ever want to use sketchybar again:
     # after-startup-command = [
     # 	'exec-and-forget borders active_color=0xffffff inactive_color=0x000000 width=10.0 style=round',

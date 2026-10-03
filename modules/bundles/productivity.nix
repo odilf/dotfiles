@@ -18,7 +18,8 @@ in
       ++ lib.optionals config.gui (
         [
           pkgs.localsend
-          pkgs.zotero
+          # Zotero needs a whole ass firefox, and I don't need zotero rn.
+          # pkgs.zotero
         ]
         ++ lib.optionals isLinux [
           pkgs.libreoffice

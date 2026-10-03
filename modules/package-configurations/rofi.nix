@@ -6,7 +6,7 @@
       pkgs.rofi-emoji
     ];
 
-    modes = [
+    settings.modes = [
       "window"
       "run"
       "drun"

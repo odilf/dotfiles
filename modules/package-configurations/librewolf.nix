@@ -16,7 +16,7 @@ in
         "browser.startup.page" = 3;
         # "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
         "findbar.highlightAll" = true;
-        "accessibility.typeaheadfind.flashBar" = 0;
+        # "accessibility.typeaheadfind.flashBar" = 0;
 
         # New tab
         "browser.newtabpage.enabled" = false;
@@ -25,6 +25,18 @@ in
         "browser.download.useDownloadDir" = true;
         "extensions.update.enabled" = false;
         "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+
+        # Losing the bargain
+        "privacy.resistFingerprinting" = false;
+        "privacy.fingerprintingProtection" = true;
+        "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
+        "privacy.resistFingerprinting.letterboxing" = true;
+
+        # Sidebery
+        "sidebar.revamp" = true;
+        "sidebar.verticalTabs" = true;
+        "sidebar.revamp.round-content-area" = true;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
 
       profiles = {

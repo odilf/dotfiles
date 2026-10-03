@@ -23,6 +23,13 @@
             "npm:pi-simplify"
             "npm:pi-vim"
           ];
+
+          defaultProvider = "opencode-go";
+          defaultModel = "deepseek-v4.1-flash";
+          enabledModels = [
+            "opencode-go/deepseek-v4.1-flash"
+            "opencode-go/deepseek-v4-pro"
+          ];
         };
 
         context = ''

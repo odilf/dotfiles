@@ -27,12 +27,22 @@ in
         "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
       };
 
-      profiles.default = {
-        settings = {
-          "extensions.autoDisableScopes" = 0;
+      profiles = {
+        focus = {
+          id = 0; # default profile — plain `librewolf` lands here
+          settings."extensions.autoDisableScopes" = 0;
+          extensions.packages = [
+            addons.ublock-origin
+            addons.leechblock-ng
+            addons.bitwarden
+          ];
         };
 
-        extensions.packages = builtins.attrValues addons;
+        leisure = {
+          id = 1; # opt-in via `librewolf -P leisure`
+          settings."extensions.autoDisableScopes" = 0;
+          extensions.packages = builtins.attrValues addons;
+        };
       };
     };
   };

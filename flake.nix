@@ -69,7 +69,6 @@
       systems = [
         "x86_64-linux"
         "aarch64-linux"
-        "x86_64-darwin"
         "aarch64-darwin"
       ];
 
@@ -159,18 +158,36 @@
           lib,
           ...
         }:
+        let
+          # `firefox-addons` is an attrset of derivations, not a derivation,
+          # so it can't live under `packages` (flake checks reject that). It
+          # goes in `legacyPackages` instead, which supports nested attrsets.
+          packageSet = import ./modules/derivations/package-set.nix {
+            inherit pkgs lib;
+          };
+        in
         {
           devShells.default = pkgs.mkShell {
             packages = [
               pkgs.nil
               pkgs.nixd
+              pkgs.nix-update
               agenix.packages.${system}.default
             ];
           };
           formatter = pkgs.nixfmt;
 
-          packages = import ./modules/derivations/package-set.nix {
-            inherit pkgs lib;
+          # Flatten the addons here so nix-update (which only resolves flat
+          # `packages.<system>.<attr>`) can reach them. The overlay keeps them
+          # nested as `pkgs.firefox-addons.<name>`.
+          packages =
+            lib.removeAttrs packageSet [
+              "firefox-addons"
+            ]
+            // packageSet.firefox-addons;
+
+          legacyPackages = {
+            firefox-addons = packageSet.firefox-addons;
           };
         };
     };

@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
-  addons = import ../derivations/firefox-addons.nix { inherit pkgs; };
+  addons = pkgs.firefox-addons;
 in
 {
   home-manager.users."*" = {
@@ -29,17 +29,23 @@ in
 
       profiles = {
         focus = {
-          id = 0; # default profile — plain `librewolf` lands here
+          id = 0;
           settings."extensions.autoDisableScopes" = 0;
           extensions.packages = [
-            addons.ublock-origin
-            addons.leechblock-ng
             addons.bitwarden
+            addons.clearurls
+            addons.darkreader
+            addons.leechblock-ng
+            addons.sidebery
+            addons.simple-translate
+            addons.tab-volume-control
+            addons.tridactyl
+            addons.ublock-origin
           ];
         };
 
         leisure = {
-          id = 1; # opt-in via `librewolf -P leisure`
+          id = 1;
           settings."extensions.autoDisableScopes" = 0;
           extensions.packages = builtins.attrValues addons;
         };

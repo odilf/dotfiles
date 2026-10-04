@@ -1,4 +1,5 @@
 {
+  lib,
   ...
 }:
 {
@@ -7,7 +8,7 @@
     let
       agentDir = hmConfig.programs.pi-coding-agent.configDir;
     in
-    {
+    lib.mkIf hmConfig.programs.pi-coding-agent.enable {
       programs.pi-coding-agent = {
         keybindings = {
           "app.editor.external" = "alt+e";
@@ -18,6 +19,7 @@
             "npm:@juicesharp/rpiv-todo"
             "npm:@narumitw/pi-usage"
             "npm:@raidou/pi-notify"
+            "npm:pi-btw"
             "npm:pi-lens"
             "npm:pi-notify"
             "npm:pi-simplify"

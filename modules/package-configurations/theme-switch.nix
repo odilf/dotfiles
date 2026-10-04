@@ -40,5 +40,5 @@ in
 {
   custom.theme-switch.package = toggle-theme;
 
-  home-manager.users."*".home.packages = [ toggle-theme ];
+  home-manager.users."*".home.packages = lib.mkIf config.gui [ toggle-theme ];
 }

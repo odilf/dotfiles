@@ -40,6 +40,7 @@ in
         autohide = true;
         autohide-delay = 0.0;
         autohide-time-modifier = 0.3;
+        expose-group-apps = false;
 
         largesize = 68;
         magnification = true;
@@ -116,6 +117,8 @@ in
         enable = true;
         launchd.enable = true;
       };
+
+      programs.karabiner.enable = true;
 
       # launchd.agents.osx-scrobbler.enable = true;
       # home.packages = [

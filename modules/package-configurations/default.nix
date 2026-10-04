@@ -14,7 +14,6 @@ let
     ./bat.nix
     ./cargo.nix
     ./cmus.nix
-    ./dump-thought.nix
     ./fish.nix
     ./ghostty.nix
     ./git.nix

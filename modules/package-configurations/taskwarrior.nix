@@ -11,7 +11,7 @@ in
 
   home-manager.users."*" =
     { hmConfig, ... }:
-    {
+    lib.mkIf hmConfig.programs.taskwarrior.enable {
       age.secrets.taskwarrior.file = ../../secrets/taskwarrior.age;
 
       programs.taskwarrior = {

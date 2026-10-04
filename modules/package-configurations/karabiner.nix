@@ -90,8 +90,6 @@ let
 in
 {
   home-manager.users."*".programs.karabiner = {
-    enable = true;
-
     # Add new external keyboards here with their vendor_id and product_id.
     # `disable_built_in_keyboard_if_exists` is set automatically.
     devices = {

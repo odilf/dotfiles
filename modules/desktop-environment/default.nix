@@ -52,6 +52,7 @@ in
     home-manager.users.odilf = {
       home.packages = [
         pkgs.libqalculate
+        pkgs.dump-thought
       ]
       ++ lib.optionals isLinux [
         pkgs.qimgv

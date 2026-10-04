@@ -1,9 +1,12 @@
-{ ... }:
+{ lib, ... }:
 {
-  home-manager.users."*".programs.bat.config = {
-    plain = true;
-  };
+  home-manager.users."*" =
+    { hmConfig, ... }:
+    {
+      programs.bat.config = {
+        plain = true;
+      };
 
-  # TODO: Watch out... this is global, actually.
-  environment.variables.PAGER = "bat";
+      home.sessionVariables.PAGER = lib.mkIf hmConfig.programs.bat.enable "bat";
+    };
 }

@@ -92,6 +92,4 @@
       alt-shift-tab = "move-workspace-to-monitor --wrap-around next";
     };
   };
-
-  system.defaults.dock.expose-group-apps = false;
 }

@@ -26,6 +26,26 @@ rec {
       map (username: { "${username}" = f username; }) users
     ));
 
+  /**
+    Whether `bundle` is enabled for any of the declared users.
+  */
+  bundleEnabled = bundle: lib.any (user: config.custom.bundles.${user}.${bundle}.enable) users;
+
+  /**
+    Whether home-manager program `program` is enabled for any of the declared users.
+  */
+  programEnabled =
+    program: lib.any (user: config.home-manager.users.${user}.programs.${program}.enable) users;
+
+  /**
+    Whether `package` is installed for `user`, either as a home-manager package
+    or as a system user package.
+  */
+  packageInstalled =
+    package: user:
+    builtins.elem package (config.home-manager.users.${user}.home.packages or [ ])
+    || builtins.elem package (config.users.users.${user}.packages or [ ]);
+
   importModule = modulePath: import modulePath inputs;
 
   importModules = map importModule;

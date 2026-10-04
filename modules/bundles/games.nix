@@ -1,8 +1,3 @@
-# TODO
-# - [ ] Emulators
-# - [ ] Steam
-# - [ ] Terminal games
-
 {
   pkgs,
   lib,
@@ -11,9 +6,11 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
+
+  utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
-  boot.binfmt.emulatedSystems = lib.mkIf (!isx86) [ "x86_64-linux" ];
+  boot.binfmt.emulatedSystems = lib.mkIf (!isx86 && utils.bundleEnabled "games") [ "x86_64-linux" ];
 
   users.users."*" =
     { enableBundle, ... }:
@@ -43,7 +40,7 @@ in
       );
     };
 
-  homebrew.casks = lib.optionals isDarwin [
+  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "games") [
     # TODO: Apparently it doesn't work in packages?? :(
     "prismlauncher"
     "epic-games"
@@ -52,10 +49,11 @@ in
     "dolphin"
     "clone-hero"
     "retroarch-metal"
-    "slackow/apps/slackowwall"
   ];
 
-  home-manager.users."*".programs = {
-    mcsr.enable = true;
-  };
+  home-manager.users."*" =
+    { enableBundle, ... }:
+    lib.mkIf (enableBundle "games") {
+      programs.mcsr.enable = true;
+    };
 }

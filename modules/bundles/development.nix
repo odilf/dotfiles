@@ -7,6 +7,8 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
+  utils = import ../utils.nix { inherit config lib pkgs; };
+
   cli = [
     (pkgs.aspellWithDicts (d: [
       d.en
@@ -44,6 +46,7 @@ let
     pkgs.uv
     pkgs.ruff
     pkgs.ty
+    pkgs.vscode-langservers-extracted
   ]
   ++ lib.optionals isDarwin [
     pkgs.darwin.trash
@@ -69,7 +72,7 @@ in
       packages = cli ++ gui;
     };
 
-  programs.fish.enable = true;
+  programs.fish.enable = lib.mkIf (utils.bundleEnabled "development") true;
 
   home-manager.users."*" =
     { user, ... }:
@@ -97,7 +100,7 @@ in
       };
     };
 
-  homebrew.casks = lib.optionals (isDarwin && config.gui) [
+  homebrew.casks = lib.optionals (isDarwin && config.gui && utils.bundleEnabled "development") [
     "cool-retro-term"
     "ghostty"
     "vscodium"

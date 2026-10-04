@@ -10,12 +10,12 @@ let
   enable = isLinux && config.programs.niri.enable;
 in
 {
-  networking.networkmanager.enable = lib.mkDefault true;
-  hardware.bluetooth.enable = lib.mkDefault true;
-  # services.tuned.enable = lib.mkDefault true;
-  services.upower.enable = lib.mkDefault true;
+  networking.networkmanager.enable = lib.mkIf enable (lib.mkDefault true);
+  hardware.bluetooth.enable = lib.mkIf enable (lib.mkDefault true);
+  # services.tuned.enable = lib.mkIf enable (lib.mkDefault true);
+  services.upower.enable = lib.mkIf enable (lib.mkDefault true);
 
-  home-manager.users."*" = lib.mkIf isLinux {
+  home-manager.users."*" = lib.mkIf enable {
     imports = [
       config.passthru.noctalia
     ];

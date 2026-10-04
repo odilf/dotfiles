@@ -5,15 +5,15 @@
   ...
 }:
 let
-  inherit (pkgs.stdenv.hostPlatform) isLinux;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+
+  utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
   users.users."*" =
     { enableBundle, ... }:
     lib.mkIf (enableBundle "productivity") {
       packages = [
-        pkgs.taskwarrior-tui
-        pkgs.tasksh
       ]
       ++ lib.optionals config.gui (
         [
@@ -29,29 +29,26 @@ in
       );
     };
 
-  home-manager.users."*" = {
-    programs = {
-      taskwarrior.enable = true;
-      sioyek.enable = true;
-      khal.enable = true;
-      # khard.enable = true;
-      meli.enable = true;
-      himalaya.enable = true;
-    };
+  home-manager.users."*" =
+    { enableBundle, ... }:
+    lib.mkIf (enableBundle "productivity") {
+      programs = {
+        sioyek.enable = true;
+        khal.enable = true;
+        # khard.enable = true;
+        meli.enable = true;
+        himalaya.enable = true;
+      };
 
-    home.packages = [
-      # pkgs.noctavox
-    ];
-
-    xdg.mimeApps = lib.mkIf isLinux {
-      enable = true;
-      defaultApplications = {
-        "application/pdf" = [ "sioyek.desktop" ];
+      xdg.mimeApps = lib.mkIf isLinux {
+        enable = true;
+        defaultApplications = {
+          "application/pdf" = [ "sioyek.desktop" ];
+        };
       };
     };
-  };
 
-  homebrew.casks = [
+  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "productivity") [
     "musicbrainz-picard"
     "zotero"
     "calibre"

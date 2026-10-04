@@ -6,28 +6,29 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86_64;
+
+  utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
   users.users."*" =
     { enableBundle, ... }:
-    lib.mkIf (enableBundle "social") {
+    lib.mkIf (enableBundle "creative") {
       packages = lib.optionals config.gui (
         [
+          pkgs.musescore
+          pkgs.blockbench
+          pkgs.blender
         ]
         ++ lib.optionals isLinux [
-          # TODO: Mirrors dont' seem to work for darwin...
-          pkgs.blockbench
 
           pkgs.reaper
-          # pkgs.blender
+          pkgs.kdePackages.kdenlive
           pkgs.obs-studio
-          pkgs.musescore
           pkgs.ardour
 
           # VST-plugins
           pkgs.lsp-plugins
           pkgs.zam-plugins
-          pkgs.kdePackages.kdenlive
         ]
         ++ lib.optionals (isLinux && isx86_64) [
           pkgs.surge
@@ -36,23 +37,12 @@ in
       );
     };
 
-  homebrew = lib.mkIf isDarwin {
+  homebrew = lib.mkIf (isDarwin && utils.bundleEnabled "creative") {
     casks = [
       "blender"
-      "musescore"
       "obs"
-
       "reaper"
-
-      # TODO: Same as above
-      "wacom-tablet"
-      "blockbench"
       "kdenlive"
     ];
-
-    # NOTE: Better to just install manually...
-    # masApps = lib.mkIf isDarwin {
-    #   "Logic Pro" = 634148309;
-    # };
   };
 }

@@ -18,7 +18,9 @@
       };
     in
     {
-      age.secrets.radicale.file = ../../secrets/radicale.age;
+      age.secrets = lib.mkIf enable {
+        radicale.file = ../../secrets/radicale.age;
+      };
 
       # TODO: Switch to `pimsync`
       programs.vdirsyncer.enable = enable;

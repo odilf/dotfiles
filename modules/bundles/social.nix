@@ -6,6 +6,8 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+
+  utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
   users.users."*" =
@@ -30,13 +32,17 @@ in
       );
     };
 
-  home-manager.users."*".programs = {
-    gurk-rs.enable = true;
-    meli.enable = true;
-    # iamb.enable = true;
-  };
+  home-manager.users."*" =
+    { enableBundle, ... }:
+    lib.mkIf (enableBundle "social") {
+      programs = {
+        gurk-rs.enable = true;
+        meli.enable = true;
+        # iamb.enable = true;
+      };
+    };
 
-  homebrew.casks = lib.optionals isDarwin [
+  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "social") [
     "whatsapp" # workaround
     "signal"
     "element"

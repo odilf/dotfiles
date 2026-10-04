@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   cmus-status-scrobbler-src = pkgs.fetchFromGitHub {
@@ -33,7 +33,7 @@ in
 {
   home-manager.users."*" =
     { hmConfig, ... }:
-    {
+    lib.mkIf hmConfig.programs.cmus.enable {
       home.packages = [ cmus-status-scrobbler ];
       programs.cmus = {
         extraConfig = ''

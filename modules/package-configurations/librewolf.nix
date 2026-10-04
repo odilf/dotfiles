@@ -78,6 +78,7 @@ in
               addons.bitwarden
               addons.clearurls
               addons.darkreader
+              addons.indie-wiki-buddy
               addons.leechblock-ng
               addons.sidebery
               addons.simple-translate

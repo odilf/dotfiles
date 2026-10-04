@@ -200,17 +200,77 @@ in
           };
         in
         {
-          focus = common // {
-            id = 0;
-            isDefault = true;
-            userChrome = common.userChrome + ''
-              :root {
-                --p-surface: #101823; /* blue */
-                --p-text: #e6edf3;
-                --p-accent: #58a6ff;
+          focus =
+            let
+              # LeechBlock day indices are Sun..Sat.
+              focusDays = lib.replicate 7 true;
+
+              leechBlockSet =
+                n:
+                {
+                  name,
+                  sites,
+                  block,
+                  allow ? "",
+                }:
+                {
+                  "setName${n}" = name;
+                  "sites${n}" = sites;
+                  "regexpBlock${n}" = block;
+                  "blockRE${n}" = block;
+                  "regexpAllow${n}" = allow;
+                  "allowRE${n}" = allow;
+                  "times${n}" = "0000-2400";
+                  "days${n}" = focusDays;
+                  "activeBlock${n}" = true;
+                };
+
+              # LeechBlock matches on regexpBlock*/regexpAllow*, not on sitesN: each pair has
+              # to stay equal to what the extension derives from the sitesN string beside it,
+              # or the first save from its options page silently changes what is blocked.
+              blocks = {
+                numSets = "3";
+                matchSubdomains = true;
+                sync = false; # browser.storage.sync would bypass this file
               }
-            '';
-          };
+              // leechBlockSet "1" {
+                name = "YouTube entry surfaces";
+                sites = "+youtube.com/embed +youtube.com/watch youtube.com";
+                block = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?youtube\\.com)";
+                allow = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?youtube\\.com/embed|([^/]*\\.)?youtube\\.com/watch)";
+              }
+              // leechBlockSet "2" {
+                name = "Reddit entry surfaces";
+                sites = "+reddit.com/**comments reddit.com";
+                block = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?reddit\\.com)";
+                allow = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?reddit\\.com/.*comments)";
+              }
+              // leechBlockSet "3" {
+                name = "Bluesky";
+                sites = "bsky.app";
+                block = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?bsky\\.app)";
+              };
+            in
+            common
+            // {
+              id = 0;
+              isDefault = true;
+              extensions = common.extensions // {
+                settings = common.extensions.settings // {
+                  "${addons.leechblock-ng.addonId}" = {
+                    force = true;
+                    settings = blocks;
+                  };
+                };
+              };
+              userChrome = common.userChrome + ''
+                :root {
+                  --p-surface: #101823; /* blue */
+                  --p-text: #e6edf3;
+                  --p-accent: #58a6ff;
+                }
+              '';
+            };
 
           leisure = common // {
             id = 1;

@@ -1,0 +1,29 @@
+/* tint to distinguish profiles with `--p-surface`, `--p-text` and `--p-accent` */
+
+/* Toolbar surface */
+#navigator-toolbox,
+#nav-bar {
+  background-color: var(--p-surface) !important;
+  background-image: none !important;
+  color: var(--p-text) !important;
+}
+
+/* Icons and toolbar text follow the surface */
+#navigator-toolbox {
+  --toolbar-color: var(--p-text) !important;
+  --lwt-text-color: var(--p-text) !important;
+  --toolbarbutton-icon-fill: var(--p-text) !important;
+  --toolbarbutton-icon-fill-attention: var(--p-accent) !important;
+}
+
+/* One accent edge, readable at a glance */
+#navigator-toolbox {
+  border-bottom: 2px solid var(--p-accent) !important;
+  box-shadow: none !important;
+}
+
+/* Accent the focused address bar */
+#urlbar[focused] > #urlbar-background {
+  outline: 2px solid var(--p-accent) !important;
+  outline-offset: -2px !important;
+}

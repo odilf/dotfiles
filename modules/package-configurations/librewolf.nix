@@ -67,7 +67,8 @@ in
       profiles =
         let
           common = {
-            userChrome = builtins.readFile ./librewolf/sidebery.css;
+            userChrome =
+              builtins.readFile ./librewolf/sidebery.css + builtins.readFile ./librewolf/profile-chrome.css;
             settings = {
               "extensions.autoDisableScopes" = 0;
               "extensions.startupScanScopes" = 15; # profile|user|application|system
@@ -201,11 +202,25 @@ in
           focus = common // {
             id = 0;
             isDefault = true;
+            userChrome = common.userChrome + ''
+              :root {
+                --p-surface: #101823; /* blue */
+                --p-text: #e6edf3;
+                --p-accent: #58a6ff;
+              }
+            '';
           };
 
           leisure = common // {
             id = 1;
             extensions.packages = builtins.attrValues addons;
+            userChrome = common.userChrome + ''
+              :root {
+                --p-surface: #1a1320; /* violet */
+                --p-text: #ede6f3;
+                --p-accent: #c9a0ff;
+              }
+            '';
           };
         };
     };

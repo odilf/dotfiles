@@ -26,6 +26,7 @@ in
         "privacy.resistFingerprinting" = false;
         "privacy.fingerprintingProtection" = true;
         "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
+        # "privacy.resistFingerprinting.letterboxing" = true;
 
         # Sidebery
         "sidebar.revamp" = true;
@@ -126,8 +127,8 @@ in
                   configversion = "2.0";
                   tabsort = "default";
                   nmaps = {
-                    J = "tabprev";
-                    K = "tabnext";
+                    J = "tabnext";
+                    K = "tabprev";
 
                     "g1" = "tab 1";
                     "g2" = "tab 2";
@@ -139,10 +140,47 @@ in
                     "g8" = "tab 8";
                     "g9" = "tab 9";
 
-                    "<C-e>" = "mode normal"; # no-op, to leave space for sidebery
+                    "<C-e>" = null; # unbind, to not clobber sidebery
 
-                    "<C-o>" = "tab #"; # last selected tab
-                    "<C-i>" = "tab #"; # back again
+                    "<C-o>" = "tabhist -1"; # back through tab history
+                    "<C-i>" = "tabhist 1"; # forward
+                  };
+
+                  exaliases = {
+                    tabhist = ''
+                      jsb -p (async () => {
+                        if (!tri._tabhist) {
+                          const h = tri._tabhist = { stack: [], pos: -1, nav: false };
+                          h.ready = tri.webext.browserBg.tabs.query({ currentWindow: true, hidden: false }).then(tabs => {
+                            h.stack = tabs.sort((a, b) => a.lastAccessed - b.lastAccessed).map(t => t.id);
+                            h.pos = h.stack.length - 1;
+                          });
+                          tri.webext.browserBg.tabs.onActivated.addListener(info => {
+                            if (h.nav) { h.nav = false; return; }
+                            h.stack = h.stack.slice(0, h.pos + 1);
+                            h.stack.push(info.tabId);
+                            if (h.stack.length > 100) h.stack = h.stack.slice(-100);
+                            h.pos = h.stack.length - 1;
+                          });
+                        }
+                        const h = tri._tabhist;
+                        await h.ready;
+                        const open = new Set((await tri.webext.browserBg.tabs.query({ currentWindow: true })).map(t => t.id));
+                        const removedBefore = h.stack.slice(0, h.pos).filter(id => !open.has(id)).length;
+                        h.stack = h.stack.filter(id => open.has(id));
+                        h.pos = Math.max(0, h.pos - removedBefore);
+                        const next = h.pos + (Number(JS_ARG) || -1);
+                        if (next < 0 || next >= h.stack.length) return;
+                        if (h.stack[next] === h.stack[h.pos]) return;
+                        h.pos = next;
+                        h.nav = true;
+                        try {
+                          await tri.webext.browserBg.tabs.update(h.stack[next], { active: true });
+                        } catch (e) {
+                          h.nav = false;
+                        }
+                      })()
+                    '';
                   };
 
                   newtab = "about:blank";
@@ -162,6 +200,7 @@ in
         {
           focus = common // {
             id = 0;
+            isDefault = true;
           };
 
           leisure = common // {

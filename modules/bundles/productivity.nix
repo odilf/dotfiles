@@ -30,7 +30,8 @@ in
       );
 
       programs = {
-        sioyek.enable = true;
+        # TODO: Broke on darwin
+        # sioyek.enable = true;
         khal.enable = true;
         # khard.enable = true;
         meli.enable = true;

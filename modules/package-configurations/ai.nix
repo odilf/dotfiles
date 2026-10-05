@@ -35,7 +35,18 @@
               "opencode-go/deepseek-v4.1-flash"
               "opencode-go/deepseek-v4-pro"
             ];
+
+            showCacheMissNotices = true;
+            defaultTools= ["+codemode"];
+
+            # tuiMode = "regular";
           };
+
+          # For plugin installation
+          extraPackages = [
+            pkgs.nodejs
+            pkgs.pnpm
+          ];
 
           context = ''
             ## Disagreement

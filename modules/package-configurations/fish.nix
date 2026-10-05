@@ -42,7 +42,6 @@ let
           preferAbbrs = true;
           interactiveShellInit = ''
             set fish_greeting
-            enable_transience # (from starship)
 
             # Append brew path on darwin.
             switch (uname)

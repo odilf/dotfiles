@@ -33,8 +33,8 @@ in
 {
   home-manager.users."*" =
     { hmConfig, ... }:
-    lib.mkIf hmConfig.programs.cmus.enable {
-      home.packages = [ cmus-status-scrobbler ];
+    {
+      home.packages = lib.mkIf hmConfig.programs.cmus.enable [ cmus-status-scrobbler ];
       programs.cmus = {
         extraConfig = ''
           set status_display_program=${cmus-status-scrobbler}/bin/cmus-status-scrobbler
@@ -43,14 +43,16 @@ in
         '';
       };
 
-      home.activation.cmusScrobblerConfig = hmConfig.lib.dag.entryAfter [ "writeBoundary" ] ''
-        CONFIG_FILE="${hmConfig.xdg.configHome}/cmus/cmus_status_scrobbler.ini"
-        if [ ! -f "$CONFIG_FILE" ]; then
-          $DRY_RUN_CMD mkdir -p "${hmConfig.xdg.configHome}/cmus"
-          $DRY_RUN_CMD cp ${initial-config} "$CONFIG_FILE"
-          $DRY_RUN_CMD chmod 644 "$CONFIG_FILE"
-          echo "Created cmus scrobbler config template at $CONFIG_FILE"
-        fi
-      '';
+      home.activation.cmusScrobblerConfig = lib.mkIf hmConfig.programs.cmus.enable (
+        hmConfig.lib.dag.entryAfter [ "writeBoundary" ] ''
+          CONFIG_FILE="${hmConfig.xdg.configHome}/cmus/cmus_status_scrobbler.ini"
+          if [ ! -f "$CONFIG_FILE" ]; then
+            $DRY_RUN_CMD mkdir -p "${hmConfig.xdg.configHome}/cmus"
+            $DRY_RUN_CMD cp ${initial-config} "$CONFIG_FILE"
+            $DRY_RUN_CMD chmod 644 "$CONFIG_FILE"
+            echo "Created cmus scrobbler config template at $CONFIG_FILE"
+          fi
+        ''
+      );
     };
 }

@@ -8,7 +8,7 @@
     let
       agentDir = hmConfig.programs.pi-coding-agent.configDir;
     in
-    lib.mkIf hmConfig.programs.pi-coding-agent.enable {
+    {
       programs.pi-coding-agent = {
         keybindings = {
           "app.editor.external" = "alt+e";
@@ -58,7 +58,7 @@
         '';
       };
 
-      home.file = {
+      home.file = lib.mkIf hmConfig.programs.pi-coding-agent.enable {
         "${agentDir}/skills/code-comments" = {
           source = ./ai/code-comments;
           recursive = true;

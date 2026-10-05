@@ -66,17 +66,11 @@ let
   enable = user: config.custom.bundles.${user}.development.enable;
 in
 {
-  users.users."*" =
-    { user, ... }:
-    lib.mkIf (enable user) {
-      packages = cli ++ gui;
-    };
-
-  programs.fish.enable = lib.mkIf (utils.bundleEnabled "development") true;
-
   home-manager.users."*" =
     { user, ... }:
     lib.mkIf (enable user) {
+      home.packages = cli ++ gui;
+
       programs = {
         alacritty.enable = config.gui;
         bat.enable = true;

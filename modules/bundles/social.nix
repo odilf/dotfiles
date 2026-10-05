@@ -10,10 +10,10 @@ let
   utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
-  users.users."*" =
+  home-manager.users."*" =
     { enableBundle, ... }:
     lib.mkIf (enableBundle "social") {
-      packages = [
+      home.packages = [
         pkgs.nchat
         pkgs.discordo
       ]
@@ -30,11 +30,7 @@ in
           # pkgs.whatsapp-for-mac # Fails to download
         ]
       );
-    };
 
-  home-manager.users."*" =
-    { enableBundle, ... }:
-    lib.mkIf (enableBundle "social") {
       programs = {
         gurk-rs.enable = true;
         meli.enable = true;

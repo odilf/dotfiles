@@ -10,10 +10,10 @@ let
   utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
-  users.users."*" =
+  home-manager.users."*" =
     { enableBundle, ... }:
     lib.mkIf (enableBundle "productivity") {
-      packages = [
+      home.packages = [
       ]
       ++ lib.optionals config.gui (
         [
@@ -27,11 +27,7 @@ in
           pkgs.calibre
         ]
       );
-    };
 
-  home-manager.users."*" =
-    { enableBundle, ... }:
-    lib.mkIf (enableBundle "productivity") {
       programs = {
         sioyek.enable = true;
         khal.enable = true;

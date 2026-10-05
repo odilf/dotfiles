@@ -12,10 +12,21 @@ in
 {
   boot.binfmt.emulatedSystems = lib.mkIf (!isx86 && utils.bundleEnabled "games") [ "x86_64-linux" ];
 
-  users.users."*" =
+  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "games") [
+    # TODO: Apparently it doesn't work in packages?? :(
+    "prismlauncher"
+    "epic-games"
+    "minecraft"
+    "steam"
+    "dolphin"
+    "clone-hero"
+    "retroarch-metal"
+  ];
+
+  home-manager.users."*" =
     { enableBundle, ... }:
     lib.mkIf (enableBundle "games") {
-      packages = [
+      home.packages = [
         # pkgs.smassh # Dependency broken on darwin
         pkgs.vitetris # Kinda mediocre
         pkgs.terminal-parrot
@@ -38,22 +49,7 @@ in
           pkgs.retroarch # Broken on darwin
         ]
       );
-    };
 
-  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "games") [
-    # TODO: Apparently it doesn't work in packages?? :(
-    "prismlauncher"
-    "epic-games"
-    "minecraft"
-    "steam"
-    "dolphin"
-    "clone-hero"
-    "retroarch-metal"
-  ];
-
-  home-manager.users."*" =
-    { enableBundle, ... }:
-    lib.mkIf (enableBundle "games") {
       programs.mcsr.enable = true;
     };
 }

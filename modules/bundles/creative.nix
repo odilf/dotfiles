@@ -10,10 +10,10 @@ let
   utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
-  users.users."*" =
+  home-manager.users."*" =
     { enableBundle, ... }:
     lib.mkIf (enableBundle "creative") {
-      packages = lib.optionals config.gui (
+      home.packages = lib.optionals config.gui (
         [
           pkgs.musescore
           pkgs.blockbench

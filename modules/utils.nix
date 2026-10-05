@@ -22,9 +22,7 @@ rec {
   */
   mapUsers =
     f:
-    (lib.foldl' lib.attrsets.unionOfDisjoint { } (
-      map (username: { "${username}" = f username; }) users
-    ));
+    (lib.foldl' lib.attrsets.unionOfDisjoint { } (map (username: { ${username} = f username; }) users));
 
   /**
     Whether `bundle` is enabled for any of the declared users.
@@ -38,13 +36,13 @@ rec {
     program: lib.any (user: config.home-manager.users.${user}.programs.${program}.enable) users;
 
   /**
-    Whether `package` is installed for `user`, either as a home-manager package
-    or as a system user package.
+    Whether `package` is installed as a home-manager package for `user`.
+
+    Only checks `home.packages` on purpose: checking `users.users.<name>.packages`
+    would recurse through `home.path` (via `useUserPackages`).
   */
   packageInstalled =
-    package: user:
-    builtins.elem package (config.home-manager.users.${user}.home.packages or [ ])
-    || builtins.elem package (config.users.users.${user}.packages or [ ]);
+    package: user: builtins.elem package (config.home-manager.users.${user}.home.packages or [ ]);
 
   importModule = modulePath: import modulePath inputs;
 

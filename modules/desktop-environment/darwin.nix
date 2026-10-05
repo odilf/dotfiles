@@ -6,7 +6,6 @@
 }:
 let
   enabled = config.gui && config.desktop-environment == "macOS";
-  utils = import ../utils.nix { inherit config lib pkgs; };
 in
 {
   config = lib.mkIf enabled {
@@ -112,18 +111,15 @@ in
       ];
     };
 
-    home-manager.users = utils.mapUsers (username: {
-      programs.aerospace = {
-        enable = true;
-        launchd.enable = true;
-      };
+    home-manager.sharedModules = [
+      {
+        programs.aerospace = {
+          enable = true;
+          launchd.enable = true;
+        };
 
-      programs.karabiner.enable = true;
-
-      # launchd.agents.osx-scrobbler.enable = true;
-      # home.packages = [
-      #   pkgs.osx-scrobbler
-      # ];
-    });
+        programs.karabiner.enable = true;
+      }
+    ];
   };
 }

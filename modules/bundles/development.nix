@@ -7,7 +7,8 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
-  utils = import ../utils.nix { inherit config lib pkgs; };
+  enabled = user: config.custom.bundles.${user}.development.enable;
+  enabledForAnyUser = lib.any enabled (builtins.attrNames config.custom.bundles);
 
   cli = [
     (pkgs.aspellWithDicts (d: [
@@ -62,13 +63,11 @@ let
       pkgs.zed-editor
     ]
   );
-
-  enable = user: config.custom.bundles.${user}.development.enable;
 in
 {
-  home-manager.users."*" =
-    { user, ... }:
-    lib.mkIf (enable user) {
+  home-manager.users = lib.mapAttrs (
+    user: _:
+    lib.mkIf (enabled user) {
       home.packages = cli ++ gui;
 
       programs = {
@@ -92,13 +91,13 @@ in
       home.sessionVariables = {
         RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
       };
-    };
+    }
+  ) config.custom.bundles;
 
-  homebrew.casks = lib.optionals (isDarwin && config.gui && utils.bundleEnabled "development") [
+  homebrew.casks = lib.optionals (isDarwin && config.gui && enabledForAnyUser) [
     "cool-retro-term"
     "ghostty"
     "vscodium"
     "zed"
   ];
-
 }

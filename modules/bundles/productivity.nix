@@ -7,12 +7,13 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
-  utils = import ../utils.nix { inherit config lib pkgs; };
+  enabled = user: config.custom.bundles.${user}.productivity.enable;
+  enabledForAnyUser = lib.any enabled (builtins.attrNames config.custom.bundles);
 in
 {
-  home-manager.users."*" =
-    { enableBundle, ... }:
-    lib.mkIf (enableBundle "productivity") {
+  home-manager.users = lib.mapAttrs (
+    user: _:
+    lib.mkIf (enabled user) {
       home.packages = [
       ]
       ++ lib.optionals config.gui (
@@ -42,9 +43,10 @@ in
           "application/pdf" = [ "sioyek.desktop" ];
         };
       };
-    };
+    }
+  ) config.custom.bundles;
 
-  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "productivity") [
+  homebrew.casks = lib.optionals (isDarwin && enabledForAnyUser) [
     "musicbrainz-picard"
     "zotero"
     "calibre"

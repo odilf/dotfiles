@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
   cmus-status-scrobbler-src = pkgs.fetchFromGitHub {
@@ -31,28 +31,31 @@ let
   '';
 in
 {
-  home-manager.users."*" =
-    { hmConfig, ... }:
-    {
-      home.packages = lib.mkIf hmConfig.programs.cmus.enable [ cmus-status-scrobbler ];
-      programs.cmus = {
-        extraConfig = ''
-          set status_display_program=${cmus-status-scrobbler}/bin/cmus-status-scrobbler
-          set lib_sort=-filemtime
-          fset jazz=genre="Jazz"
-        '';
-      };
+  home-manager.sharedModules = [
+    (
+      { config, lib, ... }:
+      {
+        home.packages = lib.mkIf config.programs.cmus.enable [ cmus-status-scrobbler ];
+        programs.cmus = {
+          extraConfig = ''
+            set status_display_program=${cmus-status-scrobbler}/bin/cmus-status-scrobbler
+            set lib_sort=-filemtime
+            fset jazz=genre="Jazz"
+          '';
+        };
 
-      home.activation.cmusScrobblerConfig = lib.mkIf hmConfig.programs.cmus.enable (
-        hmConfig.lib.dag.entryAfter [ "writeBoundary" ] ''
-          CONFIG_FILE="${hmConfig.xdg.configHome}/cmus/cmus_status_scrobbler.ini"
-          if [ ! -f "$CONFIG_FILE" ]; then
-            $DRY_RUN_CMD mkdir -p "${hmConfig.xdg.configHome}/cmus"
-            $DRY_RUN_CMD cp ${initial-config} "$CONFIG_FILE"
-            $DRY_RUN_CMD chmod 644 "$CONFIG_FILE"
-            echo "Created cmus scrobbler config template at $CONFIG_FILE"
-          fi
-        ''
-      );
-    };
+        home.activation.cmusScrobblerConfig = lib.mkIf config.programs.cmus.enable (
+          config.lib.dag.entryAfter [ "writeBoundary" ] ''
+            CONFIG_FILE="${config.xdg.configHome}/cmus/cmus_status_scrobbler.ini"
+            if [ ! -f "$CONFIG_FILE" ]; then
+              $DRY_RUN_CMD mkdir -p "${config.xdg.configHome}/cmus"
+              $DRY_RUN_CMD cp ${initial-config} "$CONFIG_FILE"
+              $DRY_RUN_CMD chmod 644 "$CONFIG_FILE"
+              echo "Created cmus scrobbler config template at $CONFIG_FILE"
+            fi
+          ''
+        );
+      }
+    )
+  ];
 }

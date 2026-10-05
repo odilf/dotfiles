@@ -1,12 +1,15 @@
-{ lib, ... }:
+{ ... }:
 {
-  home-manager.users."*" =
-    { hmConfig, ... }:
-    {
-      programs.bat.config = {
-        plain = true;
-      };
+  home-manager.sharedModules = [
+    (
+      { config, lib, ... }:
+      {
+        programs.bat.config = {
+          plain = true;
+        };
 
-      home.sessionVariables.PAGER = lib.mkIf hmConfig.programs.bat.enable "bat";
-    };
+        home.sessionVariables.PAGER = lib.mkIf config.programs.bat.enable "bat";
+      }
+    )
+  ];
 }

@@ -7,12 +7,13 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86_64;
 
-  utils = import ../utils.nix { inherit config lib pkgs; };
+  enabled = user: config.custom.bundles.${user}.creative.enable;
+  enabledForAnyUser = lib.any enabled (builtins.attrNames config.custom.bundles);
 in
 {
-  home-manager.users."*" =
-    { enableBundle, ... }:
-    lib.mkIf (enableBundle "creative") {
+  home-manager.users = lib.mapAttrs (
+    user: _:
+    lib.mkIf (enabled user) {
       home.packages = lib.optionals config.gui (
         [
           pkgs.musescore
@@ -35,9 +36,10 @@ in
           pkgs.oxefmsynth
         ]
       );
-    };
+    }
+  ) config.custom.bundles;
 
-  homebrew = lib.mkIf (isDarwin && utils.bundleEnabled "creative") {
+  homebrew = lib.mkIf (isDarwin && enabledForAnyUser) {
     casks = [
       "blender"
       "obs"

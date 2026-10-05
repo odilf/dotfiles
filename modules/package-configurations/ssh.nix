@@ -1,20 +1,20 @@
+{ ... }:
 {
-  lib,
-  ...
-}:
-{
-  home-manager.users."*" =
-    { hmConfig, ... }:
-    {
-      age.secrets = lib.mkIf hmConfig.programs.ssh.enable {
-        ssh-host-shorthands.file = ../../secrets/ssh-host-shorthands.age;
-      };
+  home-manager.sharedModules = [
+    (
+      { config, lib, ... }:
+      {
+        age.secrets = lib.mkIf config.programs.ssh.enable {
+          ssh-host-shorthands.file = ../../secrets/ssh-host-shorthands.age;
+        };
 
-      programs.ssh = {
-        enableDefaultConfig = false;
-        includes = [
-          hmConfig.age.secrets.ssh-host-shorthands.path
-        ];
-      };
-    };
+        programs.ssh = {
+          enableDefaultConfig = false;
+          includes = [
+            config.age.secrets.ssh-host-shorthands.path
+          ];
+        };
+      }
+    )
+  ];
 }

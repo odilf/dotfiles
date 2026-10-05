@@ -2,6 +2,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }:
 let
@@ -45,9 +46,12 @@ in
   ];
 
   # Add your user to audio group
-  users.users."*" = lib.mkIf enabled {
-    extraGroups = [ "audio" ];
-  };
+  users.users = lib.mapAttrs (
+    user: _:
+    lib.mkIf enabled {
+      extraGroups = [ "audio" ];
+    }
+  ) config.custom.bundles;
 
   # Environment variables for yabridge
   environment.variables = lib.mkIf enabled {
@@ -77,7 +81,9 @@ in
     }
   ];
 
-  home-manager.users."*".home.linkLive.files = lib.mkIf enabled {
-    ".config/REAPER" = "live/reaper";
-  };
+  home-manager.sharedModules = lib.mkIf enabled [
+    {
+      home.linkLive.files.".config/REAPER" = "live/reaper";
+    }
+  ];
 }

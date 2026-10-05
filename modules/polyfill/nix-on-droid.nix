@@ -33,6 +33,9 @@ in
     environment.sessionVariables = config.environment.variables;
     home-manager.config = config.home-manager.users.${config.mainUser};
     home-manager.users.${config.mainUser}.home.homeDirectory = config.user.home;
+    # Home-manager modules on NixOS/darwin receive `osConfig`; mirror that here
+    # so shared modules can read system config on nix-on-droid too.
+    home-manager.extraSpecialArgs.osConfig = config;
     user.shell = "${lib.getExe config.users.users.${config.mainUser}.shell}";
   };
 }

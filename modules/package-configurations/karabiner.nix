@@ -89,131 +89,135 @@ let
   ];
 in
 {
-  home-manager.users."*".programs.karabiner = {
-    # Add new external keyboards here with their vendor_id and product_id.
-    # `disable_built_in_keyboard_if_exists` is set automatically.
-    devices = {
-      # Apple Internal Keyboard
-      "Apple Internal Keyboard" = externalKeyboard {
-        vendor_id = 1452;
-        product_id = 591;
-        simple_modifications = isoSwap ++ [
-          {
-            from.key_code = "right_command";
-            to = [ { key_code = "right_option"; } ];
-          }
-        ];
-      };
-
-      # Keychron K2
-      "Keychron K2" = externalKeyboard {
-        vendor_id = 76;
-        product_id = 332;
-        simple_modifications = isoSwap;
-      };
-
-      # Other
-      "Other" = externalKeyboard {
-        vendor_id = 1133;
-        product_id = 45081;
-        simple_modifications = isoSwap;
-      };
-
-      # Mouse (enables pointing-button modifications, e.g. button4 -> F3)
-      "Mouse" = externalPointingDevice {
-        vendor_id = 7511;
-        product_id = 44311;
-      };
-    };
-
-    rules = {
-      ctrl-left-click = {
-        description = "Ctrl + Left Click to Left Click";
-        manipulators = [
-          {
-            type = "basic";
-            from = {
-              pointing_button = "button1";
-              modifiers = {
-                mandatory = [ "left_control" ];
-                optional = [ "caps_lock" ];
-              };
-            };
-            to = [
-              { pointing_button = "button1"; }
-              { key_code = "left_control"; }
-            ];
-          }
-        ];
-      };
-      caps-lock = {
-        description = "Caps Lock to Esc (tap) / Left Ctrl (hold)";
-        manipulators = [
-          {
-            type = "basic";
-            from = {
-              key_code = "caps_lock";
-              modifiers.optional = [ "any" ];
-            };
-            to = [ { key_code = "left_control"; } ];
-            to_if_alone = [ { key_code = "escape"; } ];
-          }
-        ];
-      };
-      cmd-hjkl-focus = {
-        description = "Cmd+hjkl (no tab) = AeroSpace focus (cmd+f13..f16)";
-        manipulators = [
-          (focusCmdKey {
-            key_code = "h";
-            fkey = "f13";
-          })
-          (focusCmdKey {
-            key_code = "j";
-            fkey = "f14";
-          })
-          (focusCmdKey {
-            key_code = "k";
-            fkey = "f15";
-          })
-          (focusCmdKey {
-            key_code = "l";
-            fkey = "f16";
-          })
-        ];
-      };
-      tab-arrow-layer = {
-        description = "Tab held = arrow layer (h/j/k/l)";
-        manipulators = [
-          {
-            type = "basic";
-            from = {
-              key_code = "tab";
-              modifiers.optional = [ "any" ];
-            };
-            to = [
+  home-manager.sharedModules = [
+    {
+      programs.karabiner = {
+        # Add new external keyboards here with their vendor_id and product_id.
+        # `disable_built_in_keyboard_if_exists` is set automatically.
+        devices = {
+          # Apple Internal Keyboard
+          "Apple Internal Keyboard" = externalKeyboard {
+            vendor_id = 1452;
+            product_id = 591;
+            simple_modifications = isoSwap ++ [
               {
-                set_variable = {
-                  name = "tab_layer_active";
-                  value = 1;
-                };
+                from.key_code = "right_command";
+                to = [ { key_code = "right_option"; } ];
               }
             ];
-            to_if_alone = [ { key_code = "tab"; } ];
-            to_after_key_up = [
+          };
+
+          # Keychron K2
+          "Keychron K2" = externalKeyboard {
+            vendor_id = 76;
+            product_id = 332;
+            simple_modifications = isoSwap;
+          };
+
+          # Other
+          "Other" = externalKeyboard {
+            vendor_id = 1133;
+            product_id = 45081;
+            simple_modifications = isoSwap;
+          };
+
+          # Mouse (enables pointing-button modifications, e.g. button4 -> F3)
+          "Mouse" = externalPointingDevice {
+            vendor_id = 7511;
+            product_id = 44311;
+          };
+        };
+
+        rules = {
+          ctrl-left-click = {
+            description = "Ctrl + Left Click to Left Click";
+            manipulators = [
               {
-                set_variable = {
-                  name = "tab_layer_active";
-                  value = 0;
+                type = "basic";
+                from = {
+                  pointing_button = "button1";
+                  modifiers = {
+                    mandatory = [ "left_control" ];
+                    optional = [ "caps_lock" ];
+                  };
                 };
+                to = [
+                  { pointing_button = "button1"; }
+                  { key_code = "left_control"; }
+                ];
               }
             ];
-          }
-          (tabArrow "left" "h")
-          (tabArrow "down" "j")
-          (tabArrow "up" "k")
-          (tabArrow "right" "l")
-        ];
+          };
+          caps-lock = {
+            description = "Caps Lock to Esc (tap) / Left Ctrl (hold)";
+            manipulators = [
+              {
+                type = "basic";
+                from = {
+                  key_code = "caps_lock";
+                  modifiers.optional = [ "any" ];
+                };
+                to = [ { key_code = "left_control"; } ];
+                to_if_alone = [ { key_code = "escape"; } ];
+              }
+            ];
+          };
+          cmd-hjkl-focus = {
+            description = "Cmd+hjkl (no tab) = AeroSpace focus (cmd+f13..f16)";
+            manipulators = [
+              (focusCmdKey {
+                key_code = "h";
+                fkey = "f13";
+              })
+              (focusCmdKey {
+                key_code = "j";
+                fkey = "f14";
+              })
+              (focusCmdKey {
+                key_code = "k";
+                fkey = "f15";
+              })
+              (focusCmdKey {
+                key_code = "l";
+                fkey = "f16";
+              })
+            ];
+          };
+          tab-arrow-layer = {
+            description = "Tab held = arrow layer (h/j/k/l)";
+            manipulators = [
+              {
+                type = "basic";
+                from = {
+                  key_code = "tab";
+                  modifiers.optional = [ "any" ];
+                };
+                to = [
+                  {
+                    set_variable = {
+                      name = "tab_layer_active";
+                      value = 1;
+                    };
+                  }
+                ];
+                to_if_alone = [ { key_code = "tab"; } ];
+                to_after_key_up = [
+                  {
+                    set_variable = {
+                      name = "tab_layer_active";
+                      value = 0;
+                    };
+                  }
+                ];
+              }
+              (tabArrow "left" "h")
+              (tabArrow "down" "j")
+              (tabArrow "up" "k")
+              (tabArrow "right" "l")
+            ];
+          };
+        };
       };
-    };
-  };
+    }
+  ];
 }

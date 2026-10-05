@@ -48,35 +48,36 @@ in
       ];
     };
 
-    # TODO: Don't hardcode main user
-    home-manager.users.odilf = {
-      home.packages = [
-        pkgs.libqalculate
-        pkgs.dump-thought
-      ]
-      ++ lib.optionals isLinux [
-        pkgs.qimgv
-        pkgs.bitwarden-desktop
-        pkgs.vlc
-        pkgs.qalculate-qt
-        pkgs.qbittorrent
-        pkgs.wl-clipboard
-        pkgs.kdePackages.dolphin
-      ]
-      ++ lib.optionals isDarwin [
-        pkgs.iina
-      ];
+    home-manager.sharedModules = [
+      {
+        home.packages = [
+          pkgs.libqalculate
+          pkgs.dump-thought
+        ]
+        ++ lib.optionals isLinux [
+          pkgs.qimgv
+          pkgs.bitwarden-desktop
+          pkgs.vlc
+          pkgs.qalculate-qt
+          pkgs.qbittorrent
+          pkgs.wl-clipboard
+          pkgs.kdePackages.dolphin
+        ]
+        ++ lib.optionals isDarwin [
+          pkgs.iina
+        ];
 
-      programs = {
-        cmus.enable = true;
-        librewolf.enable = true;
-        mpv.enable = true;
-      };
+        programs = {
+          cmus.enable = true;
+          librewolf.enable = true;
+          mpv.enable = true;
+        };
 
-      services.syncthing = {
-        enable = true;
-        tray.enable = lib.mkIf isLinux true;
-      };
-    };
+        services.syncthing = {
+          enable = true;
+          tray.enable = lib.mkIf isLinux true;
+        };
+      }
+    ];
   };
 }

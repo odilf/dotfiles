@@ -1,17 +1,23 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-  utils = import ../utils.nix { inherit config lib pkgs; };
-in
-{
-  home-manager.users."*" =
-    { hmConfig, ... }:
+  alacrittyEnabled = lib.any (user: config.home-manager.users.${user}.programs.alacritty.enable) (
+    builtins.attrNames config.home-manager.users
+  );
+
+  homeConfig =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       programs.alacritty.theme = "enfocado_dark";
       programs.alacritty.settings = {
@@ -45,16 +51,17 @@ in
         ];
       };
 
-      home.packages = lib.mkIf hmConfig.programs.alacritty.enable [
+      home.packages = lib.mkIf config.programs.alacritty.enable [
         pkgs.ueberzugpp
       ];
     };
-
-  fonts.packages = lib.mkIf (utils.programEnabled "alacritty") [
+in
+{
+  fonts.packages = lib.mkIf alacrittyEnabled [
     pkgs.nerd-fonts.iosevka-term
   ];
 
-  custom.theme-switch.hooks = lib.mkIf (utils.programEnabled "alacritty") [
+  custom.theme-switch.hooks = lib.mkIf alacrittyEnabled [
     # -f is needed otherwise we get permission errors.
     ''
       if [[ "$THEME_MODE" == "dark" ]]; then
@@ -64,4 +71,6 @@ in
       fi
     ''
   ];
+
+  home-manager.sharedModules = [ homeConfig ];
 }

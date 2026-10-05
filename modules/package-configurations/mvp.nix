@@ -1,7 +1,12 @@
-{ ... }: {
-  home-manager.users."*".programs.mpv = {
-    config = {
-      keep-open = true;
-    };
-  };
+{ ... }:
+{
+  home-manager.sharedModules = [
+    {
+      programs.mpv = {
+        config = {
+          keep-open = true;
+        };
+      };
+    }
+  ];
 }

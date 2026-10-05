@@ -1,23 +1,29 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 let
-  utils = import ../utils.nix { inherit config lib pkgs; };
-in
-{
-  home-manager.users."*" =
-    { hmConfig, ... }:
+  homeUsers = builtins.attrNames config.home-manager.users;
+
+  # Home-manager half of this module. Applied to every user through
+  # `home-manager.sharedModules`; inside here `config` is the user's home config.
+  homeConfig =
     {
-      xdg.configFile."fish/completions/nix.fish" = lib.mkIf hmConfig.programs.fish.enable {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      xdg.configFile."fish/completions/nix.fish" = lib.mkIf config.programs.fish.enable {
         # TODO: I don't think this is necessary, remove this.
         # Maybe necessary for completions? (https://discourse.nixos.org/t/how-to-use-completion-fish-with-home-manager/23356/3)
         source = "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
       };
 
-      programs = lib.mkIf hmConfig.programs.fish.enable {
+      programs = lib.mkIf config.programs.fish.enable {
         eza.enable = true;
         eza.enableFishIntegration = false; # `la` does `eza -a` but I want `eza -l`
 
@@ -82,14 +88,17 @@ in
         };
       };
 
-      home.packages = lib.mkIf hmConfig.programs.fish.enable [ pkgs.comma ];
+      home.packages = lib.mkIf config.programs.fish.enable [ pkgs.comma ];
     };
+in
+{
+  programs.fish.enable = lib.mkIf (lib.any (
+    user: config.home-manager.users.${user}.programs.fish.enable
+  ) homeUsers) true;
 
-  users.users."*" =
-    { hmConfig, ... }:
-    {
-      shell = lib.mkIf hmConfig.programs.fish.enable pkgs.fish;
-    };
+  users.users = lib.mapAttrs (user: _: {
+    shell = lib.mkIf config.home-manager.users.${user}.programs.fish.enable pkgs.fish;
+  }) config.home-manager.users;
 
-  programs.fish.enable = lib.mkIf (utils.programEnabled "fish") true;
+  home-manager.sharedModules = [ homeConfig ];
 }

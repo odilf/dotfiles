@@ -1,12 +1,6 @@
+{ ... }:
 {
-  lib,
-  pkgs,
-  config,
-  ...
-}:
-let
-  utils = import ../utils.nix { inherit lib pkgs config; };
-  modules = map utils.importModule [
+  imports = [
     ./accounts.nix
     ./aerospace.nix
     ./ai.nix
@@ -44,55 +38,4 @@ let
     ./zathura.nix
     ./zellij.nix
   ];
-
-  knownAttrs = [
-    "home-manager"
-    "users"
-
-    "system"
-    "programs"
-    "services"
-    "systemd"
-    "hardware"
-    "networking"
-    "nix"
-    "nixpkgs"
-    "environment"
-    "fonts"
-    "age"
-    "custom"
-  ];
-
-  globalCfg = utils.globalCfg modules;
-  globalAndPerUserCfg = utils.globalAndPerUserCfg modules;
-in
-{
-  config = {
-    warnings = utils.checkAttrs knownAttrs modules;
-
-    users = globalAndPerUserCfg "users" [
-      "users"
-      "users"
-      "*"
-    ];
-
-    home-manager = globalAndPerUserCfg "home-manager" [
-      "home-manager"
-      "users"
-      "*"
-    ];
-
-    system = globalCfg "system";
-    programs = globalCfg "programs";
-    services = globalCfg "services";
-    systemd = globalCfg "systemd";
-    hardware = globalCfg "hardware";
-    networking = globalCfg "networking";
-    nix = globalCfg "nix";
-    nixpkgs = globalCfg "nixpkgs";
-    environment = globalCfg "environment";
-    fonts = globalCfg "fonts";
-    age = globalCfg "age";
-    custom = globalCfg "custom";
-  };
 }

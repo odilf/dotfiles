@@ -1,13 +1,9 @@
-inputs@{
+{
   lib,
-  config,
   pkgs,
   ...
 }:
 let
-  utils = import ../utils.nix inputs;
-
-  # TODO: Move this to each bundle module?
   bundles = {
     development = {
       desc = "Development & cli tools.";
@@ -31,34 +27,17 @@ let
     };
   };
 
-  knownAttrs = [
-    "users"
-    "home-manager"
-    "programs"
-    "boot"
-    "homebrew"
-    "nixpkgs"
-  ];
-
-  modules = mapAttrsToList (name: bundle: utils.importModule bundle.path) bundles;
-
-  inherit (lib.attrsets)
-    mapAttrs
-    mapAttrsToList
-    hasAttr
-    ;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-
-  globalCfg = utils.globalCfg modules;
-  globalAndPerUserCfg = utils.globalAndPerUserCfg modules;
 in
 {
+  imports = map (bundle: bundle.path) (builtins.attrValues bundles);
+
   options.custom.bundles = lib.mkOption {
     default = { };
     description = "Opinionated bundles of software, and their configuration.";
     type = lib.types.attrsOf (
       lib.types.submodule {
-        options = mapAttrs (
+        options = lib.mapAttrs (
           name:
           { desc, ... }:
           {
@@ -69,44 +48,8 @@ in
     );
   };
 
-  config = {
-    warnings =
-      let
-        users = builtins.attrNames config.users.users;
-        inUsers = name: hasAttr name config.users.users;
-        # TODO: This doesn't do anything because the configuration below adds the entries by itself...
-        # I don't know if it's fixable.
-        usersWarning = map (
-          name: lib.mkIf (!inUsers name) "${name} is not declared in `users.users`"
-        ) users;
-        attrsWarning = utils.checkAttrs knownAttrs modules;
-      in
-      usersWarning ++ attrsWarning;
-
-    users = globalAndPerUserCfg "users" [
-      "users"
-      "users"
-      "*"
-    ];
-
-    home-manager = globalAndPerUserCfg "home-manager" [
-      "home-manager"
-      "users"
-      "*"
-    ];
-
-    programs = globalCfg "programs";
-    boot = globalCfg "boot";
-    nixpkgs = globalCfg "nixpkgs";
-    homebrew = lib.mkIf isDarwin (
-      lib.mkMerge [
-        (globalCfg "homebrew")
-        {
-          enable = true;
-          # onActivation.cleanup = "uninstall";
-        }
-      ]
-    );
+  config.homebrew = lib.mkIf isDarwin {
+    enable = true;
+    # onActivation.cleanup = "uninstall";
   };
-
 }

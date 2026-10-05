@@ -7,12 +7,13 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86;
 
-  utils = import ../utils.nix { inherit config lib pkgs; };
+  enabled = user: config.custom.bundles.${user}.games.enable;
+  enabledForAnyUser = lib.any enabled (builtins.attrNames config.custom.bundles);
 in
 {
-  boot.binfmt.emulatedSystems = lib.mkIf (!isx86 && utils.bundleEnabled "games") [ "x86_64-linux" ];
+  boot.binfmt.emulatedSystems = lib.mkIf (!isx86 && enabledForAnyUser) [ "x86_64-linux" ];
 
-  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "games") [
+  homebrew.casks = lib.optionals (isDarwin && enabledForAnyUser) [
     # TODO: Apparently it doesn't work in packages?? :(
     "prismlauncher"
     "epic-games"
@@ -23,9 +24,9 @@ in
     "retroarch-metal"
   ];
 
-  home-manager.users."*" =
-    { enableBundle, ... }:
-    lib.mkIf (enableBundle "games") {
+  home-manager.users = lib.mapAttrs (
+    user: _:
+    lib.mkIf (enabled user) {
       home.packages = [
         # pkgs.smassh # Dependency broken on darwin
         pkgs.vitetris # Kinda mediocre
@@ -51,5 +52,6 @@ in
       );
 
       programs.mcsr.enable = true;
-    };
+    }
+  ) config.custom.bundles;
 }

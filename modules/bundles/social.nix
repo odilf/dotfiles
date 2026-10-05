@@ -7,12 +7,13 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
-  utils = import ../utils.nix { inherit config lib pkgs; };
+  enabled = user: config.custom.bundles.${user}.social.enable;
+  enabledForAnyUser = lib.any enabled (builtins.attrNames config.custom.bundles);
 in
 {
-  home-manager.users."*" =
-    { enableBundle, ... }:
-    lib.mkIf (enableBundle "social") {
+  home-manager.users = lib.mapAttrs (
+    user: _:
+    lib.mkIf (enabled user) {
       home.packages = [
         pkgs.nchat
         pkgs.discordo
@@ -36,9 +37,10 @@ in
         meli.enable = true;
         # iamb.enable = true;
       };
-    };
+    }
+  ) config.custom.bundles;
 
-  homebrew.casks = lib.optionals (isDarwin && utils.bundleEnabled "social") [
+  homebrew.casks = lib.optionals (isDarwin && enabledForAnyUser) [
     "whatsapp" # workaround
     "signal"
     "element"

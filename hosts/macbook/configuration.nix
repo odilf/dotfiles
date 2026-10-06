@@ -18,14 +18,17 @@
 
   system.primaryUser = "odilf";
 
-  users.users.odilf = {
-    createHome = true;
-    home = /Users/odilf;
-    description = "Main user";
-  };
+  users = {
+    # Account settings below (uid, home, login shell) are owned by this config only for listed users.
+    knownUsers = [ "odilf" ];
 
-  # TODO: Maybe do clean uninstall/reinstall thingy... but meh.
-  ids.gids.nixbld = 350;
+    users.odilf = {
+      createHome = true;
+      home = "/Users/odilf";
+      description = "Main user";
+      uid = 501;
+    };
+  };
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 

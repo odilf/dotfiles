@@ -101,6 +101,8 @@ in
     # security.pam.services.sudo_local.touchIdAuth = true;
 
     homebrew = {
+      onActivation.cleanup = "uninstall";
+
       brews = [
         "batt" # Keep battery at specific percentage
       ];

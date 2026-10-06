@@ -22,7 +22,7 @@ let
       programs.alacritty.theme = "enfocado_dark";
       programs.alacritty.settings = {
         # general.import = [ "theme.toml" ];
-        terminal.shell = "${pkgs.fish}/bin/fish";
+        # terminal.shell = "${pkgs.fish}/bin/fish";
 
         # TODO: It's really important to disable font smoothing on macos for
         # this to look right. This should be in the config somewhere.

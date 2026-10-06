@@ -7,8 +7,6 @@
 let
   homeUsers = builtins.attrNames config.home-manager.users;
 
-  # Home-manager half of this module. Applied to every user through
-  # `home-manager.sharedModules`; inside here `config` is the user's home config.
   homeConfig =
     {
       config,
@@ -37,6 +35,8 @@ let
 
         direnv.enable = true;
         direnv.nix-direnv.enable = true;
+
+        skim.enable = true;
 
         fish = {
           preferAbbrs = true;

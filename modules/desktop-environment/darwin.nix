@@ -49,7 +49,7 @@ in
         orientation = "right";
 
         persistent-apps = [
-          "/Applications/Firefox.app"
+          "/Applications/LibreWolf.app"
           "${pkgs.alacritty}/Applications/Alacritty.app"
         ];
 

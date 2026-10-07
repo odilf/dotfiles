@@ -18,6 +18,7 @@ in
       ]
       ++ lib.optionals config.gui (
         [
+          pkgs.anki-bin
           pkgs.localsend
           # Zotero needs a whole ass firefox, and I don't need zotero rn.
           # pkgs.zotero

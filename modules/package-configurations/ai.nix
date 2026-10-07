@@ -79,6 +79,8 @@
           };
 
           "${agentDir}/prompts/discuss.md".source = ./ai/prompts/discuss.md;
+
+          "${agentDir}/mcp.json".source = ./ai/mcp.json;
         };
       }
     )

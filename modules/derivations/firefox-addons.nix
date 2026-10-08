@@ -55,15 +55,6 @@ in
     description = "Bitwarden Password Manager";
   };
 
-  clearurls = buildFirefoxAddon {
-    pname = "clearurls";
-    version = "1.27.3";
-    addonId = "{74145f27-f039-47ce-a470-a662b129930a}";
-    url = "https://addons.mozilla.org/firefox/downloads/file/4432106/clearurls-1.27.3.xpi";
-    hash = "sha256-VJJrbkJ01ZNaX8DapjIPHTcePS8aWHdGfKOrIqZcTyA=";
-    description = "ClearURLs";
-  };
-
   darkreader = buildFirefoxAddon {
     pname = "darkreader";
     version = "4.9.112";

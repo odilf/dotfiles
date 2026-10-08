@@ -78,7 +78,6 @@
 
                 extensions.packages = [
                   addons.bitwarden
-                  addons.clearurls
                   addons.darkreader
                   addons.indie-wiki-buddy
                   addons.leechblock-ng

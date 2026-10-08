@@ -31,8 +31,7 @@ in
       );
 
       programs = {
-        # TODO: Broke on darwin
-        # sioyek.enable = true;
+        sioyek.enable = true;
         khal.enable = true;
         # khard.enable = true;
         meli.enable = true;

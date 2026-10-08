@@ -37,9 +37,9 @@
             ];
 
             showCacheMissNotices = true;
-            defaultTools= ["+codemode"];
+            defaultTools = [ "+codemode" ];
 
-            # tuiMode = "regular";
+            tuiMode = "regular";
           };
 
           # For plugin installation

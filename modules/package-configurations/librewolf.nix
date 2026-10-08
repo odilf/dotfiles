@@ -76,17 +76,7 @@
                   "extensions.startupScanScopes" = 15; # profile|user|application|system
                 };
 
-                extensions.packages = [
-                  addons.bitwarden
-                  addons.darkreader
-                  addons.indie-wiki-buddy
-                  addons.leechblock-ng
-                  addons.sidebery
-                  addons.simple-translate
-                  addons.tab-volume-control
-                  addons.tridactyl
-                  addons.ublock-origin
-                ];
+                extensions.packages = builtins.attrValues addons;
 
                 extensions.settings = {
                   "${addons.sidebery.addonId}" = {
@@ -198,6 +188,14 @@
             {
               focus =
                 let
+                  excludedAddons = [
+                    addons.betterttv
+                    addons.lichess2chess
+                    addons.music-score-downloader
+                    addons.styl-us
+                    addons.web-scrobbler
+                  ];
+
                   # LeechBlock day indices are Sun..Sat.
                   focusDays = lib.replicate 7 true;
 
@@ -252,6 +250,7 @@
                   id = 0;
                   isDefault = true;
                   extensions = common.extensions // {
+                    packages = lib.subtractLists excludedAddons common.extensions.packages;
                     settings = common.extensions.settings // {
                       "${addons.leechblock-ng.addonId}" = {
                         force = true;
@@ -270,7 +269,6 @@
 
               leisure = common // {
                 id = 1;
-                extensions.packages = builtins.attrValues addons;
                 userChrome = common.userChrome + ''
                   :root {
                     --p-surface: #1a1320; /* violet */

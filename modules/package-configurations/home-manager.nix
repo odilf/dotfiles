@@ -27,6 +27,8 @@ let
         else
           lib.head (lib.splitString "#" osConfig.custom.flake-path);
 
+      programs.theme-switch.enable = lib.mkDefault osConfig.gui;
+
       age = lib.mkIf isDarwin {
         secretsMountPoint = "/tmp/agenix.d";
         secretsDir = "/tmp/agenix";

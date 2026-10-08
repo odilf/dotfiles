@@ -2,7 +2,7 @@
 {
   home-manager.sharedModules = [
     (
-      { osConfig, pkgs, ... }:
+      { config, pkgs, ... }:
       {
         programs.aerospace.settings = {
           config-version = 2;
@@ -79,7 +79,7 @@
             cmd-shift-f = "fullscreen";
 
             # Awkward bind hard to conflict or misshit
-            cmd-alt-ctrl-shift-t = "exec-and-forget ${osConfig.custom.theme-switch.package}/bin/toggle-theme";
+            cmd-alt-ctrl-shift-t = "exec-and-forget ${config.programs.theme-switch.package}/bin/toggle-theme";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
             alt-tab = "workspace-back-and-forth";

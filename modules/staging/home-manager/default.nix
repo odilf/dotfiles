@@ -7,5 +7,6 @@
     ./karabiner.nix
     ./link-live.nix
     ./mcsr.nix
+    ./theme-switch.nix
   ];
 }

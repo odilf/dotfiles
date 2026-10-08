@@ -31,7 +31,6 @@
     ./sioyek.nix
     ./ssh.nix
     ./taskwarrior.nix
-    ./theme-switch.nix
     ./tofi.nix
     ./wezterm.nix
     ./yazi.nix

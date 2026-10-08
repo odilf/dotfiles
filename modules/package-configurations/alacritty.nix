@@ -55,20 +55,18 @@ let
       home.packages = lib.mkIf config.programs.alacritty.enable [
         pkgs.ueberzugpp
       ];
+
+      programs.theme-switch.hooks = lib.mkIf config.programs.alacritty.enable [
+        {
+          on-dark = "ln -f -s ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-dark} ${config.xdg.configHome}/alacritty/theme.toml";
+          on-light = "ln -f -s ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-light} ${config.xdg.configHome}/alacritty/theme.toml";
+        }
+      ];
     };
 in
 {
   fonts.packages = lib.mkIf alacrittyEnabled [
     pkgs.nerd-fonts.iosevka-term
-  ];
-
-  custom.theme-switch.hooks = lib.mkIf alacrittyEnabled [
-    {
-      # on-dark = "ln -f -s ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-dark} $HOME/.config/alacritty/theme.toml";
-      # on-light = "ln -f -s ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-light} $HOME/.config/alacritty/theme.toml";
-      on-dark = "cp -f ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-dark} $HOME/.config/alacritty/theme.toml";
-      on-light = "cp -f ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-light} $HOME/.config/alacritty/theme.toml";
-    }
   ];
 
   home-manager.sharedModules = [ homeConfig ];

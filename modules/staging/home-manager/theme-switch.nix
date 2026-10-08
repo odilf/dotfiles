@@ -6,7 +6,7 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-  cfg = config.custom.theme-switch;
+  cfg = config.programs.theme-switch;
 
   # Toggles the system appearance and exports THEME_MODE=light|dark
   # with the mode that was just switched to.
@@ -111,9 +111,18 @@ let
     EOF
     $CC -fobjc-arc -framework Foundation main.m -o $out/bin/dark-mode-notify
   '';
+
+  watchTheme = pkgs.writeShellScript "theme-switch-watch" ''
+    ${pkgs.glib}/bin/gsettings monitor org.gnome.desktop.interface color-scheme |
+      while read -r _; do
+        ${runHooks} || true
+      done
+  '';
 in
 {
-  options.custom.theme-switch = {
+  options.programs.theme-switch = {
+    enable = lib.mkEnableOption "theme switching helpers";
+
     hooks = lib.mkOption {
       description = "Snippets to run when switching themes";
       type = lib.types.listOf (
@@ -138,27 +147,22 @@ in
         changes made from the OS settings/menu), not only via `toggle-theme`.
       '';
       type = lib.types.bool;
-      default = config.gui;
-      defaultText = lib.literalExpression "config.gui";
+      default = true;
     };
 
-    package = lib.mkPackageOption pkgs "theme-switcher" {
+    package = lib.mkOption {
+      type = lib.types.package;
       default = toggle-theme;
-      # default = null;
+      description = "The theme-switcher package to use.";
     };
   };
 
-  config = {
-    custom.theme-switch.package = toggle-theme;
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
 
-    home-manager.sharedModules = lib.mkIf config.gui [
-      {
-        home.packages = [ toggle-theme ];
-      }
-    ];
-
-    launchd.user.agents.theme-switch-watcher = lib.mkIf (isDarwin && cfg.watch) {
-      serviceConfig = {
+    launchd.agents.theme-switch-watcher = lib.mkIf (isDarwin && cfg.watch) {
+      enable = true;
+      config = {
         ProgramArguments = [
           "${darkModeNotify}/bin/dark-mode-notify"
           "${runHooks}"
@@ -181,21 +185,21 @@ in
     };
 
     systemd.user.services.theme-switch-watcher = lib.mkIf (!isDarwin && cfg.watch) {
-      description = "Run theme hooks when the color scheme changes";
-      wantedBy = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      environment = {
-        GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
-        GIO_EXTRA_MODULES = "${pkgs.dconf.lib}/lib/gio/modules";
+      Unit = {
+        Description = "Run theme hooks when the color scheme changes";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
       };
-      script = ''
-        ${pkgs.glib}/bin/gsettings monitor org.gnome.desktop.interface color-scheme |
-          while read -r _; do
-            ${runHooks} || true
-          done
-      '';
-      serviceConfig.Restart = "on-failure";
+      Install.WantedBy = [ "graphical-session.target" ];
+
+      Service = {
+        Environment = [
+          "GSETTINGS_SCHEMA_DIR=${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas"
+          "GIO_EXTRA_MODULES=${pkgs.dconf.lib}/lib/gio/modules"
+        ];
+        ExecStart = "${watchTheme}";
+        Restart = "on-failure";
+      };
     };
   };
 }

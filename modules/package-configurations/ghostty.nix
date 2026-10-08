@@ -14,7 +14,12 @@
             font-style = "Regular";
             command = "${pkgs.fish}/bin/fish";
             shell-integration = "fish";
-            theme = "light:${../../themes/ghostty/flatwhite},dark:${../../themes/ghostty/flatblack}";
+            theme =
+              let
+                light = "Bluloco Light";
+                dark = "Horizon";
+              in
+              "light:${light},dark:${dark}";
             font-size = if isDarwin then 16 else 12;
             window-decoration = "none";
             macos-option-as-alt = "left";

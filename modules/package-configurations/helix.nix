@@ -19,7 +19,7 @@
         programs.helix = {
           package = pkgs.steelix.override { inherit helix-unwrapped; };
           settings = {
-            theme = "base16_transparent";
+            theme = "base16_default";
 
             editor = {
               line-number = "relative";

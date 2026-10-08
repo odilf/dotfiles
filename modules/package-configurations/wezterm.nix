@@ -5,8 +5,6 @@
       { lib, pkgs, ... }:
       let
         inherit (pkgs.stdenv.hostPlatform) isDarwin;
-
-        loadScheme = path: (builtins.fromTOML (builtins.readFile path)).colors;
       in
       {
         programs.wezterm = {
@@ -22,8 +20,8 @@
           };
 
           colorSchemes = {
-            flatwhite = loadScheme ../../themes/wezterm/flatwhite.toml;
-            flatblack = loadScheme ../../themes/wezterm/flatblack.toml;
+            # flatwhite = loadScheme ../../themes/wezterm/flatwhite.toml;
+            # flatblack = loadScheme ../../themes/wezterm/flatblack.toml;
           };
 
           extraConfig = ''

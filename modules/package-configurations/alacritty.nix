@@ -11,6 +11,9 @@ let
     builtins.attrNames config.home-manager.users
   );
 
+  theme-dark = "enfocado_dark.toml";
+  theme-light = "enfocado_light.toml";
+
   homeConfig =
     {
       config,
@@ -19,10 +22,8 @@ let
       ...
     }:
     {
-      programs.alacritty.theme = "enfocado_dark";
       programs.alacritty.settings = {
-        # general.import = [ "theme.toml" ];
-        # terminal.shell = "${pkgs.fish}/bin/fish";
+        general.import = [ "theme.toml" ];
 
         # TODO: It's really important to disable font smoothing on macos for
         # this to look right. This should be in the config somewhere.
@@ -62,14 +63,12 @@ in
   ];
 
   custom.theme-switch.hooks = lib.mkIf alacrittyEnabled [
-    # -f is needed otherwise we get permission errors.
-    ''
-      if [[ "$THEME_MODE" == "dark" ]]; then
-        cp -f ${../../themes/alacritty/flatblack.toml} $HOME/.config/alacritty/theme.toml
-      else
-        cp -f ${../../themes/alacritty/flatwhite.toml} $HOME/.config/alacritty/theme.toml
-      fi
-    ''
+    {
+      # on-dark = "ln -f -s ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-dark} $HOME/.config/alacritty/theme.toml";
+      # on-light = "ln -f -s ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-light} $HOME/.config/alacritty/theme.toml";
+      on-dark = "cp -f ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-dark} $HOME/.config/alacritty/theme.toml";
+      on-light = "cp -f ${pkgs.alacritty-theme}/share/alacritty-theme/${theme-light} $HOME/.config/alacritty/theme.toml";
+    }
   ];
 
   home-manager.sharedModules = [ homeConfig ];

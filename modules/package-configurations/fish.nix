@@ -36,6 +36,11 @@ let
         direnv.enable = true;
         direnv.nix-direnv.enable = true;
 
+        git.ignores = [
+          ".direnv"
+          ".envrc"
+        ];
+
         skim.enable = true;
 
         fish = {

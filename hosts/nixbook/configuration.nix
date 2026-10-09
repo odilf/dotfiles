@@ -25,7 +25,6 @@ in
   # ---
 
   gui = true;
-  desktop-environment = "niri";
   laptop.enable = true;
 
   custom = {

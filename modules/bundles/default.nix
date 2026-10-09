@@ -26,11 +26,9 @@ let
       path = ./social.nix;
     };
   };
-
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
-  imports = map (bundle: bundle.path) (builtins.attrValues bundles);
+  imports = map (bundle: bundle.path) (builtins.attrValues bundles) ++ [ ./desktop-environment.nix ];
 
   options.custom.bundles = lib.mkOption {
     default = { };
@@ -46,10 +44,5 @@ in
         ) bundles;
       }
     );
-  };
-
-  config.homebrew = lib.mkIf isDarwin {
-    enable = true;
-    # onActivation.cleanup = "uninstall";
   };
 }

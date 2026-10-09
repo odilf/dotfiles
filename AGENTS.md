@@ -14,23 +14,25 @@ Also exports `nixosModules.default` / `darwinModules.default` for reuse in other
 
 ## Layout — the non-obvious parts
 
-- `modules/package-configurations/*.nix` are **not** plain NixOS modules: plain attrsets,
-  wired up by the import list in `modules/package-configurations/default.nix` and the
-  merge machinery in `modules/utils.nix`. A new file must be added to that import
-  list. Top-level attrs outside `knownAttrs` (in `default.nix`) only produce build
-  *warnings* — a typo'd attr does not fail the build.
-- Per-user config uses the `"*"` wildcard: `home-manager.users."*"` (and
-  `users.users."*"`) may be a function `{ user, hmConfig, enableBundle } -> config`,
-  expanded once per user declared in `custom.bundles.<user>.*`.
-- `modules/derivations/`: every `foo.nix` is auto-discovered and exposed as package
-  `.#foo` (via callPackage); no registration needed.
+- `modules/configurations/*.nix` are ordinary NixOS modules, one per program or
+  concern, mostly contributing `home-manager.sharedModules`. Every `.nix` file in the
+  directory is auto-imported; `default.nix` and `reaper.nix` are the only exclusions.
+- Per-user config is driven by `custom.bundles.<user>.<bundle>.enable` (options in
+  `modules/bundles/default.nix`). Bundles expand over `config.custom.bundles` with
+  `home-manager.users = lib.mapAttrs (user: _: lib.mkIf (enabled user) { ... }) ...`,
+  so a user only gets a bundle's packages when they opt in.
+- `modules/bundles/desktop-environment.nix` is the always-on GUI layer: it applies to
+  every host with `gui = true` and splits the rest on `isLinux` / `isDarwin`.
+- `modules/derivations/`: every `foo.nix` is auto-discovered by `package-set.nix` and
+  exposed as package `.#foo` (via callPackage); no registration needed. A file that
+  returns an attrset of derivations must be listed in that file's `packageSets`.
 - `modules/polyfill/`: declares platform-specific options (e.g. `homebrew` on NixOS)
   so one config evaluates on every platform; actually using the wrong one fails the
   build.
 - `modules/staging/home-manager/`: real home-manager modules for programs without
-  an upstream module (`linkLive`, `mcsr`, `karabiner`).
-- Host configs (`hosts/<name>/configuration.nix`) set `gui`,
-  `desktop-environment` (string: `"niri"`, `"macOS"`, ...), per-user bundles, and
+  an upstream module (`karabiner`, `linkLive`, `mcsr`, `theme-switch`).
+- Host configs (`hosts/<name>/configuration.nix`) set `gui`, per-user bundles under
+  `custom.bundles.<user>`, host-specific options (e.g. `laptop.enable`), and
   `custom.flake-path`. Without `custom.flake-path = "<repo path>#<hostname>"` the
   live-files mechanism silently no-ops and `nh` has no flake.
 
@@ -46,4 +48,4 @@ Prefer linking directories, not files.
 
 agenix: encrypted files in `secrets/*.age`, recipient keys declared in
 `secrets/secrets.nix`. On darwin, home-manager agenix uses `/tmp/agenix`
-(see `modules/package-configurations/home-manager.nix`).
+(see `modules/configurations/home-manager.nix`).

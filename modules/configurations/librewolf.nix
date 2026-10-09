@@ -9,7 +9,7 @@
       in
       {
         programs.librewolf = {
-          package = lib.mkIf isLinux pkgs.librewolf-bin;
+          package = lib.mkIf isLinux pkgs.librewolf;
           settings = {
             # Startup & UI
             "browser.compactmode.show" = true;

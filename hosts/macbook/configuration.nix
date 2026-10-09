@@ -1,7 +1,6 @@
 { ... }:
 {
   gui = true;
-  desktop-environment = "macOS";
 
   custom = {
     flake-path = "/Users/odilf/code/dotfiles#macbook";

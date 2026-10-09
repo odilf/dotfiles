@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/odilf/brain/.obsidian/plugins/**)",
+      "Read(//Users/odilf/brain/.obsidian/**)",
+      "Read(//Users/odilf/brain/**)"
+    ]
+  }
+}

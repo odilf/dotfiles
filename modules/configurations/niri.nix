@@ -9,7 +9,7 @@ let
   enable = isLinux && config.programs.niri.enable;
 
   homeConfig =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
       home.packages = [
         pkgs.xwayland-satellite

@@ -4,6 +4,7 @@
     (
       { config, pkgs, ... }:
       {
+        programs.aerospace.launchd.enable = true;
         programs.aerospace.settings = {
           config-version = 2;
 

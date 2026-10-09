@@ -4,9 +4,8 @@
 }:
 {
   imports = [
-    ./package-configurations
+    ./configurations
     ./bundles
-    ./desktop-environment
     ./services
     ./derivations
   ];

@@ -72,6 +72,58 @@
           '';
         };
 
+        programs.git.ignores = [
+          ".ws"
+        ];
+
+        programs.fish.functions.piws = {
+          description = "Run pi in a fresh jj workspace";
+          body = ''
+            argparse -n piws 'n/name=' -- $argv
+            or return 2
+
+            set -l name agent
+            if set -q _flag_name
+              set name $_flag_name
+            end
+
+            if test -z "$name"
+              echo "piws: workspace name must not be empty" >&2
+              return 2
+            end
+
+            if test "$name" = default
+              echo "piws: 'default' is the main workspace; pick another name" >&2
+              return 2
+            end
+
+            if string match -q -- '*/*' "$name"; or string match -q -- '-*' "$name"; or test "$name" = .; or test "$name" = ..
+              echo "piws: invalid workspace name: $name" >&2
+              return 2
+            end
+
+            set -l root (jj root 2>/dev/null)
+            if test -z "$root"
+              echo "piws: not inside a jj repo" >&2
+              return 1
+            end
+
+            set -l dir $root/.ws/$name
+
+            if not test -e $dir
+              mkdir -p $root/.ws
+              jj workspace add -r @ $dir --name $name
+              or return 1
+            end
+
+            pushd $dir >/dev/null
+            command pi --name $name $argv
+            set -l code $status
+            popd >/dev/null
+            return $code
+          '';
+        };
+
         home.file = lib.mkIf config.programs.pi-coding-agent.enable {
           "${agentDir}/skills/" = {
             source = ./ai/skills;
@@ -81,6 +133,8 @@
           "${agentDir}/prompts/discuss.md".source = ./ai/discuss.md;
 
           "${agentDir}/mcp.json".source = ./ai/mcp.json;
+
+          "${agentDir}/extensions/jj-describe.ts".source = ./ai/extensions/jj-describe.ts;
         };
       }
     )

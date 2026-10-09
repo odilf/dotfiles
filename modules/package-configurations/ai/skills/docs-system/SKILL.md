@@ -1,10 +1,12 @@
 ---
-name: code-comments
+name: docs-system
 description: >-
-  Guidance on code comments and where design context lives instead of them
-  (ADRs, design docs, handoff notes, general docs). Use when writing, reviewing,
-  or deciding whether to add a code comment, or when deciding where to document
-  a decision, a subsystem, or session/task continuity.
+  File layouts and templates for the design context that doesn't belong in a
+  code comment: ADRs for decisions and tradeoffs, design docs for how a
+  subsystem works, handoff notes for session/task continuity, and general docs.
+  Use when recording a decision, documenting a subsystem, capturing where work
+  left off, or checking whether the project already has a docs convention to
+  match.
 ---
 
 # Docs system: where design context lives instead of comments
@@ -52,21 +54,3 @@ Current shape of the system.
 What this subsystem is explicitly not responsible for.
 ```
 
-## Handoff notes — session and task continuity
-
-Root `HANDOFF.md`, or `docs/handoff/<date>.md` for history. Split into `HANDOFF.md` (outgoing) / `RESUME.md` (incoming) if work regularly passes between people; one file is enough otherwise.
-
-This is where "recently," "just changed," TODOs, and narrated history belong — none of it belongs in code comments.
-
-```md
-# Handoff — <date>
-
-## What changed
-## Why
-## What's next
-## Open questions
-```
-
-## General docs
-
-`docs/<topic>.md` or `README.md` — setup steps, operational runbooks, anything a new contributor needs that isn't a decision or a subsystem description.

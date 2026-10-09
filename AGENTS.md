@@ -6,6 +6,7 @@ Also exports `nixosModules.default` / `darwinModules.default` for reuse in other
 
 ## Commands
 
+- Do `jj st` when adding files to track them.
 - Format (nixfmt, in place): `nix fmt`
 - Verify everything evaluates (`nixosConfigurations`, `darwinConfigurations`, packages): `nix flake check`
 - Build one custom package: `nix build .#<name>`

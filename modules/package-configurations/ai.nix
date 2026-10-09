@@ -73,12 +73,12 @@
         };
 
         home.file = lib.mkIf config.programs.pi-coding-agent.enable {
-          "${agentDir}/skills/code-comments" = {
-            source = ./ai/code-comments;
+          "${agentDir}/skills/" = {
+            source = ./ai/skills;
             recursive = true;
           };
 
-          "${agentDir}/prompts/discuss.md".source = ./ai/prompts/discuss.md;
+          "${agentDir}/prompts/discuss.md".source = ./ai/discuss.md;
 
           "${agentDir}/mcp.json".source = ./ai/mcp.json;
         };

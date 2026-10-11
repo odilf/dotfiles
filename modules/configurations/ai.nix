@@ -70,6 +70,11 @@
             anything else that writes history require explicit permission each time.
             Leave changes in the working tree for me to review and commit myself.
 
+            Inside a jj linked workspace (`.ws/<name>`) git operates on the main
+            checkout, not the workspace: there is no workspace-local `.git` and
+            `.ws` is globally ignored. Use `jj` (`jj st`, `jj diff`, `jj log`) to
+            inspect or track changes there.
+
             ## Tools
             When a tool is missing or you need one, the first choice is the nixpkgs
             version: `nix run nixpkgs#<name>` to run it once, or `nix shell
@@ -86,11 +91,11 @@
           piws = {
             description = "Run pi in a jj workspace, or manage pi workspaces";
             body = ''
-              argparse -n piws 'n/name=' 'f/force' 'status' 'c/clean' 'all' 'h/help' -- $argv
+              argparse -n piws 'f/force' 'status' 'c/clean' 'all' 'h/help' -- $argv
               or return 2
 
               if set -q _flag_help
-                echo 'usage: piws [-n NAME] [-f] [pi args...]'
+                echo 'usage: piws [-f] NAME'
                 echo '       piws --status'
                 echo '       piws --clean [--all] [NAME...]'
                 return 0
@@ -100,6 +105,11 @@
               if test -z "$root"
                 echo "piws: not inside a jj repo" >&2
                 return 1
+              end
+
+              # A linked workspace's .jj/repo points at the main workspace's store.
+              if test -f "$root/.jj/repo"
+                set root (dirname (dirname (path resolve "$root/.jj/"(cat "$root/.jj/repo"))))
               end
 
               if set -q _flag_status
@@ -116,10 +126,17 @@
                 return
               end
 
-              set -l name agent
-              if set -q _flag_name
-                set name $_flag_name
+              if test (count $argv) -eq 0
+                echo "piws: workspace name required" >&2
+                return 2
               end
+
+              if test (count $argv) -gt 1
+                echo "piws: expected one workspace name, got: $argv" >&2
+                return 2
+              end
+
+              set -l name $argv[1]
 
               if test -z "$name"
                 echo "piws: workspace name must not be empty" >&2
@@ -140,7 +157,12 @@
 
               if not test -e $dir
                 mkdir -p $root/.ws
-                jj workspace add -r @ $dir --name $name
+                # Skip a trailing empty @, which is common right after a commit.
+                set -l base 'latest(::@ & ~empty())'
+                if test -z (jj log -r $base --no-graph -T 'commit_id' 2>/dev/null)
+                  set base '@'
+                end
+                jj workspace add -r $base $dir --name $name
                 or return 1
               end
 
@@ -159,7 +181,7 @@
               end
 
               pushd $dir >/dev/null
-              command pi --name $name $argv
+              command pi --name $name
               set -l code $status
               popd >/dev/null
               return $code

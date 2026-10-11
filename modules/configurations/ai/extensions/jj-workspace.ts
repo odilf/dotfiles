@@ -11,12 +11,28 @@
  * renamed or locked.
  */
 
-import { mkdirSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { mkdirSync, readFileSync, realpathSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
 const DEFAULT_WORKSPACE = "default";
+
+/**
+ * Returns the main workspace's root directory, whichever workspace
+ * `workspaceRoot` belongs to.
+ */
+function mainWorkspaceRoot(workspaceRoot: string): string {
+  const jjDir = join(workspaceRoot, ".jj");
+  const marker = join(jjDir, "repo");
+
+  try {
+    if (!statSync(marker).isFile()) return workspaceRoot;
+    return dirname(dirname(realpathSync(resolve(jjDir, readFileSync(marker, "utf8").trim()))));
+  } catch {
+    return workspaceRoot;
+  }
+}
 
 function latestTask(ctx: ExtensionContext): string | undefined {
   const entries = ctx.sessionManager.getEntries();
@@ -54,7 +70,7 @@ export default function (pi: ExtensionAPI) {
       ]);
       if (rootResult.code !== 0 || wsResult.code !== 0) return;
 
-      root = rootResult.stdout.trim();
+      root = mainWorkspaceRoot(rootResult.stdout.trim());
       workspace = wsResult.stdout.trim().replace(/@$/, "");
     } catch {
       return;

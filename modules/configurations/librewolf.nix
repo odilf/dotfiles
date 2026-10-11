@@ -192,7 +192,6 @@
                     addons.betterttv
                     addons.lichess2chess
                     addons.music-score-downloader
-                    addons.styl-us
                     addons.web-scrobbler
                   ];
 

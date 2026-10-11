@@ -69,6 +69,12 @@
             Never create commits. `git commit`, amend, rebase, cherry-pick, and
             anything else that writes history require explicit permission each time.
             Leave changes in the working tree for me to review and commit myself.
+
+            ## Tools
+            When a tool is missing or you need one, the first choice is the nixpkgs
+            version: `nix run nixpkgs#<name>` to run it once, or `nix shell
+            nixpkgs#<name>` to get it in a shell. Prefer these over installing
+            anything or reaching for a language-native package manager.
           '';
         };
 

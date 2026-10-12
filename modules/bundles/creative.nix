@@ -13,6 +13,23 @@ in
 {
   home-manager.users = lib.mapAttrs (
     user: _:
+    let
+      # TODO: This should be in `reaper.nix`, but it leads to an infinite
+      # recursion error because we try to check if reaper is in `pacakges`
+      # and then try to add more packages.
+      plugins =
+        lib.optionals isLinux [
+          pkgs.lsp-plugins
+          pkgs.zam-plugins
+        ]
+        ++ lib.optionals (isLinux && isx86_64) [
+          pkgs.surge
+          pkgs.oxefmsynth
+        ]
+        ++ lib.optionals isDarwin [
+          pkgs.lsp-plugins-macos
+        ];
+    in
     lib.mkIf (enabled user) {
       home.packages = lib.optionals config.gui (
         [
@@ -21,20 +38,11 @@ in
           pkgs.blender
         ]
         ++ lib.optionals isLinux [
-
-          pkgs.reaper
           pkgs.kdePackages.kdenlive
           pkgs.obs-studio
-          pkgs.ardour
-
-          # VST-plugins
-          pkgs.lsp-plugins
-          pkgs.zam-plugins
+          pkgs.reaper
         ]
-        ++ lib.optionals (isLinux && isx86_64) [
-          pkgs.surge
-          pkgs.oxefmsynth
-        ]
+        ++ plugins
       );
     }
   ) config.custom.bundles;
@@ -43,8 +51,8 @@ in
     casks = [
       "blender"
       "obs"
-      "reaper"
       "kdenlive"
+      "reaper"
     ];
   };
 }

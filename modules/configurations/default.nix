@@ -2,7 +2,6 @@
 let
   ignored = [
     "default.nix"
-    "reaper.nix"
   ];
 
   entries = builtins.readDir ./.;

@@ -1,4 +1,6 @@
 { ... }:
+# TODO: Add plugins:
+# - https://github.com/dmyyy/zj-navigator.hx
 {
   home-manager.sharedModules = [
     (

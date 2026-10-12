@@ -23,7 +23,7 @@
 }
 
 /* Accent the focused address bar */
-#urlbar[focused] > #urlbar-background {
+#urlbar[focused]>#urlbar-background {
   outline: 2px solid var(--p-accent) !important;
   outline-offset: -2px !important;
 }

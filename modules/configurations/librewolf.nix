@@ -239,9 +239,9 @@
                     allow = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?reddit\\.com/.*comments)";
                   }
                   // leechBlockSet "3" {
-                    name = "Bluesky";
-                    sites = "bsky.app";
-                    block = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?bsky\\.app)";
+                    name = "Bluesky, cstimer, twitch";
+                    sites = "bsky.app cstimer.net twitch.tv";
+                    block = "^(https?|file):\\/+([\\w:]+@)?(([^/]*\\.)?bsky\\.app|([^/]*\\.)?cstimer\\.net|([^/]*\\.)?twitch\\.tv)";
                   };
                 in
                 common

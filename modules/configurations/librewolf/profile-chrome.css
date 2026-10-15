@@ -1,4 +1,18 @@
-/* tint to distinguish profiles with `--p-surface`, `--p-text` and `--p-accent` */
+/* Surface and text follow the color scheme; each profile sets only `--p-accent` (see librewolf.nix) */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --p-surface: #f6f8fa;
+    --p-text: #1f2328;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --p-surface: #101823;
+    --p-text: #e6edf3;
+  }
+}
 
 /* Toolbar surface */
 #navigator-toolbox,

@@ -259,9 +259,12 @@
                   };
                   userChrome = common.userChrome + ''
                     :root {
-                      --p-surface: #101823; /* blue */
-                      --p-text: #e6edf3;
-                      --p-accent: #58a6ff;
+                      --p-accent: #58a6ff; /* blue */
+                    }
+                    @media (prefers-color-scheme: light) {
+                      :root {
+                        --p-accent: #0969da; /* blue */
+                      }
                     }
                   '';
                 };
@@ -270,9 +273,12 @@
                 id = 1;
                 userChrome = common.userChrome + ''
                   :root {
-                    --p-surface: #1a1320; /* violet */
-                    --p-text: #ede6f3;
-                    --p-accent: #c9a0ff;
+                    --p-accent: #c9a0ff; /* violet */
+                  }
+                  @media (prefers-color-scheme: light) {
+                    :root {
+                      --p-accent: #8250df; /* violet */
+                    }
                   }
                 '';
               };

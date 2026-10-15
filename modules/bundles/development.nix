@@ -78,10 +78,11 @@ in
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
+        mistral-vibe.enable = true;
         nh.enable = true;
         pi-coding-agent.enable = true;
-        ripgrep.enable = true;
         ripgrep-all.enable = true;
+        ripgrep.enable = true;
         ssh.enable = true;
         wezterm.enable = config.gui;
         yazi.enable = true;

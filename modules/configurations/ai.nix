@@ -29,9 +29,11 @@
               "npm:pi-vim"
             ];
 
-            defaultProvider = "opencode-go";
-            defaultModel = "deepseek-v4.1-flash";
+            defaultProvider = "mistral";
+            defaultModel = "mistral-large-4";
             enabledModels = [
+              "mistral/mistral-large-4"
+              "mistral/mistral-small-latest"
               "opencode-go/deepseek-v4.1-flash"
               "opencode-go/deepseek-v4-pro"
             ];

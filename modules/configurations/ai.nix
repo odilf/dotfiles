@@ -20,9 +20,10 @@
           settings = {
             packages = [
               "npm:@juicesharp/rpiv-todo"
+              "npm:@narumitw/pi-btw"
+              "npm:@narumitw/pi-caffeinate"
               "npm:@narumitw/pi-usage"
               "npm:@raidou/pi-notify"
-              "npm:pi-btw"
               "npm:pi-lens"
               "npm:pi-notify"
               "npm:pi-simplify"

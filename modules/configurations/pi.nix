@@ -84,6 +84,7 @@
               "npm:@narumitw/pi-caffeinate"
               "npm:@narumitw/pi-usage"
               "npm:@raidou/pi-notify"
+              "npm:@zigai/pi-status-bar"
               "npm:pi-lens"
               "npm:pi-notify"
               "npm:pi-simplify"
@@ -157,10 +158,7 @@
           };
 
           "${agentDir}/prompts/discuss.md".source = ./ai/discuss.md;
-
           "${agentDir}/mcp.json".source = ./ai/mcp.json;
-
-          "${agentDir}/extensions/jj-workspace.ts".source = ./ai/extensions/jj-workspace.ts;
         };
       }
     )

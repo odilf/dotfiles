@@ -18,9 +18,10 @@ let
   ];
 in
 {
-  "taskwarrior.age".publicKeys = keys;
-  "ssh-host-shorthands.age".publicKeys = keys;
+  "gmail.age".publicKeys = keys;
+  "immich-wallpapers-token.age".publicKeys = keys;
   "navidrome.age".publicKeys = keys;
   "radicale.age".publicKeys = keys;
-  "immich-wallpapers-token.age".publicKeys = keys;
+  "ssh-host-shorthands.age".publicKeys = keys;
+  "taskwarrior.age".publicKeys = keys;
 }

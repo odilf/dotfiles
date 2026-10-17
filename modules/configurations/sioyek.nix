@@ -2,10 +2,11 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-  # https://github.com/NixOS/nixpkgs/pull/566097/changes
+  # Sioyek has the -1 app id problem
   pkg =
     if isDarwin then
       pkgs.sioyek.overrideAttrs (_: {
+        # https://github.com/NixOS/nixpkgs/pull/566097/changes
         postInstall = ''
           mkdir -p sioyek.app/Contents/Resources
           cp -r pdf_viewer/shaders sioyek.app/Contents/Resources/shaders
@@ -15,6 +16,7 @@ let
           cp -r sioyek.app $out/Applications
         '';
 
+        # https://github.com/NixOS/nixpkgs/issues/571894
         # CFBundleExecutable must be the Qt binary itself: an executable that
         # execs a differently named binary leaves macOS with a stale (pid = -1)
         # app record that AeroSpace cannot manage. The plugins are supplied

@@ -5,12 +5,12 @@
       {
         config,
         lib,
-        pkgs,
         ...
       }:
       let
         enable-cal = config.programs.khal.enable;
         enable-contacts = config.programs.khard.enable;
+        enable-email = config.programs.thunderbird.enable;
         enable = enable-cal || enable-contacts;
 
         remote = type: {
@@ -26,6 +26,7 @@
       {
         age.secrets = lib.mkIf enable {
           radicale.file = ../../secrets/radicale.age;
+          gmail.file = ../../secrets/gmail.age;
         };
 
         # TODO: Switch to `pimsync`
@@ -83,26 +84,29 @@
           };
         };
 
-        accounts.email = {
+        accounts.email = lib.mkIf enable-email {
           maildirBasePath = ".accounts/mail";
           accounts.gmail = {
             primary = true;
+            flavor = "gmail.com";
             address = "odysseas.maheras@gmail.com";
-            aliases = [
-              "main"
-              "personal"
-              "odilf"
-            ];
-            userName = "Odilf";
+            aliases = [ "me@odilf.com" ];
             realName = "Ody";
+            passwordCommand = [
+              "cat"
+              config.age.secrets.gmail.path
+            ];
+            # Himalaya does not negotiate SASL mechanisms, so it has to be
+            # pinned explicitly. Gmail accepts PLAIN over TLS.
+            imap.authentication = "plain";
+            smtp.authentication = "plain";
             himalaya.enable = true;
-            imapnotify = {
-              enable = true;
-              onNotify = "${pkgs.libnotify}/bin/notify-send 'New mail: %s' -t 2000";
-            };
-            # meli.enable = true;
             thunderbird.enable = true;
           };
+        };
+
+        programs.thunderbird = lib.mkIf enable-email {
+          profiles.default.isDefault = true;
         };
       }
     )

@@ -96,7 +96,6 @@ in
   ) config.custom.bundles;
 
   homebrew.casks = lib.optionals (isDarwin && config.gui && enabledForAnyUser) [
-    "cool-retro-term"
     "ghostty"
     "vscodium"
     "zed"

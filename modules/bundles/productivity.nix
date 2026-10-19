@@ -52,5 +52,7 @@ in
     "musicbrainz-picard"
     "zotero"
     "calibre"
+    # TODO: Add on linux too
+    "obsidian"
   ];
 }

@@ -46,6 +46,14 @@ in
   # Regular NixOS options
   # ---
 
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "python3.14-textual-speedups-0.2.1"
+      "textual-speedups"
+      "reaper"
+    ];
+
   # Was failing before this
   boot.kernel.sysctl = {
     "vm.mmap_rnd_bits" = 28; # or remove this line entirely

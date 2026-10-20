@@ -4,12 +4,9 @@ let
     "default.nix"
   ];
 
-  entries = builtins.readDir ./.;
-
-  modules = builtins.filter (
-    name: entries.${name} == "regular" && lib.hasSuffix ".nix" name && !lib.elem name ignored
-  ) (builtins.attrNames entries);
+  files = builtins.attrNames (removeAttrs (builtins.readDir ./.) ignored);
+  modules = builtins.filter (lib.strings.hasSuffix ".nix") files;
 in
 {
-  imports = map (name: ./${name}) modules;
+  imports = map (module: ./${module}) modules;
 }

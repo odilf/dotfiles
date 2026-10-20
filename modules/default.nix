@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   ...
 }:
@@ -7,7 +8,6 @@
     ./configurations
     ./bundles
     ./services
-    ./derivations
   ];
 
   options = {
@@ -30,5 +30,15 @@
         "clonehero"
         "ouch"
       ];
+
+    nixpkgs.overlays = [
+      (
+        final: prev:
+        (import ./derivations {
+          lib = prev.lib;
+          pkgs = prev;
+        })
+      )
+    ];
   };
 }

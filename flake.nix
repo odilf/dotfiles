@@ -161,7 +161,7 @@
           # `firefox-addons` is an attrset of derivations, not a derivation,
           # so it can't live under `packages` (flake checks reject that). It
           # goes in `legacyPackages` instead, which supports nested attrsets.
-          packageSet = import ./modules/derivations/package-set.nix {
+          packageSet = import ./modules/derivations/default.nix {
             inherit pkgs lib;
           };
         in
@@ -185,9 +185,7 @@
             ]
             // packageSet.firefox-addons;
 
-          legacyPackages = {
-            firefox-addons = packageSet.firefox-addons;
-          };
+            legacyPackages = packageSet;
         };
     };
 }

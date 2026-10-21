@@ -52,6 +52,7 @@ lib.mkIf config.gui {
       home.packages = [
         pkgs.libqalculate
         pkgs.dump-thought
+        pkgs.wiki-tui
       ]
       ++ lib.optionals isLinux [
         pkgs.qimgv

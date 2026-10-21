@@ -15,21 +15,10 @@ let
       d.en
       d.es
     ]))
-    pkgs.bottom
-    pkgs.btop
-    pkgs.curl
-    pkgs.dust
-    pkgs.dua
-    pkgs.fd
     pkgs.hyperfine
-    pkgs.mosh
-    pkgs.ripgrep
-    pkgs.rsync
     pkgs.tokei
     pkgs.vim
     pkgs.watchexec
-    pkgs.wget
-    pkgs.wiki-tui
 
     # Should arguably be in project devShells, but are convinient to always have
     pkgs.cargo
@@ -47,12 +36,6 @@ let
     pkgs.ruff
     pkgs.ty
     pkgs.vscode-langservers-extracted
-  ]
-  ++ lib.optionals isDarwin [
-    pkgs.darwin.trash
-  ]
-  ++ lib.optionals isLinux [
-    pkgs.trashy
   ];
 
   gui = lib.optionals config.gui (
@@ -70,23 +53,19 @@ in
       home.packages = cli ++ gui;
 
       programs = {
-        alacritty.enable = config.gui;
-        bat.enable = true;
-        broot.enable = true;
         fish.enable = true;
-        ghostty.enable = config.gui;
-        git.enable = true;
         helix.enable = true;
+
+        alacritty.enable = config.gui;
+        ghostty.enable = config.gui;
+        # wezterm.enable = config.gui;
+
+        git.enable = true;
         jujutsu.enable = true;
-        mistral-vibe.enable = true;
-        nh.enable = true;
-        pi-coding-agent.enable = true;
-        ripgrep-all.enable = true;
-        ripgrep.enable = true;
         ssh.enable = true;
-        wezterm.enable = config.gui;
-        yazi.enable = true;
-        zellij.enable = true;
+
+        mistral-vibe.enable = true;
+        pi-coding-agent.enable = true;
       };
 
       home.sessionVariables = {

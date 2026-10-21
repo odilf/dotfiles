@@ -14,6 +14,9 @@ let
       pkgs,
       ...
     }:
+    let
+      inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
+    in
     {
       xdg.configFile."fish/completions/nix.fish" = lib.mkIf config.programs.fish.enable {
         # TODO: I don't think this is necessary, remove this.
@@ -21,27 +24,49 @@ let
         source = "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
       };
 
+      home.packages = lib.mkIf config.programs.fish.enable (
+        [
+          pkgs.comma
+          pkgs.mosh
+          pkgs.dust
+          pkgs.dua
+          pkgs.bottom
+          pkgs.fd
+          pkgs.btop
+          pkgs.rsync
+          pkgs.curl
+          pkgs.wget
+        ]
+        ++ lib.optionals isDarwin [
+          pkgs.darwin.trash
+        ]
+        ++ lib.optionals isLinux [
+          pkgs.trashy
+        ]
+      );
+
       programs = lib.mkIf config.programs.fish.enable {
         eza.enable = true;
         eza.enableFishIntegration = false; # `la` does `eza -a` but I want `eza -l`
 
-        zoxide.enable = true;
-        starship.enable = true;
-
         nix-index.enable = true;
         nix-index.enableFishIntegration = false; # takes a long time to fail commands otherwise
 
-        navi.enable = true;
-
+        # Other programs I want to have enabled in shells
+        bat.enable = true;
+        broot.enable = true;
         direnv.enable = true;
-        direnv.nix-direnv.enable = true;
-
-        git.ignores = [
-          ".direnv"
-          ".envrc"
-        ];
-
+        git.enable = true;
+        helix.enable = true;
+        navi.enable = true;
+        nh.enable = true;
+        ripgrep-all.enable = true;
+        ripgrep.enable = true;
         skim.enable = true;
+        starship.enable = true;
+        yazi.enable = true;
+        zellij.enable = true;
+        zoxide.enable = true;
 
         fish = {
           preferAbbrs = true;
@@ -92,7 +117,6 @@ let
         };
       };
 
-      home.packages = lib.mkIf config.programs.fish.enable [ pkgs.comma ];
     };
 in
 {

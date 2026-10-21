@@ -18,12 +18,6 @@ let
       inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
     in
     {
-      xdg.configFile."fish/completions/nix.fish" = lib.mkIf config.programs.fish.enable {
-        # TODO: I don't think this is necessary, remove this.
-        # Maybe necessary for completions? (https://discourse.nixos.org/t/how-to-use-completion-fish-with-home-manager/23356/3)
-        source = "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
-      };
-
       home.packages = lib.mkIf config.programs.fish.enable (
         [
           pkgs.comma
@@ -72,13 +66,6 @@ let
           preferAbbrs = true;
           interactiveShellInit = ''
             set fish_greeting
-
-            # Append brew path on darwin.
-            switch (uname)
-              case "Darwin"
-                set -x PATH $PATH /opt/homebrew/bin/
-            end
-
             ${lib.getExe pkgs.pfetch-rs}
           '';
 
@@ -117,6 +104,9 @@ let
         };
       };
 
+      home.sessionVariables.PATH = lib.mkIf (
+        config.programs.fish.enable && isDarwin
+      ) "$PATH:/opt/homebrew/bin";
     };
 in
 {

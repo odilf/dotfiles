@@ -32,7 +32,7 @@ in
 
       programs = {
         sioyek.enable = true;
-        khal.enable = true;
+        # khal.enable = true;
         khard.enable = true;
         meli.enable = true;
         himalaya.enable = true;

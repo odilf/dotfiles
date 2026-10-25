@@ -33,7 +33,7 @@ in
     lib.mkIf (enabled user) {
       home.packages = lib.optionals config.gui (
         [
-          pkgs.musescore
+          # pkgs.musescore
           pkgs.blockbench
           pkgs.blender
         ]

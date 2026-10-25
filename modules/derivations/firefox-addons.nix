@@ -91,14 +91,15 @@ in
     description = "Lichess2Chess";
   };
 
-  music-score-downloader = buildFirefoxAddon {
-    pname = "music-score-downloader";
-    version = "0.5.17";
-    addonId = "{c88c53f2-6af9-4575-bea0-48e206743baf}";
-    url = "https://addons.mozilla.org/firefox/downloads/file/4687262/music_score_downloader-0.5.17.xpi";
-    hash = "sha256-m8DS0+2SCcQMjs8JwJ4DeB/nJQxLMdlpynDbprLxddw=";
-    description = "Music Score Downloader";
-  };
+  # Deleted from firefox addon store??
+  # music-score-downloader = buildFirefoxAddon {
+  #   pname = "music-score-downloader";
+  #   version = "0.5.17";
+  #   addonId = "{c88c53f2-6af9-4575-bea0-48e206743baf}";
+  #   url = "https://addons.mozilla.org/firefox/downloads/file/4687262/music_score_downloader-0.5.17.xpi";
+  #   hash = "sha256-m8DS0+2SCcQMjs8JwJ4DeB/nJQxLMdlpynDbprLxddw=";
+  #   description = "Music Score Downloader";
+  # };
 
   sidebery = buildFirefoxAddon {
     pname = "sidebery";

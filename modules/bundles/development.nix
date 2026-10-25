@@ -64,7 +64,7 @@ in
         jujutsu.enable = true;
         ssh.enable = true;
 
-        mistral-vibe.enable = true;
+        # mistral-vibe.enable = true;
         pi-coding-agent.enable = true;
       };
 

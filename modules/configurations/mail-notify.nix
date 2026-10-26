@@ -11,7 +11,9 @@
       let
         inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-        enabled = config.accounts.email.accounts ? gmail;
+        # For some reason, lags entire computer on macos
+        disableOnDarwin = true;
+        enabled = (disableOnDarwin -> !isDarwin) && config.accounts.email.accounts ? gmail;
         account = config.accounts.email.accounts.gmail;
 
         notify =

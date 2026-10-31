@@ -16,6 +16,13 @@
             patch -p1 --directory="$PWD" < ${./helix/osc11-zellij.patch}
           '';
         });
+
+        context-hx = pkgs.fetchFromCodeberg {
+          owner = "gwid";
+          repo = "context.hx";
+          rev = "186a7f2062d45eba901f87e7151d0e4eece0603f";
+          hash = "sha256-7okPQ4u/XYTLBdZKpHLSIqpNCboyrf5SmDlCXZUc8vM=";
+        };
       in
       {
         programs.helix = {
@@ -122,9 +129,17 @@
           };
         };
 
-        xdg.configFile = lib.mkIf config.programs.helix.enable {
-          "helix/unicode-input/base.toml".source = ./helix/unicode-input.toml;
-          "helix/themes/".source = ./helix/themes;
+        xdg = lib.mkIf config.programs.helix.enable {
+          configFile = {
+            "helix/unicode-input/base.toml".source = ./helix/unicode-input.toml;
+            "helix/themes/".source = ./helix/themes;
+            "helix/init.scm".text = ''
+              (require "context/context.scm")
+              (context-enable 'right)
+            '';
+          };
+
+          dataFile."steel/cogs/context".source = context-hx;
         };
 
         home.sessionVariables.EDITOR = lib.mkIf config.programs.helix.enable "hx";

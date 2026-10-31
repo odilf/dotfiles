@@ -34,8 +34,6 @@
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
-      "python3.14-textual-speedups-0.2.1"
-      "textual-speedups"
     ];
 
   # Used for backwards compatibility, please read the changelog before changing.

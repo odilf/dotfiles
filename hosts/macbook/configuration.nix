@@ -1,5 +1,7 @@
 { lib, ... }:
 {
+  imports = [ ./headphone-keepalive.nix ];
+
   gui = true;
 
   custom = {

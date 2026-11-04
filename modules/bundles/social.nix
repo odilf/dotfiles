@@ -26,6 +26,7 @@ in
           pkgs.signal-desktop
           pkgs.karere
           pkgs.element-desktop
+          pkgs.discord
         ]
         ++ lib.optionals isDarwin [
           # pkgs.whatsapp-for-mac # Fails to download
@@ -44,5 +45,6 @@ in
     "whatsapp" # workaround
     "signal"
     "element"
+    "discord"
   ];
 }

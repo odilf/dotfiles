@@ -28,7 +28,7 @@
                         description.first_line(),
                         label(if(empty, "empty"), description_placeholder),
                       ),
-                      bookmarks,
+                      bookmarks.map(|b| label("bookmark", b.name())),
                       tags,
                       working_copies,
                       if(conflict, label("conflict", "conflict")),

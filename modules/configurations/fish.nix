@@ -67,6 +67,14 @@ let
           interactiveShellInit = ''
             set fish_greeting
             ${lib.getExe pkgs.pfetch-rs}
+
+            function cd --description "cd that resolves symlinks"
+              if test (count $argv) -eq 0; or test "$argv[1]" = "-"
+                builtin cd $argv
+              else
+                builtin cd (realpath -- $argv[1]) $argv[2..-1]
+              end
+            end
           '';
 
           shellAbbrs = {

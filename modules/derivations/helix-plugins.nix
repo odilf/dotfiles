@@ -3,6 +3,7 @@
   stdenv,
   fetchFromGitHub,
   fetchFromCodeberg,
+  rustPlatform,
 }:
 let
   buildHelixPlugin =
@@ -60,12 +61,41 @@ in
     description = "Zen mode toggle for the steel-enabled helix fork";
   };
 
-  helix-discord-rpc = buildHelixPlugin {
-    pname = "helix-discord-rpc";
-    owner = "norinorin";
-    repo = "helix-discord-rpc";
-    rev = "21a9aae61d063cea636d44e62f34a24acabc4eb1";
-    hash = "sha256-Pld3BiePfqfCGUyGv0ZCWA7U4v2jlxHIRt6VB43yGNY=";
-    description = "A fork of presence.hx with customisation and multi-instance support";
-  };
+  helix-discord-rpc =
+    let
+      src = fetchFromGitHub {
+        owner = "norinorin";
+        repo = "helix-discord-rpc";
+        rev = "21a9aae61d063cea636d44e62f34a24acabc4eb1";
+        hash = "sha256-Pld3BiePfqfCGUyGv0ZCWA7U4v2jlxHIRt6VB43yGNY=";
+      };
+      sharedLib = stdenv.hostPlatform.extensions.sharedLibrary;
+    in
+    rustPlatform.buildRustPackage {
+      pname = "helix-discord-rpc";
+      version = "0.1.0";
+      inherit src;
+
+      cargoLock.lockFile = "${src}/Cargo.lock";
+      patches = [ ./helix-discord-rpc-socket-path.patch ];
+      doCheck = false;
+
+      installPhase = ''
+        runHook preInstall
+        mkdir -p $out/native
+        find target -name "libhelix_discord_rpc${sharedLib}" -exec cp {} $out/native/ \;
+        cp *.scm $out/
+        runHook postInstall
+      '';
+
+      meta = {
+        description = "A fork of presence.hx with customisation and multi-instance support";
+        homepage = "https://github.com/norinorin/helix-discord-rpc";
+        platforms = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ];
+      };
+    };
 }

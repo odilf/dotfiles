@@ -133,11 +133,17 @@
             '';
           };
 
-          dataFile = {
-            "steel/cogs/context".source = pkgs.helix-plugins.context;
-            "steel/cogs/zen-mode".source = pkgs.helix-plugins.zen-mode;
-            "steel/cogs/helix-discord-rpc".source = pkgs.helix-plugins.helix-discord-rpc;
-          };
+          dataFile =
+            let
+              ext = pkgs.stdenv.hostPlatform.extensions.sharedLibrary;
+            in
+            {
+              "steel/cogs/context".source = pkgs.helix-plugins.context;
+              "steel/cogs/zen-mode".source = pkgs.helix-plugins.zen-mode;
+              "steel/cogs/helix-discord-rpc".source = pkgs.helix-plugins.helix-discord-rpc;
+              "steel/native/libhelix_discord_rpc${ext}".source =
+                "${pkgs.helix-plugins.helix-discord-rpc}/native/libhelix_discord_rpc${ext}";
+            };
         };
 
         home.sessionVariables.EDITOR = lib.mkIf config.programs.helix.enable "hx";

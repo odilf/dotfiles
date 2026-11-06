@@ -1,6 +1,4 @@
 { ... }:
-# TODO: Add plugins:
-# - https://github.com/dmyyy/zj-navigator.hx
 {
   home-manager.sharedModules = [
     (
@@ -16,13 +14,6 @@
             patch -p1 --directory="$PWD" < ${./helix/osc11-zellij.patch}
           '';
         });
-
-        context-hx = pkgs.fetchFromCodeberg {
-          owner = "gwid";
-          repo = "context.hx";
-          rev = "186a7f2062d45eba901f87e7151d0e4eece0603f";
-          hash = "sha256-7okPQ4u/XYTLBdZKpHLSIqpNCboyrf5SmDlCXZUc8vM=";
-        };
       in
       {
         programs.helix = {
@@ -136,10 +127,17 @@
             "helix/init.scm".text = ''
               (require "context/context.scm")
               (context-enable 'right)
+              (require "zen-mode/zen-mode.scm")
+              (require "helix-discord-rpc/init.scm")
+              (discord-rpc-connect)
             '';
           };
 
-          dataFile."steel/cogs/context".source = context-hx;
+          dataFile = {
+            "steel/cogs/context".source = pkgs.helix-plugins.context;
+            "steel/cogs/zen-mode".source = pkgs.helix-plugins.zen-mode;
+            "steel/cogs/helix-discord-rpc".source = pkgs.helix-plugins.helix-discord-rpc;
+          };
         };
 
         home.sessionVariables.EDITOR = lib.mkIf config.programs.helix.enable "hx";

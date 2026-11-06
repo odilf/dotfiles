@@ -12,7 +12,10 @@ let
   modules = builtins.filter (lib.strings.hasSuffix ".nix") files;
   names = map (lib.strings.removeSuffix ".nix") modules;
 
-  multisets = [ "firefox-addons" ];
+  multisets = [
+    "firefox-addons"
+    "helix-plugins"
+  ];
 in
 lib.genAttrs names (
   name:

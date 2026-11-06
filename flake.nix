@@ -158,9 +158,6 @@
           ...
         }:
         let
-          # `firefox-addons` is an attrset of derivations, not a derivation,
-          # so it can't live under `packages` (flake checks reject that). It
-          # goes in `legacyPackages` instead, which supports nested attrsets.
           packageSet = import ./modules/derivations/default.nix {
             inherit pkgs lib;
           };
@@ -176,16 +173,20 @@
           };
           formatter = pkgs.nixfmt;
 
-          # Flatten the addons here so nix-update (which only resolves flat
-          # `packages.<system>.<attr>`) can reach them. The overlay keeps them
-          # nested as `pkgs.firefox-addons.<name>`.
+          # `firefox-addons` and `helix-plugins` are attrsets of derivations,
+          # which `packages` can't hold as-is (flake checks reject nested
+          # attrsets), so they're flattened here. That also lets nix-update
+          # (which only resolves flat `packages.<system>.<attr>`) reach each
+          # entry. Modules use the nested form via the overlay in
+          # modules/default.nix as `pkgs.firefox-addons.<name>` /
+          # `pkgs.helix-plugins.<name>`.
           packages =
             lib.removeAttrs packageSet [
               "firefox-addons"
+              "helix-plugins"
             ]
-            // packageSet.firefox-addons;
-
-            legacyPackages = packageSet;
+            // packageSet.firefox-addons
+            // packageSet.helix-plugins;
         };
     };
 }

@@ -30,14 +30,20 @@ let
         except subprocess.CalledProcessError:
             rpc.clear()
             sys.exit(0)
+        status = "stopped"
         artist = "Unknown"
         title = "Not listening to anything"
         for line in output.splitlines():
-            if line.startswith("tag artist "):
+            if line.startswith("status "):
+                status = line.removeprefix("status ")
+            elif line.startswith("tag artist "):
                 artist = line.removeprefix("tag artist ")
             elif line.startswith("tag title "):
                 title = line.removeprefix("tag title ")
-        rpc.update(state=f"Listening to {artist}", details=title)
+        if status == "playing":
+            rpc.update(state=f"Listening to {artist}", details=title)
+        else:
+            rpc.clear()
         time.sleep(5)
   '';
 

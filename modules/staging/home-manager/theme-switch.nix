@@ -8,6 +8,13 @@ let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
   cfg = config.programs.theme-switch;
 
+  # NixOS keeps gsettings schemas and the dconf backend out of the system
+  # paths, so point glib at them explicitly.
+  gsettingsEnv = ''
+    export GSETTINGS_SCHEMA_DIR=${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas
+    export GIO_EXTRA_MODULES=${pkgs.dconf.lib}/lib/gio/modules
+  '';
+
   # Toggles the system appearance and exports THEME_MODE=light|dark
   # with the mode that was just switched to.
   toggleAppearance =
@@ -21,17 +28,17 @@ let
         fi
       ''
     else
-      "poopoo";
-  # ''
-  #   current=$(${pkgs.glib}/bin/gsettings get org.gnome.desktop.interface color-scheme)
-  #   if [[ "$current" == *dark* ]]; then
-  #     ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-light
-  #     export THEME_MODE=light
-  #   else
-  #     ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-  #     export THEME_MODE=dark
-  #   fi
-  # '';
+      ''
+        ${gsettingsEnv}
+        current=$(${pkgs.glib}/bin/gsettings get org.gnome.desktop.interface color-scheme)
+        if [[ "$current" == *dark* ]]; then
+          ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-light
+          export THEME_MODE=light
+        else
+          ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+          export THEME_MODE=dark
+        fi
+      '';
 
   # Reads the current appearance (without changing it)
   readAndExportTheme =
@@ -47,14 +54,14 @@ let
         fi
       ''
     else
-      "poopoo";
-  # ''
-  #   if [[ "$(${pkgs.glib}/bin/gsettings get org.gnome.desktop.interface color-scheme)" == *dark* ]]; then
-  #     export THEME_MODE=dark
-  #   else
-  #     export THEME_MODE=light
-  #   fi
-  # '';
+      ''
+        ${gsettingsEnv}
+        if [[ "$(${pkgs.glib}/bin/gsettings get org.gnome.desktop.interface color-scheme)" == *dark* ]]; then
+          export THEME_MODE=dark
+        else
+          export THEME_MODE=light
+        fi
+      '';
 
   # Runs all hooks. Uses THEME_MODE if the caller already set it,
   # otherwise detects the current appearance.
@@ -113,6 +120,7 @@ let
   '';
 
   watchTheme = pkgs.writeShellScript "theme-switch-watch" ''
+    ${gsettingsEnv}
     ${pkgs.glib}/bin/gsettings monitor org.gnome.desktop.interface color-scheme |
       while read -r _; do
         ${runHooks} || true

@@ -6,7 +6,7 @@
         settings = {
           user = {
             name = "odilf";
-            email = "odysseas.maheras@gmail.com";
+            email = "me@odilf.com";
           };
 
           ui = {

@@ -25,12 +25,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.noctalia-qs.inputs.treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     niri-session-manager = {
       url = "github:MTeaHead/niri-session-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -82,7 +76,6 @@
               inputs.niri-session-manager.nixosModules.niri-session-manager
               {
                 passthru.agenix-hm = agenix.homeManagerModules.default;
-                passthru.noctalia = inputs.noctalia.homeModules.default;
               }
             ];
           };
@@ -187,6 +180,8 @@
             ]
             // packageSet.firefox-addons
             // packageSet.helix-plugins;
+
+          legacyPackages = packageSet;
         };
     };
 }

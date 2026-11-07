@@ -4,6 +4,8 @@ load_plugins {
 web_client {
     font "monospace"
 }
+
+ support_kitty_keyboard_protocol false
  
 // default_mode "locked" 
 // default_layout "compact"

@@ -5,7 +5,7 @@ let
     owner = "vjeranc";
     repo = "cmus-status-scrobbler";
     rev = "main";
-    sha256 = "sha256-arhfBd2+YPg0yprtJrdNhe9IyF1aRDupvJhhiRMzPgY=";
+    sha256 = "sha256-tY+0VYYcgg0bDmo6+u+iIMIBtrZXCVFg8V4Mo9CQpDw=";
   };
 
   cmus-status-scrobbler = pkgs.writeShellScriptBin "cmus-status-scrobbler" ''

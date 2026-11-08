@@ -3,19 +3,6 @@
   pkgs,
   ...
 }:
-
-let
-  peripheralFirmware =
-    pkgs.runCommand "asahi-peripheral-firmware"
-      {
-        outputHash = "sha256-+GcDPSFzMbfSnfxvwQaOjLs0nb1rF92r600w2tb2r1w=";
-        outputHashMode = "recursive";
-      }
-      ''
-        mkdir -p $out
-        cp -a /boot/vendorfw/. $out/
-      '';
-in
 {
   imports = [
     ./hardware-configuration.nix
@@ -32,15 +19,15 @@ in
     bundles.odilf = {
       development.enable = true;
       social.enable = true;
-      games.enable = true;
-      creative.enable = true;
+      games.enable = false;
+      creative.enable = false;
       productivity.enable = true;
     };
   };
 
   hardware.asahi = {
     enable = true;
-    peripheralFirmwareDirectory = peripheralFirmware.outPath;
+    peripheralFirmwareDirectory = null;
   };
 
   # Regular NixOS options
@@ -49,8 +36,6 @@ in
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
-      "python3.14-textual-speedups-0.2.1"
-      "textual-speedups"
       "reaper"
     ];
 

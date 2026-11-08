@@ -68,12 +68,9 @@ let
             set fish_greeting
             ${lib.getExe pkgs.pfetch-rs}
 
-            function cd --description "cd that resolves symlinks"
-              if test (count $argv) -eq 0; or test "$argv[1]" = "-"
-                builtin cd $argv
-              else
-                builtin cd (realpath -- $argv[1]) $argv[2..-1]
-              end
+            functions --copy cd __cd_orig
+            function cd --description 'cd, resolving symlinks'
+                __cd_orig -P $argv
             end
           '';
 

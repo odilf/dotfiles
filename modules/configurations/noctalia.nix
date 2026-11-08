@@ -10,12 +10,8 @@ let
   enable = isLinux && config.programs.niri.enable;
 
   homeConfig =
-    { osConfig, lib, ... }:
+    { lib, ... }:
     {
-      imports = [
-        osConfig.passthru.noctalia
-      ];
-
       programs.noctalia.settings = {
         bar = {
           density = "compact";
@@ -119,6 +115,39 @@ let
         location = {
           monthBeforeDay = true;
           name = "Madrid, Spain";
+        };
+        lockscreen = {
+          enabled = false;
+        };
+        shell = {
+          session = {
+            actions = [
+              {
+                action = "command";
+                label = "Lock";
+                glyph = "lock";
+                command = "${pkgs.swaylock}/bin/swaylock -f";
+                shortcut = "1";
+              }
+              {
+                action = "logout";
+                shortcut = "2";
+              }
+              {
+                action = "suspend";
+                shortcut = "3";
+              }
+              {
+                action = "reboot";
+                shortcut = "4";
+              }
+              {
+                action = "shutdown";
+                shortcut = "5";
+                variant = "destructive";
+              }
+            ];
+          };
         };
         nightLight = {
           autoSchedule = true;

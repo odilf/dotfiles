@@ -150,7 +150,7 @@ binds {
     Mod+D       hotkey-overlay-title="Launcher" { spawn "tofi-run"; }
     Super+Space hotkey-overlay-title="Launcher" { spawn "tofi-drun"; }
     Mod+S       hotkey-overlay-title="Control center" { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
-    Super+Alt+L hotkey-overlay-title="Lock screen" { spawn  "noctalia" "msg"  "lockScreen" "lock"; }
+    Super+Alt+L hotkey-overlay-title="Lock screen" { spawn "swaylock" "-f"; }
     Mod+Period  hotkey-overlay-title="Emoji copy" { spawn "rofi" "-show" "emoji"; }
 
     Alt+Mod+V   hotkey-overlay-title="Clipboard" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }

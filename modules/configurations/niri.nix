@@ -29,13 +29,16 @@ let
 
       services.swayidle =
         let
-          lock = "${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock";
+          lock = "${pkgs.swaylock}/bin/swaylock -f";
           display = status: "${pkgs.niri}/bin/niri msg action power-${status}-monitors";
           mediaPlaying = "${pkgs.playerctl}/bin/playerctl status 2>/dev/null | ${pkgs.ripgrep}/bin/rg -q Playing";
         in
         {
           enable = true;
-          events = { };
+          events = {
+            inherit lock;
+            before-sleep = lock;
+          };
 
           timeouts = [
             {

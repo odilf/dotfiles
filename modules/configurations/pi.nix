@@ -25,6 +25,7 @@
               "npm:@narumitw/pi-usage"
               "npm:@raidou/pi-notify"
               "npm:@zigai/pi-status-bar"
+              "npm:pi-claude-bridge"
               "npm:pi-lens"
               # "npm:pi-nono@next"
               "npm:pi-notify"
@@ -51,6 +52,7 @@
           extraPackages = [
             pkgs.nodejs
             pkgs.pnpm
+            pkgs.gh
           ];
 
           context = ./ai/context.md;

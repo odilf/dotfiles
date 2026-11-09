@@ -24,4 +24,5 @@ in
   "radicale.age".publicKeys = keys;
   "ssh-host-shorthands.age".publicKeys = keys;
   "taskwarrior.age".publicKeys = keys;
+  "vpn.age".publicKeys = keys;
 }

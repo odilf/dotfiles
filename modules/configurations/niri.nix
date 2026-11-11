@@ -65,7 +65,10 @@ let
 in
 {
   services = lib.mkIf enable {
-    displayManager.ly.enable = true;
+    displayManager.ly = {
+      enable = true;
+      settings.session_log = null;
+    };
     niri-session-manager.enable = true;
     # The power button is bound in live/niri/config.kdl; logind must not act on it.
     logind.settings.Login.HandlePowerKey = "ignore";

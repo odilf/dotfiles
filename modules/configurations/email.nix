@@ -70,15 +70,23 @@
         programs = {
           mbsync.enable = enable;
           msmtp.enable = enable;
-          aerc.extraConfig = {
-            general.unsafe-accounts-conf = true;
-            ui.sort = "-r date";
-            filters = {
-              "text/plain" = "colorize";
-              "text/calendar" = "calendar";
-              "text/html" = "html | colorize";
+          aerc = {
+            extraConfig = {
+              general.unsafe-accounts-conf = true;
+              ui.sort = "-r date";
+              filters = {
+                "text/plain" = "colorize";
+                "text/calendar" = "calendar";
+                "text/html" = "html | colorize";
+              };
+              viewer.alternatives = "text/plain,text/html";
+              compose.address-book-cmd = lib.mkIf config.programs.khard.enable "${pkgs.khard}/bin/khard email --remove-first-line --parsable '%s'";
             };
-            viewer.alternatives = "text/plain,text/html";
+            extraBinds =
+              # Ugh... not doing this deletes all default binds...
+              lib.replaceStrings [ "q = :prompt 'Quit?' quit<Enter>" ] [ "q = :quit<Enter>" ] (
+                builtins.readFile "${pkgs.aerc}/share/aerc/binds.conf"
+              );
           };
         };
 

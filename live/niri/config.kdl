@@ -42,6 +42,9 @@ input {
     warp-mouse-to-focus
 
     focus-follows-mouse max-scroll-amount="0%"
+
+    // The power button is bound in `binds` below.
+    disable-power-key-handling
 }
 
 output "eDP-1" {
@@ -400,5 +403,9 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+
+    // The power button only turns the monitors on (allowed while locked), so
+    // using it to wake the laptop doesn't suspend it again.
+    XF86PowerOff { power-on-monitors; }
 }
 

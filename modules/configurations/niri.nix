@@ -38,6 +38,7 @@ let
           events = {
             inherit lock;
             before-sleep = lock;
+            after-resume = display "on";
           };
 
           timeouts = [
@@ -66,6 +67,8 @@ in
   services = lib.mkIf enable {
     displayManager.ly.enable = true;
     niri-session-manager.enable = true;
+    # The power button is bound in live/niri/config.kdl; logind must not act on it.
+    logind.settings.Login.HandlePowerKey = "ignore";
   };
 
   home-manager.sharedModules = lib.mkIf enable [ homeConfig ];

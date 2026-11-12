@@ -27,6 +27,7 @@ in
       upower = fill;
       kanata.keyboards = fill;
       niri-session-manager = fill;
+      logind = fill;
     };
 
     boot = fill;

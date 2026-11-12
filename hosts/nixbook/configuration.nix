@@ -8,21 +8,10 @@
     ./hardware-configuration.nix
   ];
 
-  # Custom NixOS options
-  # ---
-
   gui = true;
-  laptop.enable = true;
-
   custom = {
     flake-path = "/home/odilf/code/dotfiles#nixbook";
-    bundles.odilf = {
-      development.enable = true;
-      social.enable = true;
-      games.enable = false;
-      creative.enable = false;
-      productivity.enable = true;
-    };
+    laptop = true;
   };
 
   hardware.asahi = {
@@ -30,8 +19,26 @@
     peripheralFirmwareDirectory = null;
   };
 
-  # Regular NixOS options
-  # ---
+  home-manager.users.odilf = {
+    home.packages = [
+      pkgs.vim
+      pkgs.watchexec
+    ];
+
+    programs = {
+      alacritty.enable = true;
+      fish.enable = true;
+      ssh.enable = true;
+      helix.enable = true;
+
+      pi-coding-agent.enable = true;
+
+      aerc.enable = true;
+      khard.enable = true;
+      khal.enable = true;
+      gurk-rs.enable = true; # signal
+    };
+  };
 
   nixpkgs.config.allowUnfreePredicate =
     pkg:
@@ -48,8 +55,6 @@
     fish.shellAbbrs.wr = "sudo systemctl restart iwd && sudo systemctl restart dhcpcd";
   };
 
-  nix.settings.extra-sandbox-paths = [ "/boot/vendorfw" ];
-
   programs.nix-ld.enable = true;
 
   swapDevices = [
@@ -65,7 +70,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
-  # networking.wireless.network-manager.enable = lib.mkForce false;
   networking.networkmanager.enable = lib.mkForce false;
   networking.wireless.iwd = {
     enable = true;

@@ -10,11 +10,14 @@
       odilf = {
         development.enable = true;
         social.enable = true;
-        games.enable = true;
         creative.enable = true;
         productivity.enable = true;
       };
     };
+  };
+
+  home-manager.users.odilf = {
+    programs.mcsr.enable = true;
   };
 
   system.primaryUser = "odilf";

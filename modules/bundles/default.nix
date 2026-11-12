@@ -13,10 +13,6 @@ let
       desc = "Software for making music and art.";
       path = ./creative.nix;
     };
-    games = {
-      desc = "Videogames on the computer.";
-      path = ./games.nix;
-    };
     productivity = {
       desc = "Getting 'work' done with other humans.";
       path = ./productivity.nix;

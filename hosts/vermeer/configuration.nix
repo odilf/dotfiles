@@ -15,7 +15,6 @@
   custom.bundles.odilf = {
     development.enable = true;
     social.enable = false;
-    games.enable = false;
     creative.enable = false;
     productivity.enable = false;
   };

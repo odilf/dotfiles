@@ -17,7 +17,8 @@
       in
       {
         programs.helix = {
-          package = pkgs.steelix.override { inherit helix-unwrapped; };
+          # package = pkgs.steelix.override { inherit helix-unwrapped; };
+          package = pkgs.steelix;
           settings = {
             theme = "base16_default";
 

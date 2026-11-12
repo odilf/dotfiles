@@ -9,6 +9,7 @@
       }:
       let
         enable = config.programs.aerc.enable;
+        inherit (pkgs.stdenv.hostPlatform) isLinux;
       in
       {
         age.secrets = lib.mkIf enable {
@@ -90,7 +91,8 @@
           };
         };
 
-        services.mbsync = {
+        # TODO: Do something on macos
+        services.mbsync = lib.mkIf isLinux {
           enable = enable;
           frequency = "*:0/15";
         };

@@ -5,15 +5,9 @@
     ./headphone-keepalive.nix
   ];
 
-  custom = {
-    flake-path = "/Users/odilf/code/dotfiles#macbook";
-    bundles = {
-      odilf = {
-        development.enable = true;
-        social.enable = true;
-      };
-    };
-  };
+  custom.flake-path = "/Users/odilf/code/dotfiles#macbook";
+
+  services.tailscale.enable = true;
 
   home-manager.users.odilf = {
     programs = {
@@ -39,21 +33,29 @@
     };
 
     home.packages = [
-      pkgs.obs-studio
       pkgs.reaper
 
-      pkgs.anki
       pkgs.libreoffice-bin
-      pkgs.picard
-      pkgs.calibre-no-speech
       pkgs.obsidian
     ];
   };
 
   homebrew.casks = [
+    "obs"
     "discord"
     "signal"
+    "anki"
+    "calibre"
+    "picard"
   ];
+
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "claude-code"
+      "reaper"
+      "obsidian"
+    ];
 
   system.primaryUser = "odilf";
 
@@ -70,12 +72,6 @@
   };
 
   nixpkgs.hostPlatform = "aarch64-darwin";
-
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "claude-code"
-    ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

@@ -53,6 +53,7 @@
             pkgs.nodejs
             pkgs.pnpm
             pkgs.gh
+            pkgs.claude-code
           ];
 
           context = ./ai/context.md;

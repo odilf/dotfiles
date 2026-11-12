@@ -4,12 +4,10 @@
     (
       { lib, pkgs, ... }:
       let
-        inherit (pkgs.stdenv.hostPlatform) isLinux;
         addons = pkgs.firefox-addons;
       in
       {
         programs.librewolf = {
-          package = lib.mkIf isLinux pkgs.librewolf;
           settings = {
             # Startup & UI
             "browser.compactmode.show" = true;

@@ -20,9 +20,6 @@ lib.mkIf config.gui {
       "bitwarden"
       "surfshark"
       "transmission"
-      # TODO: Would be nice to use the nixpkgs version, but for some reason
-      # aerospace refuses to manage it on macos
-      "librewolf"
       # TODO: Should be redundant to have karabiner here and in home-manager.
       "karabiner-elements"
       # TODO: Replace with viciane when it works on darwin

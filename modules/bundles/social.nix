@@ -35,7 +35,7 @@ in
 
       programs = {
         gurk-rs.enable = true;
-        meli.enable = true;
+        # meli.enable = true;
         # iamb.enable = true;
       };
     }

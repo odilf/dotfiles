@@ -11,17 +11,32 @@
   home-manager.sharedModules = [
     (
       {
-        config,
         lib,
         pkgs,
         ...
       }:
-      # let
-      #   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-      #    resourceDir = if isDarwin then "Library/Application Support/REAPER" else ".config/REAPER";
-      # in
-      lib.mkIf (builtins.elem pkgs.reaper config.home.packages) {
-        # home.linkLive.files."${resourceDir}" = "live/reaper";
+      let
+        inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin isx86_64;
+        plugins =
+          lib.optionals isLinux [
+            pkgs.lsp-plugins
+            pkgs.zam-plugins
+          ]
+          ++ lib.optionals (isLinux && isx86_64) [
+            pkgs.surge
+            pkgs.oxefmsynth
+          ]
+          ++ lib.optionals isDarwin [
+            pkgs.lsp-plugins-macos
+          ];
+
+        # TODO: Properly enable reaper
+        enabled = false;
+        # resourceDir = if isDarwin then "Library/Application Support/REAPER" else ".config/REAPER";
+      in
+      lib.mkIf enabled {
+        # home.linkBunker.files."${resourceDir}" = "live/reaper";
+        home.packages = plugins;
       }
     )
   ];

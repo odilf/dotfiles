@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   ...
 }:
 let
@@ -8,10 +7,6 @@ let
     development = {
       desc = "Development & cli tools.";
       path = ./development.nix;
-    };
-    creative = {
-      desc = "Software for making music and art.";
-      path = ./creative.nix;
     };
     productivity = {
       desc = "Getting 'work' done with other humans.";

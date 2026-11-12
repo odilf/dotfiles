@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   imports = [ ./headphone-keepalive.nix ];
 
@@ -10,7 +10,6 @@
       odilf = {
         development.enable = true;
         social.enable = true;
-        creative.enable = true;
         productivity.enable = true;
       };
     };
@@ -18,6 +17,11 @@
 
   home-manager.users.odilf = {
     programs.mcsr.enable = true;
+
+    home.packages = [
+      pkgs.obs-studio
+      pkgs.reaper
+    ];
   };
 
   system.primaryUser = "odilf";

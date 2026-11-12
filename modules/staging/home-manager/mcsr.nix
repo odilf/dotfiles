@@ -194,7 +194,6 @@ in
     home.packages =
       lib.optionals isDarwin [
         pkgs.ninjabrain-bot-app
-        pkgs.mac-speedrunning-tools
         pkgs.linuxscreen
       ]
       ++ lib.optionals isLinux [

@@ -177,6 +177,7 @@
             lib.removeAttrs packageSet [
               "firefox-addons"
               "helix-plugins"
+              "ninjabrain-bot-app"
             ]
             // packageSet.firefox-addons
             // packageSet.helix-plugins;

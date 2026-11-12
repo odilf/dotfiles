@@ -12,10 +12,6 @@ let
       desc = "Getting 'work' done with other humans.";
       path = ./productivity.nix;
     };
-    social = {
-      desc = "Chatting and socializing apps.";
-      path = ./social.nix;
-    };
   };
 in
 {

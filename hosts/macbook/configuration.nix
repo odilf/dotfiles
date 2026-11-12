@@ -16,13 +16,25 @@
   };
 
   home-manager.users.odilf = {
-    programs.mcsr.enable = true;
+    programs = {
+      aerc.enable = true;
+      khard.enable = true;
+      khal.enable = true;
+      gurk-rs.enable = true; # signal
+
+      mcsr.enable = true;
+    };
 
     home.packages = [
       pkgs.obs-studio
       pkgs.reaper
     ];
   };
+
+  homebrew.casks = [
+    "discord"
+    "signal"
+  ];
 
   system.primaryUser = "odilf";
 

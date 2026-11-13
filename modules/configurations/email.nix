@@ -17,9 +17,9 @@
           gmail.file = ../../secrets/gmail.age;
         };
 
-        accounts.email = {
+        accounts.email = lib.mkIf enable {
           maildirBasePath = "bunker/data/mail";
-          accounts.gmail = lib.mkIf enable {
+          accounts.gmail = {
             primary = true;
             flavor = "gmail.com";
             address = "me@odilf.com";
@@ -29,13 +29,14 @@
               ${pkgs.coreutils}/bin/cat "${config.age.secrets.gmail.path}"
             ''}";
 
+            notmuch.enable = true;
+
             mbsync = {
               enable = true;
               create = "maildir";
               patterns = [
                 "INBOX"
-                "[Gmail]/All Mail"
-                "[Gmail]/Sent Mail"
+                "[Gmail]/*"
               ];
             };
 
@@ -45,32 +46,31 @@
               enable = true;
               extraAccounts = {
                 default = "INBOX";
-                archive = "[Gmail]/All Mail";
                 outgoing = "msmtp -a Personal";
                 copy-to = "";
+                check-mail = "2m";
+                check-mail-cmd = "notmuch new";
+                multi-file-strategy = "act-dir";
               };
             };
 
-            imapnotify =
-              let
-                notify =
-                  if pkgs.stdenv.hostPlatform.isDarwin then
-                    ''/usr/bin/osascript -e 'display notification "New mail" with title "Mail"' ''
-                  else
-                    "${pkgs.libnotify}/bin/notify-send 'New mail'";
-              in
-              {
-                enable = true;
-                boxes = [ "INBOX" ];
-                onNotify = "${pkgs.isync}/bin/mbsync gmail";
-                onNotifyPost = notify;
-              };
+            imapnotify = {
+              enable = true;
+              boxes = [ "INBOX" ];
+              onNotify = "${pkgs.isync}/bin/mbsync gmail";
+              onNotifyPost =
+                if pkgs.stdenv.hostPlatform.isDarwin then
+                  ''/usr/bin/osascript -e 'display notification "New mail" with title "Mail"' ''
+                else
+                  "${pkgs.libnotify}/bin/notify-send 'New mail'";
+            };
           };
         };
 
         programs = {
           mbsync.enable = enable;
           msmtp.enable = enable;
+          notmuch.enable = enable;
           aerc = {
             extraConfig = {
               general.unsafe-accounts-conf = true;
@@ -85,9 +85,16 @@
             };
             extraBinds =
               # Ugh... not doing this deletes all default binds...
-              lib.replaceStrings [ "q = :prompt 'Quit?' quit<Enter>" ] [ "q = :quit<Enter>" ] (
-                builtins.readFile "${pkgs.aerc}/share/aerc/binds.conf"
-              );
+              lib.replaceStrings
+                [
+                  "q = :prompt 'Quit?' quit<Enter>"
+                  ":archive flat<Enter>"
+                ]
+                [
+                  "q = :quit<Enter>"
+                  ":delete<Enter>"
+                ]
+                (builtins.readFile "${pkgs.aerc}/share/aerc/binds.conf");
           };
         };
 

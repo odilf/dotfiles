@@ -1,51 +1,68 @@
 # AGENTS.md
 
-Nix flake (flake-parts) dotfiles for four hosts: `macbook` (aarch64-darwin),
-`nixbook` (aarch64-linux), `ada` (x86_64-linux, WSL), `vermeer` (nix-on-droid).
-Also exports `nixosModules.default` / `darwinModules.default` for reuse in other flakes.
+Nix flake (flake-parts) dotfiles. Hosts: `macbook` (aarch64-darwin), `nixbook`
+(aarch64-linux, Asahi), `ada` (x86_64-linux, WSL). Also exports
+`nixosModules.default` / `darwinModules.default` for reuse in other flakes
+(flake.nix wires `./modules` + the per-platform polyfill + home-manager + agenix).
 
 ## Commands
 
-- Do `jj st` when adding files to track them.
-- Format (nixfmt, in place): `nix fmt`
-- Verify everything evaluates (`nixosConfigurations`, `darwinConfigurations`, packages): `nix flake check`
-- Build one custom package: `nix build .#<name>`
+- `jj st` when adding files, so they get tracked.
+- `nix fmt` — nixfmt, in place.
+- `nix flake check` — verifies `nixosConfigurations`, `darwinConfigurations` and `packages` evaluate.
+- `nix build .#<name>` — build one custom package.
 - NEVER apply host configs.
 
-## Layout — the non-obvious parts
+## Layout
 
-- `modules/configurations/*.nix` are ordinary NixOS modules, one per program or
-  concern, mostly contributing `home-manager.sharedModules`. Every `.nix` file in the
-  directory is auto-imported; `default.nix` and `reaper.nix` are the only exclusions.
-- Per-user config is driven by `custom.bundles.<user>.<bundle>.enable` (options in
-  `modules/bundles/default.nix`). Bundles expand over `config.custom.bundles` with
-  `home-manager.users = lib.mapAttrs (user: _: lib.mkIf (enabled user) { ... }) ...`,
-  so a user only gets a bundle's packages when they opt in.
-- `modules/bundles/desktop-environment.nix` is the always-on GUI layer: it applies to
-  every host with `gui = true` and splits the rest on `isLinux` / `isDarwin`.
-- `modules/derivations/`: every `foo.nix` is auto-discovered by `package-set.nix` and
-  exposed as package `.#foo` (via callPackage); no registration needed. A file that
-  returns an attrset of derivations must be listed in that file's `packageSets`.
-- `modules/polyfill/`: declares platform-specific options (e.g. `homebrew` on NixOS)
-  so one config evaluates on every platform; actually using the wrong one fails the
-  build.
-- `modules/staging/home-manager/`: real home-manager modules for programs without
-  an upstream module (`karabiner`, `linkLive`, `mcsr`, `theme-switch`).
-- Host configs (`hosts/<name>/configuration.nix`) set `gui`, per-user bundles under
-  `custom.bundles.<user>`, host-specific options (e.g. `laptop.enable`), and
-  `custom.flake-path`. Without `custom.flake-path = "<repo path>#<hostname>"` the
-  live-files mechanism silently no-ops and `nh` has no flake.
+- `hosts/<name>/configuration.nix` is the per-host entrypoint. Per-user config is
+  set directly there under `home-manager.users.<user>` — there are no bundles.
+  GUI hosts additionally import `../desktop-environment.nix`, the shared GUI
+  layer, which splits on `isLinux`/`isDarwin` (macbook and nixbook import it;
+  ada doesn't). `custom.flake-path = "<repo path>#<host>"` matters beyond `nh`:
+  without it `linkLive` links nothing (see below). `custom.laptop` is a plain
+  bool (`custom.laptop = true` on nixbook).
+- `modules/configurations/`: every `*.nix` file is auto-imported except
+  `default.nix`. Subdirectories (`ai/`, `helix/`, `librewolf/`, `zellij/`) are
+  not auto-imported — their sibling module references them. Modules contribute
+  `home-manager.sharedModules`.
+- `modules/services/`: system services (currently the Immich album downloader).
+- `modules/derivations/`: every `foo.nix` is auto-discovered by `default.nix` and
+  exposed as `.#foo`. A file returning an attrset of derivations must be listed
+  in that file's `multisets` (called via `callPackages`); `flake.nix` flattens
+  `firefox-addons`/`helix-plugins` into `packages` so `nix flake check` and
+  nix-update see flat attrs, while modules reach the nested form through the
+  overlay in `modules/default.nix` (`pkgs.firefox-addons.<name>`).
+  `legacyPackages` keeps the unflattened set.
+- `modules/polyfill/`: one file per platform (`nixos.nix`, `nix-darwin.nix`, …),
+  imported per host type in `flake.nix`. They declare the foreign options with
+  `fill` (`util.nix`) so one config evaluates on every platform; the build fails
+  only if the wrong platform actually uses them. `nix-on-droid.nix` is currently
+  unused — no nix-on-droid host anymore.
+- `modules/staging/home-manager/`: home-manager modules with no upstream module
+  (`karabiner`, `link-live`, `mcsr`, `theme-switch`). Imported into every home
+  config by `modules/configurations/home-manager.nix`, which also wires the
+  home-manager agenix module (`passthru.agenix-hm`).
+- `modules/default.nix`: declares `gui` and `custom.flake-path`, imports
+  `configurations` + `services`, applies the derivations overlay, and sets
+  `allowUnfreePredicate` (reaper, clonehero, ouch). No host sets `gui` today, so
+  the `config.gui` guard in `macos.nix` is currently inert.
 
 ## `live/` files
 
-Stateful/undocumented app configs are symlinked from the repo into `$HOME` via
-`home.linkLive.files = { "<$HOME-relative target>" = "<repo-relative source>"; }`
-(option in `modules/staging/home-manager/link-live.nix`). Apps mutate these files
-at runtime, so `live/` showing up dirty in git is normal — commit the changes.
-Prefer linking directories, not files.
+`home.linkLive.files` (`modules/staging/home-manager/link-live.nix`) maps a
+`$HOME`-relative target to a repo-relative source. `home-manager.nix` sets
+`linkLive.repoPath` from `custom.flake-path` (the part before `#`); when that is
+null nothing is linked, so importing this flake from elsewhere doesn't break.
+Links are out-of-store symlinks, so apps mutate the repo files in place: a dirty
+`live/` is expected — commit it. Prefer linking directories over files (currently
+`.config/niri` and `.config/MusicBrainz`; `live/.gitignore` covers swap/tmp
+files).
 
 ## Secrets
 
-agenix: encrypted files in `secrets/*.age`, recipient keys declared in
-`secrets/secrets.nix`. On darwin, home-manager agenix uses `/tmp/agenix`
-(see `modules/configurations/home-manager.nix`).
+Encrypted files in `secrets/*.age`; recipient keys per machine in
+`secrets/agenix-rules.nix` (agenix rekey-rules format). Consumers declare
+`age.secrets.<name>.file = ../../secrets/<name>.age` inside home-manager modules.
+On darwin the home-manager agenix module uses `secretsMountPoint = /tmp/agenix.d`
+and `secretsDir = /tmp/agenix` (`modules/configurations/home-manager.nix`).

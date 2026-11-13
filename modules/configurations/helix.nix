@@ -14,6 +14,8 @@
             patch -p1 --directory="$PWD" < ${./helix/osc11-zellij.patch}
           '';
         });
+
+        discord = config.programs.discord.enable;
       in
       {
         programs.helix = {
@@ -129,6 +131,8 @@
               (require "context/context.scm")
               (context-enable 'right)
               (require "zen-mode/zen-mode.scm")
+            ''
+            + lib.optionalString discord ''
               (require "helix-discord-rpc/init.scm")
               (discord-rpc-connect)
             '';
@@ -141,9 +145,14 @@
             {
               "steel/cogs/context".source = pkgs.helix-plugins.context;
               "steel/cogs/zen-mode".source = pkgs.helix-plugins.zen-mode;
-              "steel/cogs/helix-discord-rpc".source = pkgs.helix-plugins.helix-discord-rpc;
-              "steel/native/libhelix_discord_rpc${ext}".source =
-                "${pkgs.helix-plugins.helix-discord-rpc}/native/libhelix_discord_rpc${ext}";
+              "steel/cogs/helix-discord-rpc" = {
+                enable = discord;
+                source = pkgs.helix-plugins.helix-discord-rpc;
+              };
+              "steel/native/libhelix_discord_rpc${ext}" = {
+                enable = discord;
+                source = "${pkgs.helix-plugins.helix-discord-rpc}/native/libhelix_discord_rpc${ext}";
+              };
             };
         };
 

@@ -44,6 +44,7 @@
     pkg:
     builtins.elem (lib.getName pkg) [
       "reaper"
+      "claude-code"
     ];
 
   # Was failing before this

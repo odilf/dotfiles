@@ -189,6 +189,7 @@
                   excludedAddons = [
                     addons.betterttv
                     addons.lichess2chess
+                    # addons.music-score-downloader
                     addons.web-scrobbler
                   ];
 

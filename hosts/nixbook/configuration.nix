@@ -20,11 +20,6 @@
   };
 
   home-manager.users.odilf = {
-    home.packages = [
-      pkgs.vim
-      pkgs.watchexec
-    ];
-
     programs = {
       alacritty.enable = true;
       fish.enable = true;

@@ -19,8 +19,13 @@
       in
       {
         programs.helix = {
-          # package = pkgs.steelix.override { inherit helix-unwrapped; };
-          package = pkgs.steelix;
+          package =
+            # bit bodgy, but this only matters for transparent terminals, which
+            # I only have on macos with aerospace.
+            if config.programs.aerospace.enable then
+              pkgs.steelix.override { inherit helix-unwrapped; }
+            else
+              pkgs.steelix;
           settings = {
             theme = "base16_default";
 

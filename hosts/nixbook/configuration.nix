@@ -37,6 +37,7 @@
       khard.enable = true;
       khal.enable = true;
       gurk-rs.enable = true; # signal
+      concord.enable = true;
     };
   };
 

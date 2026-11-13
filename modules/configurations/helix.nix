@@ -57,68 +57,68 @@
           };
 
           languages = {
-            language-server = {
-              scls = {
-                command = "simple-completion-language-server";
-                config = {
-                  max_completion_items = 100;
-                  feature_words = false;
-                  feature_snippets = false;
-                  snippets_inline_by_word_tail = false;
-                  feature_unicode_input = true;
-                  feature_paths = false;
-                  feature_citations = false;
-                };
-
-                # write logs to /tmp/completion.log
-                environment = {
-                  RUST_LOG = "info,simple-completion-language-server=info";
-                  LOG_FILE = "/tmp/completion.log";
-                };
+            language-server.scls = {
+              command = "simple-completion-language-server";
+              config = {
+                max_completion_items = 100;
+                feature_words = false;
+                feature_snippets = false;
+                snippets_inline_by_word_tail = false;
+                feature_unicode_input = true;
+                feature_paths = false;
+                feature_citations = false;
               };
-
-              tinimyst = {
-                command = "${pkgs.tinymist}/bin/tinymist";
-
-                config = {
-                  preview.background.enabled = true;
-                  preview.background.args = [
-                    "--open"
-                  ];
-                };
+              environment = {
+                RUST_LOG = "info,simple-completion-language-server=info";
+                LOG_FILE = "/tmp/completion.log";
               };
             };
 
-            language = [
-              {
-                name = "nix";
+            language-server.rust-analyzer.environment.RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc
+            }";
+
+            language = lib.mapAttrsToList (name: value: { inherit name; } // value) {
+              nix = {
                 auto-format = true;
                 formatter.command = "${pkgs.nixfmt}/bin/nixfmt";
-              }
-              {
-                name = "scls";
+              };
+
+              scls = {
                 scope = "text.scls";
                 file-types = [ ];
                 shebangs = [ ];
                 roots = [ ];
                 auto-format = false;
                 language-servers = [ "scls" ];
-              }
-              {
-                name = "markdown";
-                language-servers = [
-                  "marksman"
-                  "markdown-oxide"
-                  "scls"
-                ];
-              }
-              {
-                name = "typst";
-                language-servers = [ "tinymist" ];
-              }
-            ];
+              };
+              markdown.language-servers = [
+                "marksman"
+                "markdown-oxide"
+                "scls"
+              ];
+            };
           };
         };
+
+        # Should arguably be in project devShells, but are convinient to always have
+        home.packages = [
+          pkgs.cargo
+          pkgs.rust-analyzer
+          pkgs.rustfmt
+          pkgs.clippy
+          pkgs.rustc
+          pkgs.bacon
+
+          pkgs.nil
+          pkgs.nixd
+          pkgs.taplo
+          pkgs.marksman
+          pkgs.uv
+          pkgs.ruff
+          pkgs.ty
+          pkgs.vscode-langservers-extracted
+          pkgs.tinymist
+        ];
 
         xdg = lib.mkIf config.programs.helix.enable {
           configFile = {

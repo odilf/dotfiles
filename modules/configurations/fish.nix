@@ -20,15 +20,17 @@ let
     {
       home.packages = lib.mkIf config.programs.fish.enable (
         [
-          pkgs.comma
-          pkgs.mosh
-          pkgs.dust
-          pkgs.dua
           pkgs.bottom
-          pkgs.fd
           pkgs.btop
-          pkgs.rsync
+          pkgs.comma
           pkgs.curl
+          pkgs.dua
+          pkgs.dust
+          pkgs.fd
+          pkgs.mosh
+          pkgs.rsync
+          pkgs.tokei
+          pkgs.watchexec
           pkgs.wget
         ]
         ++ lib.optionals isDarwin [
@@ -51,13 +53,14 @@ let
         broot.enable = true;
         direnv.enable = true;
         git.enable = true;
-        helix.enable = true;
+        jujutsu.enable = true;
         navi.enable = true;
         nh.enable = true;
         ripgrep-all.enable = true;
         ripgrep.enable = true;
         skim.enable = true;
         starship.enable = true;
+        vim.enable = true;
         yazi.enable = true;
         zellij.enable = true;
         zoxide.enable = true;

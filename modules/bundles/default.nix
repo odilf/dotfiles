@@ -4,10 +4,6 @@
 }:
 let
   bundles = {
-    development = {
-      desc = "Development & cli tools.";
-      path = ./development.nix;
-    };
   };
 in
 {

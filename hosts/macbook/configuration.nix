@@ -16,6 +16,17 @@
 
   home-manager.users.odilf = {
     programs = {
+      # Dev
+      alacritty.enable = true;
+      fish.enable = true;
+      helix.enable = true;
+      pi-coding-agent.enable = true;
+
+      git.enable = true;
+      jujutsu.enable = true;
+      ssh.enable = true;
+
+      # General
       aerc.enable = true;
       khard.enable = true;
       khal.enable = true;

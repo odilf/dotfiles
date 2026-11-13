@@ -6,7 +6,6 @@
 {
   imports = [
     ./configurations
-    ./bundles
     ./services
   ];
 

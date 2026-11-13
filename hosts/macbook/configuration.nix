@@ -1,8 +1,9 @@
 { lib, pkgs, ... }:
 {
-  imports = [ ./headphone-keepalive.nix ];
-
-  gui = true;
+  imports = [
+    ../desktop-environment.nix
+    ./headphone-keepalive.nix
+  ];
 
   custom = {
     flake-path = "/Users/odilf/code/dotfiles#macbook";

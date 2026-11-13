@@ -3,10 +3,5 @@
   wsl.enable = true;
   wsl.defaultUser = "odilf";
 
-  gui = false;
-  custom.bundles.odilf = {
-    development.enable = true;
-  };
-
   services.openssh.enable = true;
 }

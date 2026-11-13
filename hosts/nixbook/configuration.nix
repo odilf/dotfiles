@@ -6,9 +6,9 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../desktop-environment.nix
   ];
 
-  gui = true;
   custom = {
     flake-path = "/home/odilf/code/dotfiles#nixbook";
     laptop = true;

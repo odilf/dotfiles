@@ -36,12 +36,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,7 +49,6 @@
       nix-darwin,
       home-manager,
       agenix,
-      nix-on-droid,
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -92,13 +85,6 @@
               }
             ];
           };
-
-          nixOnDroidModule = {
-            imports = [
-              ./modules/polyfill/nix-on-droid.nix
-              ./modules
-            ];
-          };
         in
         {
           # Modules
@@ -131,14 +117,6 @@
             modules = [
               darwinModule
               ./hosts/macbook/configuration.nix
-            ];
-          };
-
-          nixOnDroidConfigurations."vermeer" = nix-on-droid.lib.nixOnDroidConfiguration {
-            pkgs = import nixpkgs { system = "aarch64-linux"; };
-            modules = [
-              nixOnDroidModule
-              ./hosts/vermeer/configuration.nix
             ];
           };
         };

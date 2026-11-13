@@ -4,10 +4,9 @@
   ...
 }:
 {
-  options.laptop = {
-    enable = lib.mkEnableOption "Configuration for laptops";
-  };
-  config = lib.mkIf config.laptop.enable {
+  options.custom.laptop = lib.mkEnableOption "Configuration for laptops";
+
+  config = lib.mkIf config.custom.laptop {
     services.tlp = {
       enable = true;
       settings = {

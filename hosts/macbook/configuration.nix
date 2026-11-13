@@ -10,7 +10,6 @@
       odilf = {
         development.enable = true;
         social.enable = true;
-        productivity.enable = true;
       };
     };
   };
@@ -23,11 +22,19 @@
       gurk-rs.enable = true; # signal
 
       mcsr.enable = true;
+
+      sioyek.enable = true;
     };
 
     home.packages = [
       pkgs.obs-studio
       pkgs.reaper
+
+      pkgs.anki
+      pkgs.libreoffice-bin
+      pkgs.picard
+      pkgs.calibre-no-speech
+      pkgs.obsidian
     ];
   };
 

@@ -8,10 +8,6 @@ let
       desc = "Development & cli tools.";
       path = ./development.nix;
     };
-    productivity = {
-      desc = "Getting 'work' done with other humans.";
-      path = ./productivity.nix;
-    };
   };
 in
 {

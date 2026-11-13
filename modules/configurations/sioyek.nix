@@ -1,7 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
   home-manager.sharedModules = [
-    {
+    ({ config, lib, ... }: {
       programs.sioyek.config = {
         ui_font = "IosevkaTerm Nerd Font";
         default_dark_mode = "1";
@@ -19,6 +22,13 @@
         open_last_file_on_startup = "1";
       };
 
-    }
+      # TODO: make default on darwin too
+      xdg.mimeApps = lib.mkIf (isLinux && config.programs.sioyek.enable) {
+        enable = true;
+        defaultApplications = {
+          "application/pdf" = [ "sioyek.desktop" ];
+        };
+      };
+    })
   ];
 }

@@ -26,6 +26,7 @@
       khard.enable = true;
       khal.enable = true;
       gurk-rs.enable = true; # signal
+      concord.enable = true;
 
       mcsr.enable = true;
 
@@ -47,6 +48,7 @@
     "anki"
     "calibre"
     "picard"
+    "linearmouse"
   ];
 
   nixpkgs.config.allowUnfreePredicate =

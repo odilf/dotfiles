@@ -54,16 +54,32 @@
               };
             };
 
-            imapnotify = {
-              enable = true;
-              boxes = [ "INBOX" ];
-              onNotify = "${pkgs.isync}/bin/mbsync gmail";
-              onNotifyPost =
-                if pkgs.stdenv.hostPlatform.isDarwin then
-                  ''/usr/bin/osascript -e 'display notification "New mail" with title "Mail"' ''
-                else
-                  "${pkgs.libnotify}/bin/notify-send 'New mail'";
-            };
+            imapnotify =
+              let
+                notify = pkgs.writeShellScript "new-mail-notify" (
+                  ''
+                    export NOTMUCH_CONFIG=${config.xdg.configHome}/notmuch/default/config
+                    ${pkgs.notmuch}/bin/notmuch new
+                    subject=$(${pkgs.notmuch}/bin/notmuch search --sort=newest-first --limit=1 --format=json 'tag:unread' | ${pkgs.jq}/bin/jq -r '.[0].subject // empty')
+                  ''
+                  + (
+                    if pkgs.stdenv.hostPlatform.isDarwin then
+                      ''
+                        /usr/bin/osascript -e "display notification \"$subject\" with title \"New mail\""
+                      ''
+                    else
+                      ''
+                        ${pkgs.libnotify}/bin/notify-send "New mail" "$subject"
+                      ''
+                  )
+                );
+              in
+              {
+                enable = true;
+                boxes = [ "INBOX" ];
+                onNotify = "${pkgs.isync}/bin/mbsync gmail";
+                onNotifyPost = notify;
+              };
           };
         };
 

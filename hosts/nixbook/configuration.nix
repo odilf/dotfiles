@@ -22,6 +22,7 @@
   home-manager.users.odilf = {
     programs = {
       alacritty.enable = true;
+      rio.enable = true; # testing it out
       fish.enable = true;
       ssh.enable = true;
       helix.enable = true;

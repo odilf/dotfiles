@@ -22,6 +22,7 @@ let
       ...
     }:
     {
+      programs.alacritty.package = pkgs.alacritty-graphics;
       programs.alacritty.settings = {
         general.import = [ "theme.toml" ];
 

@@ -2,7 +2,7 @@
 {
   home-manager.sharedModules = [
     {
-      programs.zellij.extraConfig = builtins.readFile ./zellij/config.kdl;
+      home.linkLive.files.".config/zellij" = "live/zellij";
 
       # Name new sessions after the current directory by default.
       programs.fish.functions."zellij".body = ''

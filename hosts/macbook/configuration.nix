@@ -27,6 +27,7 @@
       khal.enable = true;
       gurk-rs.enable = true; # signal
       concord.enable = true;
+      discord.enable = true;
 
       mcsr.enable = true;
 
@@ -43,11 +44,10 @@
 
   homebrew.casks = [
     "obs"
-    "discord"
     "signal"
     "anki"
     "calibre"
-    "picard"
+    "musicbrainz-picard"
     "linearmouse"
   ];
 
@@ -57,6 +57,7 @@
       "claude-code"
       "reaper"
       "obsidian"
+      "discord"
     ];
 
   system.primaryUser = "odilf";

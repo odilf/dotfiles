@@ -1,13 +1,12 @@
 {
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
-lib.mkIf (config.gui && isDarwin) {
+lib.mkIf isDarwin {
   homebrew = {
     enable = true;
     onActivation.cleanup = "uninstall";

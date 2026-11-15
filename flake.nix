@@ -67,9 +67,7 @@
               home-manager.nixosModules.default
               agenix.nixosModules.default
               inputs.niri-session-manager.nixosModules.niri-session-manager
-              {
-                passthru.agenix-hm = agenix.homeManagerModules.default;
-              }
+              { home-manager.sharedModules = [ agenix.homeManagerModules.default ]; }
             ];
           };
 
@@ -80,9 +78,7 @@
               home-manager.darwinModules.default
               agenix.darwinModules.default
               inputs.kanata-darwin.darwinModules.default
-              {
-                passthru.agenix-hm = agenix.homeManagerModules.default;
-              }
+              { home-manager.sharedModules = [ agenix.homeManagerModules.default ]; }
             ];
           };
         in

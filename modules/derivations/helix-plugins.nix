@@ -64,16 +64,16 @@ in
   helix-discord-rpc =
     let
       src = fetchFromGitHub {
-        owner = "norinorin";
+        owner = "odilf";
         repo = "helix-discord-rpc";
-        rev = "21a9aae61d063cea636d44e62f34a24acabc4eb1";
-        hash = "sha256-Pld3BiePfqfCGUyGv0ZCWA7U4v2jlxHIRt6VB43yGNY=";
+        rev = "7db484cb158b7336d2b21335f0a592ad05b848f0";
+        hash = "sha256-nx0jY/y6KKJ9GmVZQprwSJVRlva3RdJS5ecJzZceDDQ=";
       };
       sharedLib = stdenv.hostPlatform.extensions.sharedLibrary;
     in
     rustPlatform.buildRustPackage {
       pname = "helix-discord-rpc";
-      version = "0.1.0";
+      version = "0-unstable-2026-11-15";
       inherit src;
 
       cargoLock.lockFile = "${src}/Cargo.lock";

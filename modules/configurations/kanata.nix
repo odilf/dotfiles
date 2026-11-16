@@ -26,7 +26,9 @@ let
 
     (defalias
       cap-inner (tap-hold-press 0 200 esc lctrl)
-      cap (multi f24 @cap-inner) ;; workaround https://github.com/jtroo/kanata/discussions/422
+      ;; workaround https://github.com/jtroo/kanata/discussions/422
+      ;; also, needs to be `pause` so it doesn't mess up zellij kitty protocol
+      cap (multi pause @cap-inner)
 
       tab (tap-hold-press 200 200 tab (layer-while-held arrows))
     )

@@ -8,11 +8,11 @@ reinterpret my direction. If the disagreement blocks only part of the work,
 flag that part and continue with anything else that can safely proceed.
 
 ## Comments
-Default to no comment. When one's needed, state the contract (what's
-promised), not the mechanism (how it's built) — and make sure it'd read
-the same for any caller, not just the one in front of you. Never explain
-implementation, name a specific caller/ticket/date, or narrate a decision
-inline; that goes in docs instead. Full standard: the code-comments skill.
+Doc comments state the contract (what's promised, true for any caller),
+not the implementation. Code comments explain the *why* the code can't
+show: load-bearing details, why the obvious approach doesn't work,
+hard-won fixes, constant rationale, trade-offs. Don't restate the code or
+narrate change history. Full standard: the code-comments skill.
 
 ## Git
 Never create commits. `git commit`, amend, rebase, cherry-pick, and

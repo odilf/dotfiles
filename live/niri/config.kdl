@@ -27,7 +27,7 @@ input {
         // Enable numlock on startup, omitting this setting disables it.
         numlock
 
-        repeat-delay 120
+        repeat-delay 150
         repeat-rate 25
     }
 
@@ -49,7 +49,8 @@ input {
 
 output "eDP-1" {
     mode "2560x1600@60.000"
-    scale 1.77
+    // scale 1.77
+    scale 1.5
     transform "normal"
 }
 
@@ -57,7 +58,7 @@ output "eDP-1" {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
-    gaps 8
+    gaps 0
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -78,7 +79,7 @@ layout {
     }
 
     focus-ring {
-        width 4
+        width 0
 
         active-color "rgba(20, 20, 90, 0.5)"
         inactive-color "#505050"
@@ -123,14 +124,9 @@ window-rule {
     open-maximized true
 }
 
-window-rule {
-    match at-startup=true app-id=r#"fooyin"#
-    open-on-workspace "chat"
-}
-
 // Noctalia: Enable rounded corners for all windows.
 window-rule {
-    geometry-corner-radius 10
+    geometry-corner-radius 4
     clip-to-geometry true
 }
 

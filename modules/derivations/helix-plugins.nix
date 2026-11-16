@@ -77,7 +77,7 @@ in
       inherit src;
 
       cargoLock.lockFile = "${src}/Cargo.lock";
-      patches = [ ./helix-discord-rpc-socket-path.patch ];
+      # patches = [ ./helix-discord-rpc-socket-path.patch ];
       doCheck = false;
 
       installPhase = ''

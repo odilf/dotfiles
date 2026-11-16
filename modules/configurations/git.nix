@@ -1,4 +1,3 @@
-{ ... }:
 {
   home-manager.sharedModules = [
     (
@@ -6,7 +5,7 @@
       {
         programs.git = {
           settings = {
-            user.email = "odysseas.maheras@gmail.com";
+            user.email = "me@odilf.com";
             user.name = "odilf";
             pull.rebase = true;
             credential.helper = "cache";

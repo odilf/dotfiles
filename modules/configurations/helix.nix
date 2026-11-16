@@ -27,7 +27,7 @@
             else
               pkgs.steelix;
           settings = {
-            theme = "base16_default";
+            theme = "base16_terminal";
 
             editor = {
               line-number = "relative";
